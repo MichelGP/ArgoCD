@@ -1,0 +1,113 @@
+
+nodePools:
+  controlPlane: &controlPlaneSelector
+    node-role.kubernetes.io/control-plane: "true"
+  logsIngest: &logsIngestSelector
+    logs: "ingest"
+  metricsHot: &metricsHotSelector
+    metrics: "hot"
+  tracesHot: &tracesHotSelector
+    traces: "hot"
+  queryCpu: &queryCpuSelector
+    query: "cpu"
+  general: &generalSelector
+    general: "true"
+  tierMinio: &minioSelector
+    tier: "minio"
+
+tempo:
+  reportingEnabled: false
+  storage:
+    trace:
+      backend: s3
+      s3:
+        bucket:        tempo
+        endpoint:      minio.minio.svc.cluster.local:9000
+        access_key:    minio
+        secret_key:    minio123
+        insecure:      true
+        forcepathstyle: true
+distributor:
+  replicas: 2
+  nodeSelector: *tracesHotSelector
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+ingester:
+  replicas: 2
+  nodeSelector: *tracesHotSelector
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: standard
+querier:
+  replicas: 2
+  nodeSelector: *queryCpuSelector
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+queryFrontend:
+  replicas: 2
+  nodeSelector: *queryCpuSelector
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+compactor:
+  replicas: 1
+  nodeSelector: *tracesHotSelector
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+memcached:
+  nodeSelector: *tracesHotSelector
+metricsGenerator:
+  enabled: true
+  nodeSelector: *queryCpuSelector
+  config:
+    registry:
+      collection_interval: 15s
+      external_labels:
+        source: tempo
+    storage:
+      remote_write:
+        - url: "http://prometheus.monitoring.svc:9090/api/v1/write"
+global_overrides:
+  metrics_generator_processors:
+    - service-graphs
+    - span-metrics
+
+traces:
+  otlp:
+    http:
+      # -- Enable Tempo to ingest Open Telemetry HTTP traces
+      enabled: true
+      # -- HTTP receiver advanced config
+      receiverConfig: {}
+    grpc:
+      # -- Enable Tempo to ingest Open Telemetry GRPC traces
+      enabled: true
+      # -- GRPC receiver advanced config
+      receiverConfig: {}

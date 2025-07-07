@@ -1,0 +1,32 @@
+image:
+  registry: docker.io          # or your private registry
+  repository: bitnami/minio    # default repo for the Bitnami chart
+  tag: "latest"                # <— grab the `:latest` image
+  pullPolicy: Always  
+
+## Use the existing Secret for root creds
+auth:
+  existingSecret: minio-creds
+
+## Expose only inside the cluster
+service:
+  type: ClusterIP
+  ports:
+    api:     9000
+    console: 9001
+
+## Distributed mode example
+mode: distributed
+replicas: 4
+
+persistence:
+  size: 10Gi
+  storageClass: standard
+
+resources:
+  requests:
+    cpu:    500m
+    memory: 1Gi
+
+nodeSelector:
+  tier: minio

@@ -1,0 +1,116 @@
+cluster:
+  name: k8s-lgtm
+
+destinations:
+  - name: loki
+    type: loki
+    url: http://loki-gateway.loki.svc.cluster.local:80/loki/api/v1/push
+  - name: localPrometheus
+    type: prometheus
+    url: http://mimir-nginx.mimir.svc:80/api/v1/push
+  - name: tempo
+    type: otlp
+    protocol: http
+    url: tempo-distributor.tempo.svc.cluster.local:4317
+    metrics:
+      enabled: true
+    logs:
+      enabled: true
+    traces:
+      enabled: true
+      processors:
+        tailSampling:
+          enabled: true
+
+clusterEvents:
+  enabled: true
+  collector: alloy-logs
+  namespaces:
+    - alloy
+    - loki
+    - mimir
+    - tempo
+    - quickpizza
+    - pyroscope
+    - grafana
+    - cilium-cni
+    - alloy-external
+
+nodeLogs:
+  enabled: false
+
+podLogs:
+  enabled: true
+  gatherMethod: kubernetesApi
+  collector: alloy-logs
+  labelsToKeep:
+    - app_kubernetes_io_name
+    - container
+    - instance
+    - job
+    - level
+    - namespace
+    - service_name
+    - service_namespace
+    - deployment_environment
+    - deployment_environment_name
+  structuredMetadata:
+    pod: pod
+  namespaces:
+    - alloy
+    - loki
+    - mimir
+    - tempo
+    - quickpizza
+    - pyroscope
+    - grafana
+    - cilium-cni
+    - alloy-external
+
+alloy-singleton:
+  enabled: true
+
+alloy-metrics:
+  enabled: true
+
+alloy-logs:
+  enabled: true
+  alloy:
+    mounts:
+      varlog: false
+      dockercontainers: false
+    clustering:
+      enabled: true
+
+clusterMetrics:
+  enabled: true
+
+alloy-receiver:
+  enabled: true
+  alloy:
+    receiver:
+      otlp:
+        protocols:
+          grpc: {}
+          http: {}
+    exporter:
+      otlp:
+        endpoint: tempo-distributor.tempo.svc.cluster.local:4317
+        insecure: true
+
+applicationObservability:
+  enabled: true
+  receivers:
+    otlp:
+      grpc:
+        enabled: true
+      http:
+        enabled: true
+
+annotationAutodiscovery:
+  enabled: true
+
+alloy-profiles:
+  enabled: false
+
+extraConfig: |

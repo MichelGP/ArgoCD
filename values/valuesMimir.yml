@@ -1,0 +1,153 @@
+# https://github.com/grafana/mimir/blob/main/operations/helm/charts/mimir-distributed/values.yaml
+# for chart: https://github.com/grafana/mimir/tree/main/operations/helm/charts/mimir-distributed
+
+nodePools:
+  controlPlane: &controlPlaneSelector
+    node-role.kubernetes.io/control-plane: "true"
+  logsIngest: &logsIngestSelector
+    logs: "ingest"
+  metricsHot: &metricsHotSelector
+    metrics: "hot"
+  tracesHot: &tracesHotSelector
+    traces: "hot"
+  queryCpu: &queryCpuSelector
+    query: "cpu"
+  general: &generalSelector
+    general: "true"
+  tierMinio: &minioSelector
+    tier: "minio"
+
+mimir:
+  image:
+    tag: "latest"
+  common:
+    replication_factor: 2
+
+  structuredConfig:
+    multitenancy_enabled: false
+    common:
+      storage:
+        backend: s3
+        s3:
+          bucket_name: mimir
+          endpoint: minio.minio.svc.cluster.local:9000
+          region: minio
+          access_key_id: minio
+          secret_access_key: minio123
+          insecure: true
+
+    blocks_storage:
+      s3:
+        bucket_name: mimir-blocks
+    alertmanager_storage:
+      s3:
+        bucket_name: mimir-alerts
+    ruler_storage:
+      s3:
+        bucket_name: mimir-ruler
+   
+minio:
+  enabled: false
+  
+distributor:
+  replicas: 2
+  nodeSelector: *metricsHotSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+ingester:
+  zoneAwareReplication:
+    enabled: false
+  replicas: 2
+  nodeSelector: *metricsHotSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+  persistence:
+    enabled: true
+    size: 50Gi
+    storageClass: standard
+querier:
+  replicas: 2
+  nodeSelector: *queryCpuSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+query_frontend:
+  replicas: 2
+  nodeSelector: *queryCpuSelector
+  config:
+    multitenancy_enabled: true
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+store_gateway:
+  replicas: 2
+  nodeSelector: *metricsHotSelector
+  zoneAwareReplication:
+    enabled: false
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+compactor:
+  replicas: 2
+  nodeSelector: *metricsHotSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+alertmanager:
+  nodeSelector: *metricsHotSelector
+nginx:
+  enabled: true
+  replicas: 1
+  nodeSelector: *queryCpuSelector
+query_scheduler:
+  replicas: 1
+  nodeSelector: *queryCpuSelector
+ruler:
+  replicas: 2
+  nodeSelector: *metricsHotSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+  podDisruptionBudget:
+    maxUnavailable: 1
+overrides_exporter:
+  enabled: true
+  replicas: 1
+  nodeSelector: *generalSelector

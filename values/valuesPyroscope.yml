@@ -1,0 +1,144 @@
+nodePools:
+  controlPlane: &controlPlaneSelector
+    node-role.kubernetes.io/control-plane: "true"
+  logsIngest: &logsIngestSelector
+    logs: "ingest"
+  metricsHot: &metricsHotSelector
+    metrics: "hot"
+  tracesHot: &tracesHotSelector
+    traces: "hot"
+  queryCpu: &queryCpuSelector
+    query: "cpu"
+  general: &generalSelector
+    general: "true"
+  tierMinio: &minioSelector
+    tier: "minio"
+
+pyroscope:
+  structuredConfig:
+    storage:
+      backend: s3
+      s3:
+        bucket_name: pyroscope
+        endpoint: minio.minio.svc.cluster.local:9000
+        region: minio
+        access_key_id: minio
+        secret_access_key: minio123
+        insecure: true
+  objectStorage:
+    backend: s3
+    s3:
+      endpoint: minio.minio.svc.cluster.local:9000
+      bucket: pyroscope
+      region: minio
+      access_key_id: minio
+      secret_access_key: minio123
+      insecure: true
+  extraArgs:
+    store-gateway.sharding-ring.replication-factor: "3"
+  components:
+    querier:
+      kind: Deployment
+      nodeSelector: *queryCpuSelector
+      replicaCount: 2
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+    query-frontend:
+      kind: Deployment
+      nodeSelector: *queryCpuSelector
+      replicaCount: 2
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 100m
+    query-scheduler:
+      kind: Deployment
+      nodeSelector: *queryCpuSelector
+      replicaCount: 1
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+    distributor:
+      kind: Deployment
+      nodeSelector: *metricsHotSelector
+      replicaCount: 2
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+    ingester:
+      kind: StatefulSet
+      nodeSelector: *metricsHotSelector
+      replicaCount: 2
+      terminationGracePeriodSeconds: 600
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+    compactor:
+      kind: StatefulSet
+      nodeSelector: *metricsHotSelector
+      replicaCount: 1
+      terminationGracePeriodSeconds: 1200
+      persistence:
+        enabled: false
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+    store-gateway:
+      kind: StatefulSet
+      nodeSelector: *metricsHotSelector
+      replicaCount: 2
+      persistence:
+        # The store-gateway needs not need persistent storage, but we still run it as a StatefulSet
+        # This is to avoid having blocks of data being
+        enabled: false
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+      readinessProbe:
+        # The store gateway can be configured to wait on startup for ring stability to be reached before it becomes
+        # ready. See the `store-gateway.sharding-ring.wait-stability-min-duration` server argument for more information.
+        #
+        # Depending on this flag and the number of tenants + blocks that need to be synced on startup, pods can take
+        # some time to become ready. This value can be used to ensure Kubernetes waits long enough and reduce errors.
+        initialDelaySeconds: 60
+    tenant-settings:
+      kind: Deployment
+      replicaCount: 1
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+    ad-hoc-profiles:
+      kind: Deployment
+      replicaCount: 1
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          memory: 256Mi
+          cpu: 500m
+minio:
+  enabled: false
