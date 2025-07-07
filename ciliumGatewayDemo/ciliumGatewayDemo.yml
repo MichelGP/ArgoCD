@@ -10,7 +10,7 @@ metadata:
   name: hello-deployment
   namespace: hello-namespace
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: hello-app
