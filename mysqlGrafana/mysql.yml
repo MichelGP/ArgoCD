@@ -1,0 +1,127 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mysql-grafana
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-root-creds
+  namespace: mysql-grafana
+type: Opaque
+stringData:
+  # base64 is optional—Kubernetes will encode for you
+  MYSQL_ROOT_PASSWORD: some-password-string
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-user-creds
+  namespace: mysql-grafana
+type: Opaque
+stringData:
+  MYSQL_USER: pandora
+  MYSQL_PASSWORD: some-password-string
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-data-pvc
+  namespace: mysql-grafana
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-grafana
+  namespace: mysql-grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-grafana
+  template:
+    metadata:
+      labels:
+        app: mysql-grafana
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          args:
+            - --max-connections=200
+          ports:
+            - name: mysql
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-root-creds
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              value: pandora
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-creds
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-creds
+                  key: MYSQL_PASSWORD
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+          # Healthchecks modelled on your docker-compose
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - mysqladmin ping -h localhost -u root -p"${MYSQL_ROOT_PASSWORD}"
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - mysqladmin ping -h localhost -u root -p"${MYSQL_ROOT_PASSWORD}"
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 5
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-grafana
+  namespace: mysql-grafana
+spec:
+  selector:
+    app: mysql-grafana
+  ports:
+    - port: 3306
+      targetPort: mysql
+      protocol: TCP
+      name: mysql
+  type: ClusterIP
