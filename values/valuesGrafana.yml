@@ -19,7 +19,7 @@ image:
   repository: grafana/grafana
   tag: "latest"
   pullPolicy: IfNotPresent
-replicas: 1
+replicas: 2
 nodeSelector: *generalSelector
 resources:
   requests:
@@ -32,7 +32,7 @@ persistence:
   enabled: true
   volumeName: ""
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   size: 10Gi
   storageClass: "standard"
 grafana.ini:
