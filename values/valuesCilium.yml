@@ -55,7 +55,7 @@ hubble:
       - icmp
     port: 9965
     enableOpenMetrics: true
-    serviceAnnotations:
-      k8s.grafana.com/scrape: "true"
-  podAnnotations:
-    k8s.grafana.com/scrape: "true"
+#    serviceAnnotations:
+#      k8s.grafana.com/scrape: "true"
+#  podAnnotations:
+#    k8s.grafana.com/scrape: "true"
