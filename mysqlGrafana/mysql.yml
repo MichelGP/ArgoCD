@@ -23,7 +23,7 @@ metadata:
   namespace: mysql-grafana
 type: Opaque
 stringData:
-  MYSQL_USER: pandora
+  MYSQL_USER: grafana
   MYSQL_PASSWORD: some-password-string
 
 ---
@@ -70,7 +70,7 @@ spec:
                   name: mysql-root-creds
                   key: MYSQL_ROOT_PASSWORD
             - name: MYSQL_DATABASE
-              value: pandora
+              value: grafana
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
