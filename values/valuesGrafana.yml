@@ -32,7 +32,7 @@ persistence:
   enabled: true
   volumeName: ""
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   size: 10Gi
   storageClass: "standard"
 grafana.ini:
