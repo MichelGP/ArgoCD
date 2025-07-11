@@ -85,12 +85,10 @@ ingester:
       memory: "4Gi"
   persistence:
     enabled: true
-    inMemory: false
-    claims:
-      - name: data
-        size: 500Gi
-  storageClass: standard
-
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+    storageClassName: "juicefs-s3"
 querier:
   replicas: 2
   maxUnavailable: 1

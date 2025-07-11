@@ -73,8 +73,10 @@ ingester:
       memory: "1Gi"
   persistence:
     enabled: true
-    size: 50Gi
-    storageClass: standard
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+    storageClassName: "juicefs-s3"
 querier:
   replicas: 2
   nodeSelector: *queryCpuSelector
