@@ -82,15 +82,9 @@ env:
   - name: GF_DATABASE_NAME
     value: grafana
   - name: GF_DATABASE_USER
-    valueFrom:
-      secretKeyRef:
-        name: mysql-user-creds
-        key: MYSQL_USER
+    value: grafana
   - name: GF_DATABASE_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: mysql-user-creds
-        key: MYSQL_PASSWORD
+    value: some-password-string
   - name: GF_DATABASE_SSL_MODE
     value: disable
 

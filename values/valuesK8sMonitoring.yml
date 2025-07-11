@@ -26,14 +26,12 @@ clusterEvents:
   enabled: true
   collector: alloy-logs
   namespaces:
-    - alloy
     - loki
     - mimir
     - tempo
     - quickpizza
     - pyroscope
     - grafana
-    - cilium-cni
     - alloy-external
 
 nodeLogs:
@@ -57,14 +55,12 @@ podLogs:
   structuredMetadata:
     pod: pod
   namespaces:
-    - alloy
     - loki
     - mimir
     - tempo
     - quickpizza
     - pyroscope
     - grafana
-    - cilium-cni
     - alloy-external
 
 alloy-singleton:
