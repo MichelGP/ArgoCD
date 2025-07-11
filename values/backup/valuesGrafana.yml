@@ -30,10 +30,11 @@ resources:
     memory: "8Gi"
 persistence:
   enabled: true
+  volumeName: ""
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   size: 10Gi
-  storageClass: "juicefs-s3"
+  storageClass: "standard"
 grafana.ini:
   server:
     root_url: "https://grafana.local"
