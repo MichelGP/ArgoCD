@@ -63,30 +63,18 @@ datasources:
         url: http://pyroscope-querier.pyroscope.svc.cluster.local.:4040/
 
 env:
-  - name: GF_INSTALL_PLUGINS
-    value: grafana-pyroscope-app
-  - name: GF_AUTH_ANONYMOUS_ENABLED
-    value: "true"
-  - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-    value: Admin
-  - name: GF_DIAGNOSTICS_PROFILING_ENABLED
-    value: "true"
-  - name: GF_DIAGNOSTICS_PROFILING_ADDR
-    value: 0.0.0.0
-  - name: GF_DIAGNOSTICS_PROFILING_PORT
-    value: "9094"
-  - name: GF_DATABASE_TYPE
-    value: mysql
-  - name: GF_DATABASE_HOST
-    value: mysql-grafana.mysql-grafana.svc.cluster.local:3306
-  - name: GF_DATABASE_NAME
-    value: grafana
-  - name: GF_DATABASE_USER
-    value: grafana
-  - name: GF_DATABASE_PASSWORD
-    value: some-password-string
-  - name: GF_DATABASE_SSL_MODE
-    value: disable
+  GF_INSTALL_PLUGINS: grafana-pyroscope-app
+  GF_AUTH_ANONYMOUS_ENABLED: "true"
+  GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+  GF_DIAGNOSTICS_PROFILING_ENABLED: "true"
+  GF_DIAGNOSTICS_PROFILING_ADDR: 0.0.0.0
+  GF_DIAGNOSTICS_PROFILING_PORT: 9094
+  GF_DATABASE_TYPE: mysql
+  GF_DATABASE_HOST: mysql-grafana.mysql-grafana.svc.cluster.local:3306
+  GF_DATABASE_NAME: grafana
+  GF_DATABASE_USER: grafana
+  GF_DATABASE_PASSWORD: some-password-string
+  GF_DATABASE_SSL_MODE: disable
 
 podAnnotations:
   profiles.grafana.com/cpu.scrape: "true"
