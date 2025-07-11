@@ -88,10 +88,10 @@ ingester:
     inMemory: false
     claims:
       - name: data
-        size: 10Gi
+        size: "10Gi"
         storageClass: juicefs-s3
       - name: wal
-        size: 10Gi
+        size: "10Gi"
         storageClass: juicefs-s3
 querier:
   replicas: 2

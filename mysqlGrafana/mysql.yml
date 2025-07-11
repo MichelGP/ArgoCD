@@ -12,7 +12,6 @@ metadata:
   namespace: mysql-grafana
 type: Opaque
 stringData:
-  # base64 is optional—Kubernetes will encode for you
   MYSQL_ROOT_PASSWORD: some-password-string
 
 ---
@@ -84,7 +83,7 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
-          # Healthchecks modelled on your docker-compose
+          # Healthchecks
           readinessProbe:
             exec:
               command:
@@ -120,8 +119,8 @@ spec:
   selector:
     app: mysql-grafana
   ports:
-    - port: 3306
+    - name: mysql
+      port: 3306
       targetPort: mysql
       protocol: TCP
-      name: mysql
   type: ClusterIP

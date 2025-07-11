@@ -19,8 +19,11 @@ image:
   repository: grafana/grafana
   tag: "latest"
   pullPolicy: IfNotPresent
+
 replicas: 2
+
 nodeSelector: *generalSelector
+
 resources:
   requests:
     cpu: "2"
@@ -28,17 +31,16 @@ resources:
   limits:
     cpu: "2"
     memory: "8Gi"
+
 persistence:
-  enabled: true
-  accessModes:
-    - ReadWriteMany
-  size: 10Gi
-  storageClassName: "juicefs-s3"
+  enabled: false
+
 grafana.ini:
   server:
     root_url: "https://grafana.local"
   auth:
     disable_login_form: false
+
 datasources:
   datasources.yaml:
     apiVersion: 1
@@ -51,10 +53,6 @@ datasources:
         type: prometheus
         access: proxy
         url: http://mimir-nginx.mimir.svc:80/prometheus
-        #jsonData:
-        #  httpHeaderName1: X-Scope-OrgID
-        #secureJsonData:
-        #  httpHeaderValue1: "1"
       - name: Tempo
         type: tempo
         access: proxy
@@ -65,12 +63,36 @@ datasources:
         url: http://pyroscope-querier.pyroscope.svc.cluster.local.:4040/
 
 env:
-  GF_INSTALL_PLUGINS: grafana-pyroscope-app
-  GF_AUTH_ANONYMOUS_ENABLED: "true"
-  GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
-  GF_DIAGNOSTICS_PROFILING_ENABLED: "true"
-  GF_DIAGNOSTICS_PROFILING_ADDR: 0.0.0.0
-  GF_DIAGNOSTICS_PROFILING_PORT: 9094
+  - name: GF_INSTALL_PLUGINS
+    value: grafana-pyroscope-app
+  - name: GF_AUTH_ANONYMOUS_ENABLED
+    value: "true"
+  - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+    value: Admin
+  - name: GF_DIAGNOSTICS_PROFILING_ENABLED
+    value: "true"
+  - name: GF_DIAGNOSTICS_PROFILING_ADDR
+    value: 0.0.0.0
+  - name: GF_DIAGNOSTICS_PROFILING_PORT
+    value: "9094"
+  - name: GF_DATABASE_TYPE
+    value: mysql
+  - name: GF_DATABASE_HOST
+    value: mysql-grafana.mysql-grafana.svc.cluster.local:3306
+  - name: GF_DATABASE_NAME
+    value: grafana
+  - name: GF_DATABASE_USER
+    valueFrom:
+      secretKeyRef:
+        name: mysql-user-creds
+        key: MYSQL_USER
+  - name: GF_DATABASE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: mysql-user-creds
+        key: MYSQL_PASSWORD
+  - name: GF_DATABASE_SSL_MODE
+    value: disable
 
 podAnnotations:
   profiles.grafana.com/cpu.scrape: "true"
