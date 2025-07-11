@@ -108,7 +108,7 @@ applicationObservability:
         enabled: true
 
 annotationAutodiscovery:
-  enabled: true
+  enabled: false
 
 alloy-profiles:
   enabled: false
