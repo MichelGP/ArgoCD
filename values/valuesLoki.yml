@@ -88,7 +88,7 @@ ingester:
     claims:
       - name: data
         size: 10Gi
-        storageClassName: "juicefs-s3"
+        storageClass: "juicefs-s3"
 querier:
   replicas: 2
   maxUnavailable: 1
