@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: juicefs-s3
+provisioner: csi.juicefs.com
+parameters:
+  bucket: "" # juicefs will create a bucket per PVC
+  mountOptions: "allow_other"
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
