@@ -33,7 +33,7 @@ persistence:
   accessModes:
     - ReadWriteMany
   size: 10Gi
-  storageClassName: "juicefs-csi"
+  storageClassName: "juicefs-s3"
 grafana.ini:
   server:
     root_url: "https://grafana.local"
