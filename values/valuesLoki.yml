@@ -78,11 +78,11 @@ ingester:
   maxUnavailable: 1
   resources:
     requests:
-      cpu: "1500m"
-      memory: "4Gi"
+      cpu: "500m"
+      memory: "1Gi"
     limits:
-      cpu: "2"
-      memory: "4Gi"
+      cpu: "500m"
+      memory: "1Gi"
   persistence:
     enabled: true
     inMemory: false
@@ -102,7 +102,7 @@ querier:
       cpu: "500m"
       memory: "768Mi"
     limits:
-      cpu: "1"
+      cpu: "500m"
       memory: "1Gi"
 
 queryFrontend:
@@ -111,11 +111,11 @@ queryFrontend:
   nodeSelector: *queryCpuSelector
   resources:
     requests:
-      cpu: "800m"
-      memory: "1.5Gi"
+      cpu: "500m"
+      memory: "512mi"
     limits:
-      cpu: "1"
-      memory: "2Gi"
+      cpu: "500m"
+      memory: "512Mi"
 
 queryScheduler:
   replicas: 2
@@ -125,7 +125,7 @@ queryScheduler:
       cpu: "500m"
       memory: "512Mi"
     limits:
-      cpu: "1"
+      cpu: "500m"
       memory: "512Mi"
 
 distributor:
@@ -137,8 +137,8 @@ distributor:
       cpu: "500m"
       memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512Mi"
 
 compactor:
   replicas: 2
@@ -158,10 +158,10 @@ indexGateway:
   resources:
     requests:
       cpu: "500m"
-      memory: "1.5Gi"
+      memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "2Gi"
+      cpu: "500m"
+      memory: "512Mi"
 
 # Experimental bloom components
 bloomPlanner:

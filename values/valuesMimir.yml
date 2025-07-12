@@ -55,10 +55,10 @@ distributor:
   resources:
     requests:
       cpu: "500m"
-      memory: "1Gi"
+      memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512mi"
 ingester:
   zoneAwareReplication:
     enabled: false
@@ -67,10 +67,10 @@ ingester:
   resources:
     requests:
       cpu: "500m"
-      memory: "1Gi"
+      memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512Mi"
   persistence:
     enabled: true
     accessModes:
@@ -83,10 +83,10 @@ querier:
   resources:
     requests:
       cpu: "500m"
-      memory: "1Gi"
+      memory: "500mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "500mi"
 query_frontend:
   replicas: 2
   nodeSelector: *queryCpuSelector
@@ -95,10 +95,10 @@ query_frontend:
   resources:
     requests:
       cpu: "500m"
-      memory: "1Gi"
+      memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512Mi"
 store_gateway:
   replicas: 2
   nodeSelector: *metricsHotSelector
@@ -107,20 +107,20 @@ store_gateway:
   resources:
     requests:
       cpu: "500m"
-      memory: "1Gi"
+      memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512Mi"
 compactor:
   replicas: 2
   nodeSelector: *metricsHotSelector
   resources:
     requests:
       cpu: "500m"
-      memory: "1Gi"
+      memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512Mi"
 alertmanager:
   nodeSelector: *metricsHotSelector
 nginx:
@@ -136,10 +136,10 @@ ruler:
   resources:
     requests:
       cpu: "500m"
-      memory: "1Gi"
+      memory: "512Mi"
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "500m"
+      memory: "512Mi"
   readinessProbe:
     httpGet:
       path: /ready
