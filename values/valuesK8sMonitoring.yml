@@ -62,7 +62,7 @@ alloy-metrics:
   enabled: true
 
 alloy-logs:
-  enabled: false
+  enabled: true
   alloy:
     mounts:
       varlog: false
