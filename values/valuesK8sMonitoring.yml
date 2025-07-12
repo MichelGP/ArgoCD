@@ -17,10 +17,10 @@ destinations:
     logs:
       enabled: true
     traces:
-      enabled: true
+      enabled: false
       processors:
         tailSampling:
-          enabled: true
+          enabled: false
 
 clusterEvents:
   enabled: true
@@ -29,10 +29,6 @@ clusterEvents:
     - loki
     - mimir
     - tempo
-    - quickpizza
-    - pyroscope
-    - grafana
-    - alloy-external
 
 nodeLogs:
   enabled: false
@@ -58,10 +54,6 @@ podLogs:
     - loki
     - mimir
     - tempo
-    - quickpizza
-    - pyroscope
-    - grafana
-    - alloy-external
 
 alloy-singleton:
   enabled: true
@@ -70,7 +62,7 @@ alloy-metrics:
   enabled: true
 
 alloy-logs:
-  enabled: true
+  enabled: false
   alloy:
     mounts:
       varlog: false
@@ -80,9 +72,11 @@ alloy-logs:
 
 clusterMetrics:
   enabled: true
+clusterEvents:
+  enabled: true
 
 alloy-receiver:
-  enabled: true
+  enabled: false
   alloy:
     receiver:
       otlp:
@@ -95,7 +89,7 @@ alloy-receiver:
         insecure: true
 
 applicationObservability:
-  enabled: true
+  enabled: false
   receivers:
     otlp:
       grpc:
