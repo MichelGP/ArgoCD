@@ -58,7 +58,7 @@ distributor:
       memory: "512Mi"
     limits:
       cpu: "500m"
-      memory: "512mi"
+      memory: "512Mi"
 ingester:
   zoneAwareReplication:
     enabled: false
@@ -83,10 +83,10 @@ querier:
   resources:
     requests:
       cpu: "500m"
-      memory: "500mi"
+      memory: "500Mi"
     limits:
       cpu: "500m"
-      memory: "500mi"
+      memory: "500Mi"
 query_frontend:
   replicas: 2
   nodeSelector: *queryCpuSelector
