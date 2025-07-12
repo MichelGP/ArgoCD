@@ -57,12 +57,33 @@ podLogs:
 
 alloy-singleton:
   enabled: true
+  resources:
+    requests:
+      cpu:  "150m"
+      memory: "256Mi"
+    limits:
+      cpu:  "500m"
+      memory: "256Mi"
 
 alloy-metrics:
   enabled: true
+  resources:
+    requests:
+      cpu:  "150m"
+      memory: "256Mi"
+    limits:
+      cpu:  "500m"
+      memory: "256Mi"
 
 alloy-logs:
   enabled: true
+  resources:
+    requests:
+      cpu:  "150m"
+      memory: "256Mi"
+    limits:
+      cpu:  "500m"
+      memory: "256Mi"
   alloy:
     mounts:
       varlog: false
@@ -77,6 +98,13 @@ clusterEvents:
 
 alloy-receiver:
   enabled: false
+  resources:
+    requests:
+      cpu:  "150m"
+      memory: "256Mi"
+    limits:
+      cpu:  "500m"
+      memory: "256Mi"
   alloy:
     receiver:
       otlp:
@@ -102,5 +130,12 @@ annotationAutodiscovery:
 
 alloy-profiles:
   enabled: false
+  resources:
+    requests:
+      cpu:  "150m"
+      memory: "256Mi"
+    limits:
+      cpu:  "500m"
+      memory: "256Mi"
 
 extraConfig: |
