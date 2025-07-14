@@ -59,31 +59,31 @@ alloy-singleton:
   enabled: true
   resources:
     requests:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
     limits:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
 
 alloy-metrics:
   enabled: true
   resources:
     requests:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
     limits:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
 
 alloy-logs:
   enabled: true
   resources:
     requests:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
     limits:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
   alloy:
     mounts:
       varlog: false
@@ -100,11 +100,11 @@ alloy-receiver:
   enabled: false
   resources:
     requests:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
     limits:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
   alloy:
     receiver:
       otlp:
@@ -132,10 +132,10 @@ alloy-profiles:
   enabled: false
   resources:
     requests:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
     limits:
-      cpu:  "150m"
-      memory: "256Mi"
+      cpu:  "80m"
+      memory: "128Mi"
 
 extraConfig: |
