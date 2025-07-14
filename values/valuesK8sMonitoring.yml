@@ -34,7 +34,7 @@ nodeLogs:
   enabled: false
 
 podLogs:
-  enabled: true
+  enabled: false
   gatherMethod: kubernetesApi
   collector: alloy-logs
   labelsToKeep:
