@@ -34,6 +34,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: juicefs-s3
   resources:
     requests:
       storage: 5Gi
