@@ -94,7 +94,7 @@ ingester:
         size: "10Gi"
         storageClass: juicefs-s3
 querier:
-  replicas: 2
+  replicas: 1
   maxUnavailable: 1
   nodeSelector: *queryCpuSelector
   resources:
@@ -106,7 +106,7 @@ querier:
       memory: "1Gi"
 
 queryFrontend:
-  replicas: 2
+  replicas: 1
   maxUnavailable: 1
   nodeSelector: *queryCpuSelector
   resources:
@@ -118,7 +118,7 @@ queryFrontend:
       memory: "512Mi"
 
 queryScheduler:
-  replicas: 2
+  replicas: 1
   nodeSelector: *logsIngestSelector
   resources:
     requests:
@@ -129,8 +129,8 @@ queryScheduler:
       memory: "512Mi"
 
 distributor:
-  replicas: 2
-  maxUnavailable: 2
+  replicas: 1
+  maxUnavailable: 1
   nodeSelector: *logsIngestSelector
   resources:
     requests:
@@ -141,7 +141,7 @@ distributor:
       memory: "512Mi"
 
 compactor:
-  replicas: 2
+  replicas: 1
   nodeSelector: *logsIngestSelector
   resources:
     requests:
@@ -152,7 +152,7 @@ compactor:
       memory: "512Mi"
 
 indexGateway:
-  replicas: 2
+  replicas: 1
   maxUnavailable: 1
   nodeSelector: *logsIngestSelector
   resources:
