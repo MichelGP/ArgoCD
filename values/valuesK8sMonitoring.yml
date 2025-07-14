@@ -90,7 +90,6 @@ alloy-metrics:
 
 alloy-logs:
   enabled: true
-  nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu:  "80m"
@@ -99,6 +98,7 @@ alloy-logs:
       cpu:  "80m"
       memory: "128Mi"
   alloy:
+    nodeSelector: *logsIngestSelector
     stabilityLevel: public-preview
     mounts:
       varlog: false
