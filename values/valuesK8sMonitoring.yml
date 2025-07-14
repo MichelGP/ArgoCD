@@ -34,7 +34,6 @@ nodeLogs:
 podLogs:
   enabled: true
   gatherMethod: filelog
-  stabilityLevel: public-preview
   collector: alloy-logs
   labelsToKeep:
     - app_kubernetes_io_name
@@ -82,6 +81,7 @@ alloy-logs:
       cpu:  "80m"
       memory: "128Mi"
   alloy:
+    stabilityLevel: public-preview
     mounts:
       varlog: false
       dockercontainers: false
