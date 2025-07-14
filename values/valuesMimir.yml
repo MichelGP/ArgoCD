@@ -50,7 +50,7 @@ minio:
   enabled: false
   
 distributor:
-  replicas: 2
+  replicas: 1
   nodeSelector: *metricsHotSelector
   resources:
     requests:
@@ -78,7 +78,7 @@ ingester:
     size: 10Gi
     storageClassName: "juicefs-s3"
 querier:
-  replicas: 2
+  replicas: 1
   nodeSelector: *queryCpuSelector
   resources:
     requests:
@@ -88,7 +88,7 @@ querier:
       cpu: "500m"
       memory: "500Mi"
 query_frontend:
-  replicas: 2
+  replicas: 1
   nodeSelector: *queryCpuSelector
   config:
     multitenancy_enabled: true
@@ -100,7 +100,7 @@ query_frontend:
       cpu: "500m"
       memory: "512Mi"
 store_gateway:
-  replicas: 2
+  replicas: 1
   nodeSelector: *metricsHotSelector
   zoneAwareReplication:
     enabled: false
@@ -131,7 +131,7 @@ query_scheduler:
   replicas: 1
   nodeSelector: *queryCpuSelector
 ruler:
-  replicas: 2
+  replicas: 1
   nodeSelector: *metricsHotSelector
   resources:
     requests:
