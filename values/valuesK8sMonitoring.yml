@@ -62,7 +62,7 @@ alloy-singleton:
       cpu:  "150m"
       memory: "256Mi"
     limits:
-      cpu:  "500m"
+      cpu:  "150m"
       memory: "256Mi"
 
 alloy-metrics:
@@ -72,7 +72,7 @@ alloy-metrics:
       cpu:  "150m"
       memory: "256Mi"
     limits:
-      cpu:  "500m"
+      cpu:  "150m"
       memory: "256Mi"
 
 alloy-logs:
@@ -82,7 +82,7 @@ alloy-logs:
       cpu:  "150m"
       memory: "256Mi"
     limits:
-      cpu:  "500m"
+      cpu:  "150m"
       memory: "256Mi"
   alloy:
     mounts:
@@ -103,7 +103,7 @@ alloy-receiver:
       cpu:  "150m"
       memory: "256Mi"
     limits:
-      cpu:  "500m"
+      cpu:  "150m"
       memory: "256Mi"
   alloy:
     receiver:
@@ -135,7 +135,7 @@ alloy-profiles:
       cpu:  "150m"
       memory: "256Mi"
     limits:
-      cpu:  "500m"
+      cpu:  "150m"
       memory: "256Mi"
 
 extraConfig: |

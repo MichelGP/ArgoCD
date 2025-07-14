@@ -112,7 +112,7 @@ store_gateway:
       cpu: "500m"
       memory: "512Mi"
 compactor:
-  replicas: 2
+  replicas: 1
   nodeSelector: *metricsHotSelector
   resources:
     requests:
