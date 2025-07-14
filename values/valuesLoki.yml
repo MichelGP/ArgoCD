@@ -189,9 +189,23 @@ gateway:
 
 resultsCache:
   nodeSelector: *queryCpuSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
   
 chunksCache:
   nodeSelector: *queryCpuSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
 
 canary:
   enabled: false
