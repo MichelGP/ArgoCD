@@ -28,7 +28,7 @@ tempo:
         insecure:      true
         forcepathstyle: true
 distributor:
-  replicas: 2
+  replicas: 1
   nodeSelector: *tracesHotSelector
   resources:
     requests:
@@ -38,7 +38,7 @@ distributor:
       cpu: "500m"
       memory: "512Mi"
 ingester:
-  replicas: 2
+  replicas: 1
   nodeSelector: *tracesHotSelector
   resources:
     requests:
@@ -52,7 +52,7 @@ ingester:
     size: 10Gi
     storageClass: standard
 querier:
-  replicas: 2
+  replicas: 1
   nodeSelector: *queryCpuSelector
   resources:
     requests:
@@ -62,7 +62,7 @@ querier:
       cpu: "500m"
       memory: "512Mi"
 queryFrontend:
-  replicas: 2
+  replicas: 1
   nodeSelector: *queryCpuSelector
   resources:
     requests:
