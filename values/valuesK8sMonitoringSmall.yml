@@ -11,8 +11,12 @@ clusterEvents:
   enabled: true
   collector: alloy-logs
   namespaces:
-    - meta
-    - prod
+    - loki
+    - grafana
+    - mysql-grafana
+    - minio
+    - redis
+    - argocd
 
 nodeLogs:
   enabled: false
@@ -25,8 +29,12 @@ podLogs:
   structuredMetadata:
     pod: pod  # Set structured metadata "pod" from label "pod"
   namespaces:
-    - meta
-    - prod
+    - loki
+    - grafana
+    - mysql-grafana
+    - minio
+    - redis
+    - argocd
 
 # Collectors
 alloy-singleton:
