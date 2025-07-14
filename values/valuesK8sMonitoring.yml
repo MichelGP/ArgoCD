@@ -27,15 +27,13 @@ clusterEvents:
   collector: alloy-logs
   namespaces:
     - loki
-    - mimir
-    - tempo
 
 nodeLogs:
   enabled: false
 
 podLogs:
-  enabled: false
-  gatherMethod: kubernetesApi
+  enabled: true
+  gatherMethod: filelog
   collector: alloy-logs
   labelsToKeep:
     - app_kubernetes_io_name
@@ -52,8 +50,6 @@ podLogs:
     pod: pod
   namespaces:
     - loki
-    - mimir
-    - tempo
 
 alloy-singleton:
   enabled: true
