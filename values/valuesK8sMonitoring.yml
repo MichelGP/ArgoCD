@@ -1,3 +1,19 @@
+nodePools:
+  controlPlane: &controlPlaneSelector
+    node-role.kubernetes.io/control-plane: "true"
+  logsIngest: &logsIngestSelector
+    logs: "ingest"
+  metricsHot: &metricsHotSelector
+    metrics: "hot"
+  tracesHot: &tracesHotSelector
+    traces: "hot"
+  queryCpu: &queryCpuSelector
+    query: "cpu"
+  general: &generalSelector
+    general: "true"
+  tierMinio: &minioSelector
+    tier: "minio"
+
 cluster:
   name: k8s-lgtm
 
@@ -63,6 +79,7 @@ alloy-singleton:
 
 alloy-metrics:
   enabled: true
+  tierMinio: &minioSelector
   resources:
     requests:
       cpu:  "80m"
@@ -73,6 +90,7 @@ alloy-metrics:
 
 alloy-logs:
   enabled: true
+  tierMinio: &minioSelector
   resources:
     requests:
       cpu:  "80m"
