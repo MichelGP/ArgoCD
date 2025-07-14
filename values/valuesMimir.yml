@@ -123,6 +123,13 @@ compactor:
       memory: "512Mi"
 alertmanager:
   nodeSelector: *metricsHotSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
 nginx:
   enabled: true
   replicas: 1
@@ -130,6 +137,13 @@ nginx:
 query_scheduler:
   replicas: 1
   nodeSelector: *queryCpuSelector
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
 ruler:
   replicas: 1
   nodeSelector: *metricsHotSelector
