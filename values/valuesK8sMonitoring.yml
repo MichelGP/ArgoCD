@@ -79,7 +79,7 @@ alloy-singleton:
 
 alloy-metrics:
   enabled: true
-  tierMinio: &minioSelector
+  nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu:  "80m"
@@ -90,7 +90,7 @@ alloy-metrics:
 
 alloy-logs:
   enabled: true
-  tierMinio: &minioSelector
+  nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu:  "80m"
