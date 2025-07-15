@@ -27,7 +27,7 @@ clusterEvents:
   collector: alloy-logs
 
 nodeLogs:
-  enabled: false
+  enabled: true
 
 podLogs:
   enabled: true

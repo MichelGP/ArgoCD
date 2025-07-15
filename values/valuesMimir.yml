@@ -55,10 +55,10 @@ distributor:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 ingester:
   zoneAwareReplication:
     enabled: false
@@ -67,10 +67,10 @@ ingester:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
   persistence:
     enabled: true
     accessModes:
@@ -83,10 +83,10 @@ querier:
   resources:
     requests:
       cpu: "500m"
-      memory: "500Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "500Mi"
+      memory: "256Mi"
 query_frontend:
   replicas: 1
   nodeSelector: *queryCpuSelector
@@ -95,10 +95,10 @@ query_frontend:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 store_gateway:
   replicas: 1
   nodeSelector: *metricsHotSelector
@@ -107,29 +107,29 @@ store_gateway:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 compactor:
   replicas: 1
   nodeSelector: *metricsHotSelector
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 alertmanager:
   nodeSelector: *metricsHotSelector
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 nginx:
   enabled: true
   replicas: 1
@@ -140,20 +140,20 @@ query_scheduler:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 ruler:
   replicas: 1
   nodeSelector: *metricsHotSelector
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
   readinessProbe:
     httpGet:
       path: /ready

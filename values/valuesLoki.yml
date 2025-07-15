@@ -79,10 +79,10 @@ ingester:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
   persistence:
     enabled: true
     inMemory: false
@@ -100,10 +100,10 @@ querier:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 
 queryFrontend:
   replicas: 1
@@ -112,10 +112,10 @@ queryFrontend:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 
 queryScheduler:
   replicas: 1
@@ -123,10 +123,10 @@ queryScheduler:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 
 distributor:
   replicas: 1
@@ -135,10 +135,10 @@ distributor:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 
 compactor:
   replicas: 1
@@ -146,10 +146,10 @@ compactor:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
-      cpu: "1"
-      memory: "512Mi"
+      cpu: "500m"
+      memory: "256Mi"
 
 indexGateway:
   replicas: 1
@@ -158,10 +158,10 @@ indexGateway:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 
 # Experimental bloom components
 bloomPlanner:
@@ -192,20 +192,20 @@ resultsCache:
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
   
 chunksCache:
   nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "512Mi"
+      memory: "256Mi"
 
 canary:
   enabled: false
