@@ -40,40 +40,44 @@ pyroscope:
     querier:
       kind: Deployment
       nodeSelector: *queryCpuSelector
-      replicaCount: 2
+      replicaCount: 1
       resources:
         limits:
-          memory: 512Mi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
     query-frontend:
       kind: Deployment
       nodeSelector: *queryCpuSelector
-      replicaCount: 2
+      replicaCount: 1
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
-          cpu: 100m
+          cpu: 500m
     query-scheduler:
       kind: Deployment
       nodeSelector: *queryCpuSelector
       replicaCount: 1
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
     distributor:
       kind: Deployment
       nodeSelector: *metricsHotSelector
-      replicaCount: 2
+      replicaCount: 1
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
@@ -84,7 +88,8 @@ pyroscope:
       terminationGracePeriodSeconds: 600
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
@@ -97,7 +102,8 @@ pyroscope:
         enabled: false
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
@@ -111,7 +117,8 @@ pyroscope:
         enabled: false
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
@@ -127,7 +134,8 @@ pyroscope:
       replicaCount: 1
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
@@ -136,7 +144,8 @@ pyroscope:
       replicaCount: 1
       resources:
         limits:
-          memory: 1Gi
+          memory: 256Mi
+          cpu: 500m
         requests:
           memory: 256Mi
           cpu: 500m
