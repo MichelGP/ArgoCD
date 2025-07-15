@@ -31,7 +31,7 @@ nodeLogs:
 
 podLogs:
   enabled: true
-  gatherMethod: kubernetesApi
+  gatherMethod: filelog
   collector: alloy-logs
   labelsToKeep:
     - app_kubernetes_io_name
