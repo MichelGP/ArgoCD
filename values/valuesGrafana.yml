@@ -20,7 +20,7 @@ image:
   tag: "latest"
   pullPolicy: IfNotPresent
 
-replicas: 3
+replicas: 2
 
 nodeSelector: *generalSelector
 
