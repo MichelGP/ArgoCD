@@ -208,4 +208,5 @@ chunksCache:
       memory: "256Mi"
 
 lokiCanary:
-  enabled: false
+  enabled: true
+  kind: Deployment
