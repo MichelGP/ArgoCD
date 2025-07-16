@@ -70,7 +70,7 @@ clusterEvents:
   enabled: true
 
 alloy-receiver:
-  enabled: false
+  enabled: true
 
 applicationObservability:
   enabled: true
