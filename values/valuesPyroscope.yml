@@ -84,7 +84,7 @@ pyroscope:
     ingester:
       kind: StatefulSet
       nodeSelector: *metricsHotSelector
-      replicaCount: 2
+      replicaCount: 1
       terminationGracePeriodSeconds: 600
       resources:
         limits:
@@ -110,7 +110,7 @@ pyroscope:
     store-gateway:
       kind: StatefulSet
       nodeSelector: *metricsHotSelector
-      replicaCount: 2
+      replicaCount: 1
       persistence:
         # The store-gateway needs not need persistent storage, but we still run it as a StatefulSet
         # This is to avoid having blocks of data being
