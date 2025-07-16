@@ -209,4 +209,4 @@ chunksCache:
 
 lokiCanary:
   enabled: true
-  kind: Deployment
+  nodeSelector: *queryCpuSelector
