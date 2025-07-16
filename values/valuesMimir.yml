@@ -42,12 +42,6 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: mimir-ruler
-    ingester:
-      ring:
-        replication_factor: 1
-    store_gateway:
-      sharding_ring:
-        replication_factor: 1
    
 minio:
   enabled: false
@@ -81,7 +75,7 @@ ingester:
     size: 10Gi
     storageClassName: "juicefs-s3"
 querier:
-  replicas: 1
+  replicas: 2
   nodeSelector: *queryCpuSelector
   resources:
     requests:
@@ -91,7 +85,7 @@ querier:
       cpu: "500m"
       memory: "256Mi"
 query_frontend:
-  replicas: 1
+  replicas: 2
   nodeSelector: *queryCpuSelector
   config:
     multitenancy_enabled: true

@@ -94,7 +94,7 @@ ingester:
         size: "10Gi"
         storageClass: juicefs-s3
 querier:
-  replicas: 1
+  replicas: 2
   maxUnavailable: 1
   nodeSelector: *queryCpuSelector
   resources:
@@ -106,7 +106,7 @@ querier:
       memory: "256Mi"
 
 queryFrontend:
-  replicas: 1
+  replicas: 2
   maxUnavailable: 1
   nodeSelector: *queryCpuSelector
   resources:
