@@ -70,10 +70,10 @@ clusterEvents:
   enabled: true
 
 alloy-receiver:
-  enabled: true
+  enabled: false
 
 applicationObservability:
-  enabled: false
+  enabled: true
   receivers:
     otlp:
       grpc:
