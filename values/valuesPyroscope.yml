@@ -84,7 +84,7 @@ pyroscope:
     ingester:
       kind: StatefulSet
       nodeSelector: *metricsHotSelector
-      replicaCount: 1
+      replicaCount: 2
       terminationGracePeriodSeconds: 600
       resources:
         limits:
