@@ -74,7 +74,7 @@ ingester:
   zoneAwareReplication:
     enabled: false
   nodeSelector: *logsIngestSelector
-  replicas: 2
+  replicas: 1
   maxUnavailable: 1
   resources:
     requests:
@@ -207,5 +207,5 @@ chunksCache:
       cpu: "500m"
       memory: "256Mi"
 
-canary:
+lokiCanary:
   enabled: false
