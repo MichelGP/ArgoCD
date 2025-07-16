@@ -62,7 +62,7 @@ distributor:
 ingester:
   zoneAwareReplication:
     enabled: false
-  replicas: 2
+  replicas: 1
   nodeSelector: *metricsHotSelector
   resources:
     requests:
