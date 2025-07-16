@@ -17,7 +17,7 @@ destinations:
     logs:
       enabled: true
     traces:
-      enabled: true
+      enabled: false
       processors:
         tailSampling:
           enabled: false
@@ -70,10 +70,10 @@ clusterEvents:
   enabled: true
 
 alloy-receiver:
-  enabled: true
+  enabled: false
 
 applicationObservability:
-  enabled: true
+  enabled: false
   receivers:
     otlp:
       grpc:
