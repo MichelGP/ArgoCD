@@ -62,7 +62,7 @@ pyroscope:
     query-scheduler:
       kind: Deployment
       nodeSelector: *queryCpuSelector
-      replicaCount: 1
+      replicaCount: 2
       resources:
         limits:
           memory: 256Mi
@@ -73,7 +73,7 @@ pyroscope:
     distributor:
       kind: Deployment
       nodeSelector: *metricsHotSelector
-      replicaCount: 1
+      replicaCount: 2
       resources:
         limits:
           memory: 256Mi
@@ -110,7 +110,7 @@ pyroscope:
     store-gateway:
       kind: StatefulSet
       nodeSelector: *metricsHotSelector
-      replicaCount: 1
+      replicaCount: 2
       persistence:
         # The store-gateway needs not need persistent storage, but we still run it as a StatefulSet
         # This is to avoid having blocks of data being
@@ -131,7 +131,7 @@ pyroscope:
         initialDelaySeconds: 60
     tenant-settings:
       kind: Deployment
-      replicaCount: 1
+      replicaCount: 2
       resources:
         limits:
           memory: 256Mi
@@ -141,7 +141,7 @@ pyroscope:
           cpu: 500m
     ad-hoc-profiles:
       kind: Deployment
-      replicaCount: 1
+      replicaCount: 2
       resources:
         limits:
           memory: 256Mi
