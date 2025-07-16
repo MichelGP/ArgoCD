@@ -17,7 +17,7 @@ destinations:
     logs:
       enabled: true
     traces:
-      enabled: false
+      enabled: true
       processors:
         tailSampling:
           enabled: false
