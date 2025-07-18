@@ -33,7 +33,7 @@ data:
       }
     }
 
-    otelcol.exporter.otlphttp "tempo" {
+    otelcol.exporter.otlphttp "mimir" {
       client {
         endpoint = "http://mimir.local:4318"
       }
