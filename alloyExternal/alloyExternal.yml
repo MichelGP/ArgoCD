@@ -95,7 +95,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: alloy-app
+    app: alloy
   ports:
     - name: otlp-grpc
       protocol: TCP
@@ -106,11 +106,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: alloy-external-ingress
-  namespace: cilium-cni
+  namespace: alloy-external
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
 spec:
-  ingressClassName: cilium
+  ingressClassName: nginx
   rules:
     - host: otlp.local
       http:
