@@ -112,6 +112,7 @@ metadata:
   namespace: alloy-external
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    nginx.ingress.kubernetes.io/proxy-http-version: "2"
 spec:
   ingressClassName: nginx
   rules:
