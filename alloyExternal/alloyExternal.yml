@@ -27,9 +27,15 @@ data:
 
     otelcol.processor.batch "default" {
       output {
-        metrics = [otelcol.exporter.otlp.mimir.input]
-        logs    = [otelcol.exporter.otlp.loki.input]
-        traces  = [otelcol.exporter.otlp.tempo.input]
+        metrics = [otelcol.exporter.otlphttp.mimir.input]
+        logs    = [otelcol.exporter.otlphttp.loki.input]
+        traces  = [otelcol.exporter.otlphttp.tempo.input]
+      }
+    }
+
+    otelcol.exporter.otlphttp "tempo" {
+      client {
+        endpoint = "http://mimir.local:4318"
       }
     }
 
