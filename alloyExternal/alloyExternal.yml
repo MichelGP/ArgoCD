@@ -34,7 +34,7 @@ data:
     }
 
     otelcol.exporter.otlp "mimir" {
-      client { endpoint = "http://mimir.local/otlp" }
+      client { endpoint = "http://mimir-nginx.mimir.svc:80/otlp" }
     }
     otelcol.exporter.otlp "loki" {
       client { endpoint = "http://loki-gateway.loki.svc.cluster.local:3100/otlp" }
