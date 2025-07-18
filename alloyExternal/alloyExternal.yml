@@ -33,14 +33,16 @@ data:
       }
     }
 
-    otelcol.exporter.otlp "mimir" {
-      client { endpoint = "http://mimir-nginx.mimir.svc:80/otlp" }
+    otelcol.exporter.otlphttp "loki" {
+      client {
+        endpoint = "http://loki-gateway.loki.svc.cluster.local:3100/otlp"
+      }
     }
-    otelcol.exporter.otlp "loki" {
-      client { endpoint = "http://loki-gateway.loki.svc.cluster.local:3100/otlp" }
-    }
-    otelcol.exporter.otlp "tempo" {
-      client { endpoint = "http://tempo.local:4318" }
+
+    otelcol.exporter.otlphttp "tempo" {
+      client {
+        endpoint = "http://tempo.local:4318"
+      }
     }
 ---
 apiVersion: apps/v1
@@ -112,7 +114,6 @@ metadata:
   namespace: alloy-external
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
-    nginx.ingress.kubernetes.io/use-http2: "true"
 spec:
   ingressClassName: nginx
   rules:
