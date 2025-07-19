@@ -98,10 +98,8 @@ kind: Ingress
 metadata:
   name: alloy-external-ingress
   namespace: alloy-external
-  annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
 spec:
-  ingressClassName: nginx
+  ingressClassName: cilium
   rules:
     - host: otlp.local
       http:
