@@ -112,4 +112,4 @@ spec:
               service:
                 name: alloy-service
                 port:
-                  number: 4317
+                  name: otlp-grpc
