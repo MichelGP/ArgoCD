@@ -55,8 +55,10 @@ spec:
             - "run"
             - "/etc/alloy/alloy.hcl"
           ports:
-            - name: grpc-4317
+            - name: otlp-grpc
               containerPort: 4317
+            - name: otlp-http
+              containerPort: 4318
           volumeMounts:
             - name: config
               mountPath: /etc/alloy
@@ -86,7 +88,10 @@ spec:
   ports:
     - name: otlp-grpc
       port: 4317
-      targetPort: grpc-4317
+      targetPort: otlp-grpc
+    - name: otlp-http
+      port: 4318
+      targetPort: otlp-http
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -98,7 +103,7 @@ metadata:
 spec:
   ingressClassName: cilium
   rules:
-    - host: oltp.local
+    - host: otlp.local
       http:
         paths:
           - path: /
