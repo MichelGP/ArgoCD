@@ -116,4 +116,4 @@ spec:
   rules:
     - backendRefs:
         - name: alloy-service
-          port: grpc-otlp
+          port: 4317
