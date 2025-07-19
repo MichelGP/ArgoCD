@@ -15,35 +15,19 @@ data:
       grpc {}
 
       output {
-        metrics = [otelcol.processor.batch.default.input]
         logs    = [otelcol.processor.batch.default.input]
-        traces  = [otelcol.processor.batch.default.input]
       }
     }
 
     otelcol.processor.batch "default" {
       output {
-        metrics = [otelcol.exporter.otlp.mimir.input]
-        logs    = [otelcol.exporter.otlp.loki.input]
-        traces  = [otelcol.exporter.otlp.tempo.input]
+        logs    = [otelcol.exporter.otlphttp.loki.input]
       }
     }
 
-    otelcol.exporter.otlp "mimir" {
+    otelcol.exporter.otlphttp "loki" {
       client {
-        endpoint = "http://mimir.local/otlp"
-      }
-    }
-
-    otelcol.exporter.otlp "loki" {
-      client {
-        endpoint = "http://loki.local:3100/otlp"
-      }
-    }
-
-    otelcol.exporter.otlp "tempo" {
-      client {
-        endpoint = "http://tempo.local:4318"
+        endpoint = "http://loki-distributor:3100/otlp"
       }
     }
 ---
