@@ -82,7 +82,7 @@ metadata:
   name: alloy-service
   namespace: alloy-external
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: alloy
   ports:
@@ -92,22 +92,3 @@ spec:
     - name: http2-otlp
       port: 4318
       targetPort: http2-otlp
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: alloy-external-ingress
-  namespace: alloy-external
-spec:
-  ingressClassName: cilium
-  rules:
-    - host: otlp.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: alloy-service
-                port:
-                  name: grpc-otlp
