@@ -82,7 +82,7 @@ metadata:
   name: alloy-service
   namespace: alloy-external
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: alloy
   ports:
@@ -92,3 +92,28 @@ spec:
     - name: http2-otlp
       port: 4318
       targetPort: http2-otlp
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: otlp-gateway
+  namespace: alloy-external
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - name: grpc
+      protocol: TCP
+      port: 4317
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: otlp-grpc-route
+  namespace: alloy-external
+spec:
+  parentRefs:
+    - name: otlp-gateway
+  rules:
+    - backendRefs:
+        - name: alloy-service
+          port: grpc-otlp
