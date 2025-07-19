@@ -98,10 +98,12 @@ kind: Ingress
 metadata:
   name: alloy-external-ingress
   namespace: alloy-external
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: cilium
   rules:
-    - host: otlp.local
+    - host: oltp.local
       http:
         paths:
           - path: /
