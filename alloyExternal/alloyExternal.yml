@@ -1,135 +1,37 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: alloy-external
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: alloy-config
-  namespace: alloy-external
-data:
-  alloy.hcl: |
-    otelcol.receiver.otlp "receiver" {
-      grpc {
-        endpoint = "0.0.0.0:4317"
-      }
-      http {
-        endpoint = "0.0.0.0:4318"
-      }
+otelcol.receiver.otlp "receiver" {
+  http {}
+  grpc {}
 
-      output {
-        metrics = [otelcol.processor.batch.default.input]
-        logs    = [otelcol.processor.batch.default.input]
-        traces  = [otelcol.processor.batch.default.input]
-      }
-    }
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
 
-    otelcol.processor.batch "default" {
-      output {
-        metrics = [otelcol.exporter.otlphttp.mimir.input]
-        logs    = [otelcol.exporter.otlphttp.loki.input]
-        traces  = [otelcol.exporter.otlphttp.tempo.input]
-      }
-    }
+otelcol.processor.batch "default" {
+  output {
+    metrics = [otelcol.exporter.otlp.mimir.input]
+    logs    = [otelcol.exporter.otlp.loki.input]
+    traces  = [otelcol.exporter.otlp.tempo.input]
+  }
+}
 
-    otelcol.exporter.otlphttp "mimir" {
-      client {
-        endpoint = "http://mimir.local:4318"
-      }
-    }
 
-    otelcol.exporter.otlphttp "loki" {
-      client {
-        endpoint = "http://loki-gateway.loki.svc.cluster.local:3100/otlp"
-      }
-    }
+otelcol.exporter.otlp "mimir" {
+  client {
+    endpoint = "http://mimir.local/otlp"
+  }
+}
 
-    otelcol.exporter.otlphttp "tempo" {
-      client {
-        endpoint = "http://tempo.local:4318"
-      }
-    }
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: alloy-deployment
-  namespace: alloy-external
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: alloy
-  template:
-    metadata:
-      labels:
-        app: alloy
-    spec:
-      nodeSelector:
-        logs: ingest
-      containers:
-        - name: alloy
-          image: grafana/alloy:latest
-          args:
-            - "run"
-            - "/etc/alloy/alloy.hcl"
-          ports:
-            - name: otlp-grpc
-              containerPort: 4317
-            - name: otlp-http
-              containerPort: 4318
-          volumeMounts:
-            - name: config
-              mountPath: /etc/alloy
-              readOnly: true
-          # optional probes
-          livenessProbe:
-            tcpSocket: { port: 4317 }
-            initialDelaySeconds: 10
-            periodSeconds: 20
-      volumes:
-        - name: config
-          configMap:
-            name: alloy-config
-            items:
-              - key: alloy.hcl
-                path: alloy.hcl
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: alloy-service
-  namespace: alloy-external
-spec:
-  type: ClusterIP
-  selector:
-    app: alloy
-  ports:
-    - name: otlp-grpc
-      port: 4317
-      targetPort: otlp-grpc
-    - name: otlp-http
-      port: 4318
-      targetPort: otlp-http
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: alloy-external-ingress
-  namespace: alloy-external
-  annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: otlp.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: alloy-service
-                port:
-                  number: 4317
+otelcol.exporter.otlp "loki" {
+  client {
+    endpoint = "http://loki.local:3100/otlp"
+  }
+}
+
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = "http://tempo.local:4318"
+  }
+}
