@@ -82,7 +82,7 @@ metadata:
   name: alloy-service
   namespace: alloy-external
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: alloy
   ports:
