@@ -1,0 +1,1 @@
+kubectl port-forward svc/alloy-service -n alloy-external 4317:4317
