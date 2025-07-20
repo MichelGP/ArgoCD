@@ -106,11 +106,11 @@ spec:
     port: 4317
     hostname: otlp.local
     allowedRoutes:
-    - kinds:
-      - group: gateway.networking.k8s.io
-        kind: GRPCRoute
       namespaces:
         from: Same
+      kinds:
+      - group: gateway.networking.k8s.io
+        kind: GRPCRoute
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GRPCRoute
