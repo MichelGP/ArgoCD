@@ -102,27 +102,24 @@ spec:
   gatewayClassName: cilium
   listeners:
   - name: alloy-listener
-    protocol: GRPC
+    protocol: HTTP
     port: 4317
-    hostname: otlp.local
     allowedRoutes:
       namespaces:
         from: Same
       kinds:
       - group: gateway.networking.k8s.io
-        kind: GRPCRoute
+        kind: HTTPRoute
 ---
 apiVersion: gateway.networking.k8s.io/v1
-kind: GRPCRoute
+kind: HTTPRoute
 metadata:
-  name: alloy-grpc-route
+  name: alloy-http-route
   namespace: alloy-external
 spec:
   parentRefs:
   - name: alloy-gateway
     sectionName: alloy-listener
-  hostnames:
-  - otlp.local
   rules:
   - backendRefs:
     - name: alloy-service
