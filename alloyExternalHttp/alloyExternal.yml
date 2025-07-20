@@ -17,18 +17,26 @@ data:
 
       output {
         logs    = [otelcol.processor.batch.default.input]
+        metrics = [otelcol.processor.batch.default.input]
       }
     }
 
     otelcol.processor.batch "default" {
       output {
         logs    = [otelcol.exporter.otlphttp.loki.input]
+        metrics = [otelcol.exporter.otlphttp.mimir.input]
       }
     }
 
     otelcol.exporter.otlphttp "loki" {
       client {
         endpoint = "http://loki-distributor.loki.svc.cluster.local:3100/otlp"
+      }
+    }
+
+    otelcol.exporter.otlphttp "mimir" {
+      client {
+        endpoint = "http://mimir-distributor.mimir.svc.cluster.local:8080/otlp"
       }
     }
 ---
