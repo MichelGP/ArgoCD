@@ -109,12 +109,12 @@ spec:
           from: Same
         kinds:
           - group: gateway.networking.k8s.io
-            kind: HTTPRoute
+            kind: GRPCRoute
 ---
 apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+kind: GRPCRoute
 metadata:
-  name: alloy-route
+  name: alloy-grpc-route
   namespace: alloy-external
 spec:
   parentRefs:
