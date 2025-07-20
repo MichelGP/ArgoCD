@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -110,4 +111,4 @@ spec:
               service:
                 name: alloy-service
                 port:
-                  name: otlp-grpc
+                  name: grpc-otlp

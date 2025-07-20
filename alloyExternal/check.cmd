@@ -11,4 +11,6 @@ kubectl get HTTPRoute alloy-http-route --namespace alloy-external
 ECHO ---------------------------
 kubectl describe gateway --namespace alloy-external
 ECHO ---------------------------
+kubectl describe ingress --namespace alloy-external
+ECHO ---------------------------
 pause
