@@ -102,7 +102,7 @@ spec:
   gatewayClassName: cilium
   listeners:
     - name: alloy-listener
-      protocol: grpc
+      protocol: HTTP
       port: 4317
       allowedRoutes:
         namespaces:
