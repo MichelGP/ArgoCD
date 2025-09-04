@@ -84,6 +84,7 @@ spec:
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
+              subPath: data
           # Healthchecks
           readinessProbe:
             exec:
