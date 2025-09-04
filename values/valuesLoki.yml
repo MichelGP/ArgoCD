@@ -89,10 +89,10 @@ ingester:
     claims:
       - name: data
         size: "10Gi"
-        storageClass: juicefs-s3
+        storageClass: nfs-csi
       - name: wal
         size: "10Gi"
-        storageClass: juicefs-s3
+        storageClass: nfs-csi
 querier:
   replicas: 2
   maxUnavailable: 1
