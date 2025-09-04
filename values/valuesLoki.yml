@@ -1,22 +1,6 @@
 # https://github.com/grafana/loki/blob/main/production/helm/loki/distributed-values.yaml
 # for chart: https://github.com/grafana/loki/tree/main/production/helm/loki
 
-nodePools:
-  controlPlane: &controlPlaneSelector
-    node-role.kubernetes.io/control-plane: "true"
-  logsIngest: &logsIngestSelector
-    logs: "ingest"
-  metricsHot: &metricsHotSelector
-    metrics: "hot"
-  tracesHot: &tracesHotSelector
-    traces: "hot"
-  queryCpu: &queryCpuSelector
-    query: "cpu"
-  general: &generalSelector
-    general: "true"
-  tierMinio: &minioSelector
-    tier: "minio"
-
 # Loki runtime config
 loki:
   schemaConfig:
@@ -73,7 +57,6 @@ deploymentMode: Distributed
 ingester:
   zoneAwareReplication:
     enabled: false
-  nodeSelector: *logsIngestSelector
   replicas: 2
   maxUnavailable: 1
   resources:
@@ -96,7 +79,6 @@ ingester:
 querier:
   replicas: 2
   maxUnavailable: 1
-  nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "500m"
@@ -108,7 +90,6 @@ querier:
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
-  nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "500m"
@@ -119,7 +100,6 @@ queryFrontend:
 
 queryScheduler:
   replicas: 1
-  nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "500m"
@@ -131,7 +111,6 @@ queryScheduler:
 distributor:
   replicas: 1
   maxUnavailable: 1
-  nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "500m"
@@ -142,7 +121,6 @@ distributor:
 
 compactor:
   replicas: 1
-  nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "500m"
@@ -154,7 +132,6 @@ compactor:
 indexGateway:
   replicas: 1
   maxUnavailable: 1
-  nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "500m"
@@ -183,12 +160,10 @@ singleBinary:
 
 # Loki Gateway service
 gateway:
-  nodeSelector: *logsIngestSelector
   service:
     type: LoadBalancer
 
 resultsCache:
-  nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "500m"
@@ -198,7 +173,6 @@ resultsCache:
       memory: "256Mi"
   
 chunksCache:
-  nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "500m"
@@ -209,4 +183,3 @@ chunksCache:
 
 lokiCanary:
   enabled: true
-  nodeSelector: *queryCpuSelector
