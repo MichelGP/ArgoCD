@@ -11,7 +11,7 @@ destinations:
   - name: tempo
     type: otlp
     protocol: http
-    url: tempo-distributor.tempo.svc.cluster.local:4317
+    url: tempo-distributor.tempo.svc.cluster.local:4318
     metrics:
       enabled: true
     logs:
@@ -70,7 +70,7 @@ alloy-receiver:
   enabled: false
 
 applicationObservability:
-  enabled: false
+  enabled: true
   receivers:
     otlp:
       grpc:
