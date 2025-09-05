@@ -52,7 +52,6 @@ ingester:
   persistence:
     enabled: true
     size: 10Gi
-    storageClass: standard
 querier:
   replicas: 2
   #nodeSelector: *queryCpuSelector
