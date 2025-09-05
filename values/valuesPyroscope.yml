@@ -44,7 +44,7 @@ pyroscope:
     querier:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
-      replicaCount: 1
+      replicaCount: 2
       resources:
         requests:
           cpu: 100m
@@ -55,7 +55,7 @@ pyroscope:
     query-frontend:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
-      replicaCount: 1
+      replicaCount: 2
       resources:
         requests:
           cpu: 100m
@@ -87,7 +87,7 @@ pyroscope:
     ingester:
       kind: StatefulSet
       #nodeSelector: *metricsHotSelector
-      replicaCount: 1
+      replicaCount: 2
       terminationGracePeriodSeconds: 600
       resources:
         requests:
