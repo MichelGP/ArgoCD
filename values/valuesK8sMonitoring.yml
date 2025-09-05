@@ -18,9 +18,6 @@ destinations:
       enabled: true
     traces:
       enabled: true
-      processors:
-        tailSampling:
-          enabled: false
 
 clusterEvents:
   enabled: true
