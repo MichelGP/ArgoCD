@@ -8,10 +8,10 @@ replicas: 2
 
 resources:
   requests:
-    cpu: "2"
-    memory: "8Gi"
+    cpu: "100m"
+    memory: "1Gi"
   limits:
-    cpu: "2"
+    cpu: "500m"
     memory: "8Gi"
 
 persistence:
