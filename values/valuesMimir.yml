@@ -44,7 +44,7 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: mimir-ruler
-   
+
 minio:
   enabled: false
   
@@ -70,12 +70,12 @@ ingester:
     limits:
       cpu: "500m"
       memory: "256Mi"
-  persistence:
+  persistentVolume:
     enabled: true
     accessModes:
       - ReadWriteOnce
     size: 10Gi
-    storageClassName: "nfs-csi"
+    storageClass: "nfs-csi"
 querier:
   replicas: 2
   #nodeSelector: *queryCpuSelector
