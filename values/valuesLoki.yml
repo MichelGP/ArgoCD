@@ -53,7 +53,7 @@ loki:
       ruler: loki-ruler
       admin: loki-admin
     s3:
-      endpoint: http://minio.minio.svc.cluster.local:9000
+      endpoint: https://minio-tenant-hl.minio-tenant.svc.cluster.local:9000
       accessKeyId: minio
       secretAccessKey: minio123
       s3ForcePathStyle: true
