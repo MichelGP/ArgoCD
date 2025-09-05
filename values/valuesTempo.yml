@@ -30,7 +30,7 @@ tempo:
         http:
           insecure_skip_verify: true
 distributor:
-  replicas: 1
+  replicas: 2
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
@@ -40,7 +40,7 @@ distributor:
       cpu: 200m
       memory: 256Mi
 ingester:
-  replicas: 1
+  replicas: 2
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
@@ -54,7 +54,7 @@ ingester:
     size: 10Gi
     storageClass: standard
 querier:
-  replicas: 1
+  replicas: 2
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
@@ -64,7 +64,7 @@ querier:
       cpu: 200m
       memory: 256Mi
 queryFrontend:
-  replicas: 1
+  replicas: 2
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
