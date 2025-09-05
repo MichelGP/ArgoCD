@@ -58,7 +58,7 @@ alloy-logs:
   alloy:
     stabilityLevel: public-preview
     mounts:
-      varlog: false
+      varlog: true
       dockercontainers: false
     clustering:
       enabled: true
