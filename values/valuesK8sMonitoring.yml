@@ -17,7 +17,7 @@ destinations:
     logs:
       enabled: true
     traces:
-      enabled: false
+      enabled: true
       processors:
         tailSampling:
           enabled: false
@@ -27,7 +27,7 @@ clusterEvents:
   collector: alloy-logs
 
 nodeLogs:
-  enabled: false
+  enabled: true
 
 podLogs:
   enabled: true
@@ -82,6 +82,6 @@ annotationAutodiscovery:
   enabled: false
 
 alloy-profiles:
-  enabled: true
+  enabled: false
 
 extraConfig: |
