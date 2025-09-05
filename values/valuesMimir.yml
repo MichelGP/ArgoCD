@@ -28,11 +28,11 @@ mimir:
         backend: s3
         s3:
           bucket_name: mimir
-          endpoint: minio.minio.svc.cluster.local:9000
+          endpoint: https://minio-tenant-hl.minio-tenant.svc.cluster.local:9000
           region: minio
           access_key_id: minio
           secret_access_key: minio123
-          insecure: true
+          insecure: false
     blocks_storage:
       s3:
         bucket_name: mimir-blocks
@@ -48,10 +48,10 @@ minio:
   
 distributor:
   replicas: 1
-  nodeSelector: *metricsHotSelector
+  #nodeSelector: *metricsHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
@@ -60,10 +60,10 @@ ingester:
   zoneAwareReplication:
     enabled: false
   replicas: 2
-  nodeSelector: *metricsHotSelector
+  #nodeSelector: *metricsHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
@@ -73,56 +73,56 @@ ingester:
     accessModes:
       - ReadWriteOnce
     size: 10Gi
-    storageClassName: "juicefs-s3"
+    storageClassName: "nfs-csi"
 querier:
   replicas: 2
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 query_frontend:
   replicas: 2
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   config:
     multitenancy_enabled: true
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 store_gateway:
   replicas: 1
-  nodeSelector: *metricsHotSelector
+  #nodeSelector: *metricsHotSelector
   zoneAwareReplication:
     enabled: false
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 compactor:
   replicas: 1
-  nodeSelector: *metricsHotSelector
+  #nodeSelector: *metricsHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 alertmanager:
-  nodeSelector: *metricsHotSelector
+  #nodeSelector: *metricsHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
@@ -130,23 +130,23 @@ alertmanager:
 nginx:
   enabled: true
   replicas: 1
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
 query_scheduler:
   replicas: 1
   nodeSelector: *queryCpuSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 ruler:
   replicas: 1
-  nodeSelector: *metricsHotSelector
+  #nodeSelector: *metricsHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
@@ -163,4 +163,4 @@ ruler:
 overrides_exporter:
   enabled: true
   replicas: 1
-  nodeSelector: *generalSelector
+  #nodeSelector: *generalSelector
