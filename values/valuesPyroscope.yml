@@ -39,7 +39,7 @@ pyroscope:
       http:
         insecure_skip_verify: true
   extraArgs:
-    store-gateway.sharding-ring.replication-factor: "2"
+    store-gateway.sharding-ring.replication-factor: "1"
   components:
     querier:
       kind: Deployment
