@@ -34,21 +34,21 @@ distributor:
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
-      cpu: "100m"
-      memory: "256Mi"
+      cpu: 100m
+      memory: 256Mi
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: 200m
+      memory: 256Mi
 ingester:
-  replicas: 2
+  replicas: 1
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
-      cpu: "100m"
-      memory: "256Mi"
+      cpu: 100m
+      memory: 256Mi
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: 200m
+      memory: 256Mi
   persistence:
     enabled: true
     size: 10Gi
@@ -58,31 +58,31 @@ querier:
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
-      cpu: "100m"
-      memory: "256Mi"
+      cpu: 100m
+      memory: 256Mi
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: 200m
+      memory: 256Mi
 queryFrontend:
   replicas: 1
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
-      cpu: "100m"
-      memory: "256Mi"
+      cpu: 100m
+      memory: 256Mi
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: 200m
+      memory: 256Mi
 compactor:
   replicas: 1
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
-      cpu: "100m"
-      memory: "256Mi"
+      cpu: 100m
+      memory: 256Mi
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: 200m
+      memory: 256Mi
 #memcached:
   #nodeSelector: *tracesHotSelector
 metricsGenerator:
