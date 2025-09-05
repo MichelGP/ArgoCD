@@ -20,7 +20,7 @@ pyroscope:
       backend: s3
       s3:
         bucket_name: pyroscope
-        endpoint: minio.minio.svc.cluster.local:9000
+        endpoint: minio-tenant-hl.minio-tenant.svc.cluster.local:9000
         region: minio
         access_key_id: minio
         secret_access_key: minio123
@@ -30,7 +30,7 @@ pyroscope:
   objectStorage:
     backend: s3
     s3:
-      endpoint: minio.minio.svc.cluster.local:9000
+      endpoint: minio-tenant-hl.minio-tenant.svc.cluster.local:9000
       bucket: pyroscope
       region: minio
       access_key_id: minio

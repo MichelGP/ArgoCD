@@ -21,28 +21,30 @@ tempo:
     trace:
       backend: s3
       s3:
-        bucket:        tempo
-        endpoint:      minio.minio.svc.cluster.local:9000
-        access_key:    minio
-        secret_key:    minio123
-        insecure:      true
+        bucket: tempo
+        endpoint: minio-tenant-hl.minio-tenant.svc.cluster.local:9000
+        access_key: minio
+        secret_key: minio123
+        insecure: false
         forcepathstyle: true
+        http:
+          insecure_skip_verify: true
 distributor:
   replicas: 1
-  nodeSelector: *tracesHotSelector
+  #nodeSelector: *tracesHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 ingester:
   replicas: 2
-  nodeSelector: *tracesHotSelector
+  #nodeSelector: *tracesHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
@@ -53,39 +55,39 @@ ingester:
     storageClass: standard
 querier:
   replicas: 1
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 queryFrontend:
   replicas: 1
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 compactor:
   replicas: 1
-  nodeSelector: *tracesHotSelector
+  #nodeSelector: *tracesHotSelector
   resources:
     requests:
-      cpu: "500m"
+      cpu: "100m"
       memory: "256Mi"
     limits:
       cpu: "500m"
       memory: "256Mi"
 memcached:
-  nodeSelector: *tracesHotSelector
+  #nodeSelector: *tracesHotSelector
 metricsGenerator:
   enabled: true
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   config:
     registry:
       collection_interval: 15s
