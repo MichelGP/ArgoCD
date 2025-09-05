@@ -102,7 +102,7 @@ metricsGenerator:
         source: tempo
     storage:
       remote_write:
-        - url: "http://prometheus.monitoring.svc:9090/api/v1/write"
+        - url: "http://mimir-nginx.mimir.svc:80/api/v1/push"
 
 traces:
   otlp:
