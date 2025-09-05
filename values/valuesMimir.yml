@@ -28,11 +28,12 @@ mimir:
         backend: s3
         s3:
           bucket_name: mimir
-          endpoint: minio-tenant-hl.minio-tenant.svc.cluster.local:9000
+          endpoint: https://minio-tenant-hl.minio-tenant.svc.cluster.local:9000
           region: minio
           access_key_id: minio
           secret_access_key: minio123
-          insecure: false
+          s3ForcePathStyle: true
+          insecure: true
     blocks_storage:
       s3:
         bucket_name: mimir-blocks
