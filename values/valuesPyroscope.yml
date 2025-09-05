@@ -24,7 +24,9 @@ pyroscope:
         region: minio
         access_key_id: minio
         secret_access_key: minio123
-        insecure: true
+        insecure: false
+        http:
+          insecure_skip_verify: true
   objectStorage:
     backend: s3
     s3:
@@ -33,69 +35,71 @@ pyroscope:
       region: minio
       access_key_id: minio
       secret_access_key: minio123
-      insecure: true
+      insecure: false
+      http:
+        insecure_skip_verify: true
   extraArgs:
     store-gateway.sharding-ring.replication-factor: "3"
   components:
     querier:
       kind: Deployment
-      nodeSelector: *queryCpuSelector
+      #nodeSelector: *queryCpuSelector
       replicaCount: 2
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
     query-frontend:
       kind: Deployment
-      nodeSelector: *queryCpuSelector
+      #nodeSelector: *queryCpuSelector
       replicaCount: 2
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
     query-scheduler:
       kind: Deployment
-      nodeSelector: *queryCpuSelector
+      #nodeSelector: *queryCpuSelector
       replicaCount: 2
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
     distributor:
       kind: Deployment
-      nodeSelector: *metricsHotSelector
+      #nodeSelector: *metricsHotSelector
       replicaCount: 2
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
     ingester:
       kind: StatefulSet
-      nodeSelector: *metricsHotSelector
+      #nodeSelector: *metricsHotSelector
       replicaCount: 2
       terminationGracePeriodSeconds: 600
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
     compactor:
       kind: StatefulSet
-      nodeSelector: *metricsHotSelector
+      #nodeSelector: *metricsHotSelector
       replicaCount: 1
       terminationGracePeriodSeconds: 1200
       persistence:
@@ -103,13 +107,13 @@ pyroscope:
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
     store-gateway:
       kind: StatefulSet
-      nodeSelector: *metricsHotSelector
+      #nodeSelector: *metricsHotSelector
       replicaCount: 2
       persistence:
         # The store-gateway needs not need persistent storage, but we still run it as a StatefulSet
@@ -118,7 +122,7 @@ pyroscope:
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
@@ -135,7 +139,7 @@ pyroscope:
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m
@@ -145,7 +149,7 @@ pyroscope:
       resources:
         limits:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
         requests:
           memory: 256Mi
           cpu: 500m

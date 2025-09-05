@@ -66,9 +66,6 @@ alloy-logs:
 clusterMetrics:
   enabled: true
 
-clusterEvents:
-  enabled: true
-
 alloy-receiver:
   enabled: false
 
