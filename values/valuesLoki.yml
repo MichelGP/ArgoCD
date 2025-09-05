@@ -73,7 +73,7 @@ deploymentMode: Distributed
 ingester:
   zoneAwareReplication:
     enabled: false
-  nodeSelector: *logsIngestSelector
+  #nodeSelector: *logsIngestSelector
   replicas: 2
   maxUnavailable: 1
   resources:
@@ -96,7 +96,7 @@ ingester:
 querier:
   replicas: 2
   maxUnavailable: 1
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "100m"
@@ -108,7 +108,7 @@ querier:
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "100m"
@@ -119,7 +119,7 @@ queryFrontend:
 
 queryScheduler:
   replicas: 1
-  nodeSelector: *logsIngestSelector
+  #nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "100m"
@@ -131,7 +131,7 @@ queryScheduler:
 distributor:
   replicas: 1
   maxUnavailable: 1
-  nodeSelector: *logsIngestSelector
+  #nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "100m"
@@ -142,7 +142,7 @@ distributor:
 
 compactor:
   replicas: 1
-  nodeSelector: *logsIngestSelector
+  #nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "100m"
@@ -154,7 +154,7 @@ compactor:
 indexGateway:
   replicas: 1
   maxUnavailable: 1
-  nodeSelector: *logsIngestSelector
+  #nodeSelector: *logsIngestSelector
   resources:
     requests:
       cpu: "100m"
@@ -183,12 +183,12 @@ singleBinary:
 
 # Loki Gateway service
 gateway:
-  nodeSelector: *logsIngestSelector
+  #nodeSelector: *logsIngestSelector
   service:
     type: LoadBalancer
 
 resultsCache:
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "100m"
@@ -198,7 +198,7 @@ resultsCache:
       memory: "256Mi"
   
 chunksCache:
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "100m"
@@ -209,4 +209,4 @@ chunksCache:
 
 lokiCanary:
   enabled: true
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
