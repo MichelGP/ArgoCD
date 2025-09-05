@@ -33,6 +33,7 @@ mimir:
           access_key_id: minio
           secret_access_key: minio123
           insecure: false
+          insecure_skip_verify: true
     blocks_storage:
       s3:
         bucket_name: mimir-blocks
