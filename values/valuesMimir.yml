@@ -75,7 +75,6 @@ ingester:
     accessModes:
       - ReadWriteOnce
     size: 10Gi
-    storageClass: "nfs-csi"
 querier:
   replicas: 2
   #nodeSelector: *queryCpuSelector
@@ -135,7 +134,7 @@ nginx:
   #nodeSelector: *queryCpuSelector
 query_scheduler:
   replicas: 1
-  nodeSelector: *queryCpuSelector
+  #nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "100m"
