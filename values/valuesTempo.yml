@@ -83,7 +83,7 @@ compactor:
     limits:
       cpu: "500m"
       memory: "256Mi"
-memcached:
+#memcached:
   #nodeSelector: *tracesHotSelector
 metricsGenerator:
   enabled: true
