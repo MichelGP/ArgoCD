@@ -27,7 +27,7 @@ clusterEvents:
   collector: alloy-logs
 
 nodeLogs:
-  enabled: true
+  enabled: false
 
 podLogs:
   enabled: true
@@ -58,7 +58,7 @@ alloy-logs:
   alloy:
     stabilityLevel: public-preview
     mounts:
-      varlog: true
+      varlog: false
       dockercontainers: false
     clustering:
       enabled: true
