@@ -78,11 +78,11 @@ ingester:
   maxUnavailable: 1
   resources:
     requests:
-      cpu: "100m"
-      memory: "256Mi"
-    limits:
       cpu: "500m"
       memory: "512Mi"
+    limits:
+      cpu: "750m"
+      memory: "1024Mi"
   persistence:
     enabled: true
     inMemory: false
