@@ -58,7 +58,8 @@ loki:
       secretAccessKey: minio123
       s3ForcePathStyle: true
       insecure: false
-      http_config: {}
+      http_config:
+        insecure_skip_verify: true
 
   ingester:
     chunk_encoding: snappy
