@@ -1,5 +1,5 @@
 cluster:
-  name: k8s-lgtm
+  name: kubernetes
 
 destinations:
   - name: loki
