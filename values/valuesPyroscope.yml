@@ -45,13 +45,12 @@ pyroscope:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
       replicaCount: 2
-      resources:
-        requests:
-          memory: 256Mi
-          cpu: 100m
-        limits:
-          memory: 256Mi
-          cpu: 200m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
     query-frontend:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
