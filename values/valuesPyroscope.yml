@@ -46,57 +46,54 @@ pyroscope:
       #nodeSelector: *queryCpuSelector
       replicaCount: 2
       resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
         requests:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
+        limits:
+          memory: 256Mi
+          cpu: 200m
     query-frontend:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
       replicaCount: 2
       resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
         requests:
           memory: 256Mi
-          cpu: 500m
+          cpu: 100m
+        limits:
+          memory: 256Mi
+          cpu: 200m
     query-scheduler:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
       replicaCount: 2
-      resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
-        requests:
-          memory: 256Mi
-          cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
     distributor:
       kind: Deployment
       #nodeSelector: *metricsHotSelector
       replicaCount: 2
-      resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
-        requests:
-          memory: 256Mi
-          cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
     ingester:
       kind: StatefulSet
       #nodeSelector: *metricsHotSelector
       replicaCount: 2
       terminationGracePeriodSeconds: 600
-      resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
-        requests:
-          memory: 256Mi
-          cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
     compactor:
       kind: StatefulSet
       #nodeSelector: *metricsHotSelector
@@ -104,13 +101,12 @@ pyroscope:
       terminationGracePeriodSeconds: 1200
       persistence:
         enabled: false
-      resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
-        requests:
-          memory: 256Mi
-          cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
     store-gateway:
       kind: StatefulSet
       #nodeSelector: *metricsHotSelector
@@ -119,13 +115,12 @@ pyroscope:
         # The store-gateway needs not need persistent storage, but we still run it as a StatefulSet
         # This is to avoid having blocks of data being
         enabled: false
-      resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
-        requests:
-          memory: 256Mi
-          cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
       readinessProbe:
         # The store gateway can be configured to wait on startup for ring stability to be reached before it becomes
         # ready. See the `store-gateway.sharding-ring.wait-stability-min-duration` server argument for more information.
@@ -136,22 +131,20 @@ pyroscope:
     tenant-settings:
       kind: Deployment
       replicaCount: 2
-      resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
-        requests:
-          memory: 256Mi
-          cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
     ad-hoc-profiles:
       kind: Deployment
       replicaCount: 2
-      resources:
-        limits:
-          memory: 256Mi
-          cpu: 100m
-        requests:
-          memory: 256Mi
-          cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
 minio:
   enabled: false
