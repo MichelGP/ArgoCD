@@ -40,7 +40,7 @@ distributor:
       cpu: 200m
       memory: 256Mi
 ingester:
-  replicas: 2
+  replicas: 3
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
