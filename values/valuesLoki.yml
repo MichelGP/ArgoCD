@@ -80,10 +80,10 @@ ingester:
   resources:
     requests:
       cpu: "500m"
-      memory: "2G"
+      memory: "256Mi"
     limits:
       cpu: "1"
-      memory: "2G"
+      memory: "1G"
   persistence:
     enabled: true
     inMemory: false
