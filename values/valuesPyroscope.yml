@@ -108,8 +108,8 @@ pyroscope:
           cpu: 100m
           memory: 256Mi
         limits:
-          cpu: 200m
-          memory: 512Mi
+          cpu: 1
+          memory: 1G
     store-gateway:
       kind: StatefulSet
       #nodeSelector: *metricsHotSelector
