@@ -22,7 +22,6 @@ grafana.ini:
     root_url: "https://grafana.local"
   auth:
     disable_login_form: false
-  # Enable Grafana Tempo tracing
   tracing.opentelemetry:
     enabled: true
     service_name: grafana
