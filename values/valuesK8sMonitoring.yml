@@ -55,7 +55,7 @@ alloy-metrics:
   enabled: true
 
 alloy-logs:
-  enabled: false
+  enabled: true
   alloy:
     clustering:
       enabled: true
