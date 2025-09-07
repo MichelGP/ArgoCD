@@ -27,7 +27,7 @@ grafana.ini:
     enabled: true
     service_name: grafana
     otlp.protocol: http
-    otlp.address: http://tempo-distributor.tempo.svc.cluster.local:4318
+    otlp.address: tempo-distributor.tempo.svc.cluster.local:4317
     otlp.insecure: true
 
 adminUser: Admin
