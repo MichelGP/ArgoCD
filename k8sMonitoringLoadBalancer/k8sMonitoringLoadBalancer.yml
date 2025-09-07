@@ -1,0 +1,33 @@
+# For LoadBalancer with a dedicated IP pool for public alloy.
+# The IP pool has one IP so that the public facing Alloy always gets the same IP.
+apiVersion: v1
+kind: Service
+metadata:
+  name: alloy-receiver
+  namespace: k8s-monitoring
+  labels:
+    lb-pool: public-alloy
+spec:
+  type: LoadBalancer
+  ports:
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317
+      protocol: TCP
+    - name: otlp-http
+      port: 4318
+      targetPort: 4318
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: alloy
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: public-alloy-pool
+spec:
+  blocks:
+    - cidr: "192.168.50.165/32"
+  serviceSelector:
+    matchLabels:
+      lb-pool: public-alloy

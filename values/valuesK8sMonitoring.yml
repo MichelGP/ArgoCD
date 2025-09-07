@@ -63,17 +63,35 @@ alloy-logs:
 clusterMetrics:
   enabled: true
 
-alloy-receiver:
-  enabled: true
 
+## Grafana Alloy: Start
+# https://grafana.com/docs/grafana-cloud/monitor-infrastructure/kubernetes-monitoring/configuration/helm-chart-config/helm-chart/collector-reference/
 applicationObservability:
   enabled: true
   receivers:
     otlp:
       grpc:
         enabled: true
+        port: 4317
       http:
         enabled: true
+        port: 4318
+
+alloy-receiver:
+  enabled: true
+  alloy:
+    service:
+    type: LoadBalancer
+    extraPorts:
+      - name: otlp-grpc
+        port: 4317
+        targetPort: 4317
+        protocol: TCP
+      - name: otlp-http
+        port: 4318
+        targetPort: 4318
+        protocol: TCP
+## Grafana Alloy: End
 
 annotationAutodiscovery:
   enabled: false
