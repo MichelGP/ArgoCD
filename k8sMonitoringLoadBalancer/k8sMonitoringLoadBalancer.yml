@@ -21,7 +21,7 @@ spec:
       targetPort: 4318
       protocol: TCP
   selector:
-    app.kubernetes.io/name: alloy
+    app.kubernetes.io/name: alloy-receiver
 ---
 apiVersion: "cilium.io/v2"
 kind: CiliumLoadBalancerIPPool
