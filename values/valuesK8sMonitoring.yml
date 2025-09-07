@@ -10,12 +10,12 @@ destinations:
     url: http://mimir-nginx.mimir.svc:80/api/v1/push
   - name: tempo
     type: otlp
-    protocol: http # grpc = 4317, http = 4318.
-    url: tempo-distributor.tempo.svc.cluster.local:4318
+    protocol: http        # http -> 4318, grpc -> 4317
+    url: http://tempo-distributor.tempo.svc.cluster.local:4318
     metrics:
-      enabled: true
+      enabled: false
     logs:
-      enabled: true
+      enabled: false
     traces:
       enabled: true
 
