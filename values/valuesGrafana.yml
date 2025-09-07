@@ -22,10 +22,16 @@ grafana.ini:
     root_url: "https://grafana.local"
   auth:
     disable_login_form: false
+  # Enable Grafana Tempo tracing
+  tracing.opentelemetry:
+    enabled: true
+    service_name: grafana
+    otlp.protocol: http
+    otlp.address: http://tempo-distributor.tempo.svc.cluster.local:4318
+    otlp.insecure: true
 
 adminUser: Admin
 adminPassword: a3vnwwEs
-
 
 datasources:
   datasources.yaml:
