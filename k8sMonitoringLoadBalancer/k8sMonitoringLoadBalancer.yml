@@ -7,6 +7,8 @@ metadata:
   namespace: k8s-monitoring
   labels:
     lb-pool: public-alloy
+  annotations: # Cilium annotation to bind the service to a specific IP from the pool that contains it.
+    lbipam.cilium.io/ips: "192.168.50.165"
 spec:
   type: LoadBalancer
   ports:
