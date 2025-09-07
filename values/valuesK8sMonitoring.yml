@@ -55,14 +55,7 @@ alloy-metrics:
   enabled: true
 
 alloy-logs:
-  enabled: false
-  alloy:
-    stabilityLevel: public-preview
-    mounts:
-      varlog: false
-      dockercontainers: false
-    clustering:
-      enabled: true
+  enabled: true
 
 clusterMetrics:
   enabled: true
