@@ -24,7 +24,11 @@ clusterEvents:
   collector: alloy-logs
 
 nodeLogs:
-  enabled: false
+  enabled: true
+  journal:
+    units:
+      - kubelet.service
+      - containerd.service
 
 podLogs:
   enabled: true
@@ -51,7 +55,7 @@ alloy-metrics:
   enabled: true
 
 alloy-logs:
-  enabled: true
+  enabled: false
   alloy:
     stabilityLevel: public-preview
     mounts:
