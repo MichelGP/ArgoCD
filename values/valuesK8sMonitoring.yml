@@ -64,7 +64,7 @@ clusterMetrics:
   enabled: true
 
 
-## Grafana Alloy: Start
+## Grafana Public Alloy: Start
 # https://grafana.com/docs/grafana-cloud/monitor-infrastructure/kubernetes-monitoring/configuration/helm-chart-config/helm-chart/collector-reference/
 applicationObservability:
   enabled: true
@@ -91,7 +91,7 @@ alloy-receiver:
         port: 4318
         targetPort: 4318
         protocol: TCP
-## Grafana Alloy: End
+## Grafana PublicAlloy: End
 
 annotationAutodiscovery:
   enabled: false
