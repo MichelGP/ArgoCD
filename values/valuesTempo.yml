@@ -23,6 +23,7 @@ tempo:
           processors:
             - service-graphs
             - span-metrics
+            - local-blocks
   reportingEnabled: false
   storage:
     trace:
