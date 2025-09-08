@@ -47,15 +47,15 @@ distributor:
       cpu: 200m
       memory: 256Mi
 ingester:
-  replicas: 6
+  replicas: 3
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
       cpu: 100m
       memory: 256Mi
     limits:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 2
+      memory: 2Gi
   persistence:
     enabled: true
     size: 10Gi
