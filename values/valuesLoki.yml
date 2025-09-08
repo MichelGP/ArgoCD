@@ -75,7 +75,7 @@ ingester:
   zoneAwareReplication:
     enabled: false
   #nodeSelector: *logsIngestSelector
-  replicas: 6
+  replicas: 3
   maxUnavailable: 1
   resources:
     requests:
