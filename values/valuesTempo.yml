@@ -37,7 +37,7 @@ tempo:
         http:
           insecure_skip_verify: true
 distributor:
-  replicas: 3
+  replicas: 1
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
@@ -47,7 +47,7 @@ distributor:
       cpu: 200m
       memory: 256Mi
 ingester:
-  replicas: 3
+  replicas: 1
   #nodeSelector: *tracesHotSelector
   config:
     replication_factor: 1
@@ -56,14 +56,14 @@ ingester:
       cpu: 100m
       memory: 256Mi
     limits:
-      cpu: 2
-      memory: 2Gi
+      cpu: 1
+      memory: 1Gi
   persistence:
     enabled: true
     size: 10Gi
     storageClass: nfs-csi
 querier:
-  replicas: 2
+  replicas: 1
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
@@ -73,7 +73,7 @@ querier:
       cpu: 200m
       memory: 256Mi
 queryFrontend:
-  replicas: 3
+  replicas: 1
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
