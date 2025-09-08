@@ -37,7 +37,7 @@ tempo:
         http:
           insecure_skip_verify: true
 distributor:
-  replicas: 2
+  replicas: 3
   #nodeSelector: *tracesHotSelector
   resources:
     requests:
@@ -49,6 +49,8 @@ distributor:
 ingester:
   replicas: 3
   #nodeSelector: *tracesHotSelector
+  config:
+    replication_factor: 1
   resources:
     requests:
       cpu: 100m
@@ -71,7 +73,7 @@ querier:
       cpu: 200m
       memory: 256Mi
 queryFrontend:
-  replicas: 2
+  replicas: 3
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
