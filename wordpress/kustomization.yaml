@@ -1,0 +1,8 @@
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=Dentist-Evidence-Spirits6-Goldfish-Outright
+
+resources:
+  - mysql-deployment.yml
+  - wordpress-deployment.yml
