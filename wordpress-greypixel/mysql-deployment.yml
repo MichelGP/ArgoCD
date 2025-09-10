@@ -41,7 +41,7 @@ spec:
   template:
     metadata:
       labels:
-        app: wordpress-tst
+        app: wordpress-gp
         tier: mysql
     spec:
       containers:
@@ -67,16 +67,16 @@ spec:
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-pass
+              name: mysql-gp-pass
               key: password
         ports:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: mysql-persistent-storage
+        - name: mysql-gp-persistent-storage
           mountPath: /var/lib/mysql
           subPath: data
       volumes:
-      - name: mysql-persistent-storage
+      - name: mysql-gp-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mysql-gp-pv-claim

@@ -1,7 +1,7 @@
 secretGenerator:
-- name: mysql-tst-pass
+- name: mysql-gp-pass
   literals:
-  - password=Dentist-Evidence-Spirits6-Goldfish-Outright
+  - password=Plexiglas-Decade-Entomb8-Unaudited-Saga
 
 resources:
   - mysql-deployment.yml
