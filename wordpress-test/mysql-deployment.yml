@@ -47,6 +47,13 @@ spec:
       containers:
       - image: mysql:8.0
         name: mysql
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -68,6 +75,7 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+          subPath: data
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
