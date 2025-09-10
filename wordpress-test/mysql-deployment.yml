@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: wordpress-mysql
   labels:
-    app: wordpress-gp
+    app: wordpress-tst
 spec:
   ports:
     - port: 3306
   selector:
-    app: wordpress-gp
+    app: wordpress-tst
     tier: mysql
   clusterIP: None
 ---
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-tst-pv-claim
   labels:
-    app: wordpress-gp
+    app: wordpress-tst
 spec:
   accessModes:
     - ReadWriteOnce
@@ -30,11 +30,11 @@ kind: Deployment
 metadata:
   name: wordpress-mysql
   labels:
-    app: wordpress-gp
+    app: wordpress-tst
 spec:
   selector:
     matchLabels:
-      app: wordpress-gp
+      app: wordpress-tst
       tier: mysql
   strategy:
     type: Recreate
