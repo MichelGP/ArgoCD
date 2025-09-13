@@ -28,7 +28,10 @@ loki:
         index:
           prefix: loki_index_
           period: 24h
-          
+
+  commonConfig:
+    replication_factor: 3
+
   auth_enabled: false
 
   # Pattern ingester gives HTTP error 500?
