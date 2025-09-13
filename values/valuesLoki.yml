@@ -88,10 +88,10 @@ ingester:
     enabled: true
     inMemory: false
     claims:
-      - name: data
+      - name: data # staging area for chunks
         size: "10Gi"
         storageClass: nfs-csi
-      - name: wal
+      - name: wal # write-ahead log
         size: "10Gi"
         storageClass: nfs-csi
 querier:
