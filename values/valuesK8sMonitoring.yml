@@ -60,8 +60,13 @@ alloy-logs:
     clustering:
       enabled: true
 
+# https://github.com/grafana/k8s-monitoring-helm/tree/main/charts/k8s-monitoring/charts/feature-cluster-metrics
 clusterMetrics:
   enabled: true
+  apiServer:
+    enabled: true
+  cadvisor:
+    enabled: true
 
 
 ## Grafana Public Alloy: Start
