@@ -65,7 +65,9 @@ clusterMetrics:
   enabled: true
   apiServer:
     enabled: true
-  cadvisor:
+  cadvisor: # default is true, here for clarity
+    enabled: true
+  controlPlane: # This includes api-server, kube-scheduler, kube-controller-manager, and KubeDNS.
     enabled: true
 
 
