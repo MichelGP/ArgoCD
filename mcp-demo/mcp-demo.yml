@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: greypixel/mcp-demo:0.1
+          image: greypixel/mcp-demo:0.2
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
