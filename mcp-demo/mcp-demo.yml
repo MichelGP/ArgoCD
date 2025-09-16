@@ -6,21 +6,21 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mcp-hello
+  name: mcp-demo
   namespace: mcp-demo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mcp-hello
+      app: mcp-demo
   template:
     metadata:
       labels:
-        app: mcp-hello
+        app: mcp-demo
     spec:
       containers:
         - name: server
-          image: greypixel/mcp-demo/mcp-hello-http:0.1
+          image: greypixel/mcp-demo:0.1
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -49,11 +49,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mcp-hello
+  name: mcp-demo
   namespace: mcp-demo
 spec:
   selector:
-    app: mcp-hello
+    app: mcp-demo
   ports:
     - name: http
       port: 80        # Cluster port
@@ -63,7 +63,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: mcp-hello
+  name: mcp-demo
   namespace: mcp-demo
   annotations:
     ingress.cilium.io/loadbalancer-mode: "shared"
@@ -77,10 +77,10 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mcp-hello
+                name: mcp-demo
                 port:
                   number: 80
   # If you have TLS ready, uncomment and set your cert secret name:
   # tls:
   #   - hosts: [mcp.example.com]
-  #     secretName: mcp-hello-tls
+  #     secretName: mcp-demo-tls
