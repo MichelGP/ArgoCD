@@ -142,6 +142,21 @@ spec:
       labels:
         app: n8n
     spec:
+      initContainers:
+        - name: fix-perms
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              set -eux
+              mkdir -p /home/node/.n8n
+              chown -R 1000:1000 /home/node/.n8n
+              chmod -R 770 /home/node/.n8n
+          securityContext:
+            runAsUser: 0   # run this iniContainer as root
+          volumeMounts:
+            - name: n8n-data
+              mountPath: /home/node/.n8n
       containers:
       - name: n8n
         image: n8nio/n8n:latest
