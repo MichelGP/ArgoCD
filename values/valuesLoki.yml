@@ -93,7 +93,7 @@ ingester:
         size: "10Gi"
         storageClass: nfs-csi
 querier:
-  replicas: 4
+  replicas: 2
   maxUnavailable: 1
   #nodeSelector: *queryCpuSelector
   resources:
