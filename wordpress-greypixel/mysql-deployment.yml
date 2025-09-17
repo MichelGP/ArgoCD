@@ -19,11 +19,12 @@ metadata:
   labels:
     app: wordpress-gp
 spec:
+  storageClassName: nfs-csi-retain
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 100Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
