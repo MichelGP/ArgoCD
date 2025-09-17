@@ -44,7 +44,7 @@ pyroscope:
     querier:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
-      replicaCount: 2
+      replicaCount: 1
       resources:
         requests:
           cpu: 100m
@@ -55,7 +55,7 @@ pyroscope:
     query-frontend:
       kind: Deployment
       #nodeSelector: *queryCpuSelector
-      replicaCount: 2
+      replicaCount: 1
       resources:
         requests:
           cpu: 100m
@@ -77,7 +77,7 @@ pyroscope:
     distributor:
       kind: Deployment
       #nodeSelector: *metricsHotSelector
-      replicaCount: 2
+      replicaCount: 1
       requests:
         memory: 256Mi
         cpu: 100m
@@ -87,7 +87,7 @@ pyroscope:
     ingester:
       kind: StatefulSet
       #nodeSelector: *metricsHotSelector
-      replicaCount: 3
+      replicaCount: 1
       terminationGracePeriodSeconds: 600
       resources:
         requests:
@@ -113,7 +113,7 @@ pyroscope:
     store-gateway:
       kind: StatefulSet
       #nodeSelector: *metricsHotSelector
-      replicaCount: 2
+      replicaCount: 1
       persistence:
         # The store-gateway needs not need persistent storage, but we still run it as a StatefulSet
         # This is to avoid having blocks of data being
