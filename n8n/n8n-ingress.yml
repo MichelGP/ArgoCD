@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: n8n
+  namespace: n8n
+  annotations:
+    ingress.cilium.io/loadbalancer-mode: "shared"
+spec:
+  ingressClassName: cilium
+  rules:
+    - host: n8n.greypixel.nl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: n8n
+                port:
+                  number: 5678

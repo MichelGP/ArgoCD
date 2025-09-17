@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mcp-demo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-demo
+  namespace: mcp-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mcp-demo
+  template:
+    metadata:
+      labels:
+        app: mcp-demo
+    spec:
+      containers:
+        - name: server
+          image: greypixel/mcp-demo:0.3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          # These are the same as your Docker CMD
+          args: ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+          # Basic health checks (TCP is safest for a minimal app)
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-demo
+  namespace: mcp-demo
+spec:
+  selector:
+    app: mcp-demo
+  ports:
+    - name: http
+      port: 80        # Cluster port
+      targetPort: 8000 # Container port
+  type: ClusterIP
