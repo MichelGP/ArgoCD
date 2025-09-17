@@ -10,7 +10,7 @@ spec:
   selector:
     app: wordpress-gp
     tier: frontend
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
