@@ -92,6 +92,7 @@ ingester:
       - name: wal # write-ahead log
         size: "10Gi"
         storageClass: nfs-csi
+        
 querier:
   replicas: 2
   maxUnavailable: 1

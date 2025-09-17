@@ -58,6 +58,7 @@ distributor:
     limits:
       cpu: "500m"
       memory: "256Mi"
+
 ingester:
   zoneAwareReplication:
     enabled: false
@@ -75,6 +76,7 @@ ingester:
     accessModes:
       - ReadWriteOnce
     size: 10Gi
+
 querier:
   replicas: 2
   #nodeSelector: *queryCpuSelector
@@ -85,6 +87,7 @@ querier:
     limits:
       cpu: "500m"
       memory: "256Mi"
+
 query_frontend:
   replicas: 2
   #nodeSelector: *queryCpuSelector
@@ -97,6 +100,7 @@ query_frontend:
     limits:
       cpu: "500m"
       memory: "256Mi"
+
 store_gateway:
   replicas: 1
   #nodeSelector: *metricsHotSelector
@@ -108,7 +112,8 @@ store_gateway:
       memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "256Mi"
+      memory: "512Mi"
+
 compactor:
   replicas: 1
   #nodeSelector: *metricsHotSelector
@@ -119,6 +124,7 @@ compactor:
     limits:
       cpu: "500m"
       memory: "256Mi"
+
 alertmanager:
   #nodeSelector: *metricsHotSelector
   resources:
@@ -128,10 +134,19 @@ alertmanager:
     limits:
       cpu: "500m"
       memory: "256Mi"
+
 nginx:
   enabled: true
   replicas: 1
   #nodeSelector: *queryCpuSelector
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
 query_scheduler:
   replicas: 1
   #nodeSelector: *queryCpuSelector
@@ -142,6 +157,7 @@ query_scheduler:
     limits:
       cpu: "500m"
       memory: "256Mi"
+
 ruler:
   replicas: 1
   #nodeSelector: *metricsHotSelector
