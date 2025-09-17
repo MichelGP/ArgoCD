@@ -62,7 +62,7 @@ ingester:
   persistence:
     enabled: true
     size: 10Gi
-    storageClass: nfs-csi
+    storageClass: nfs-csi-retain
 querier:
   replicas: 1
   #nodeSelector: *queryCpuSelector

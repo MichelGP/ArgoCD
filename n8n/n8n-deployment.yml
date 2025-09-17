@@ -18,7 +18,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: nfs-csi
+  storageClassName: nfs-csi-retain
 
 # Persistent Volume Claim for PostgreSQL data
 ---
@@ -33,7 +33,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: nfs-csi
+  storageClassName: nfs-csi-retain
 
 # ConfigMap for PostgreSQL configuration (e.g., database name and user)
 ---
