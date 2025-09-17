@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: wordpress-rs-ingress
-  namespace: grafana
+  namespace: wordpress-rosaliesieraden
   annotations:
     # Cilium supports websocket upgrades automatically,
     # so you don't need nginx-specific proxy annotations.
