@@ -25,9 +25,7 @@ spec:
           ports:
             - name: http
               containerPort: 8000
-          # These are the same as your Docker CMD
           args: ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
-          # Basic health checks (TCP is safest for a minimal app)
           livenessProbe:
             tcpSocket:
               port: http
