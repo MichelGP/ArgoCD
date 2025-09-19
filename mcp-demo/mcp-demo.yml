@@ -56,6 +56,6 @@ spec:
     app: mcp-demo
   ports:
     - name: http
-      port: 80        # Cluster port
-      targetPort: 8000 # Container port
+      port: 80
+      targetPort: 8000
   type: ClusterIP
