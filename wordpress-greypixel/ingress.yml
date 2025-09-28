@@ -10,6 +10,16 @@ metadata:
 spec:
   ingressClassName: cilium
   rules:
+    - host: www.greypixel.nl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wordpress-gp
+                port:
+                  number: 80
     - host: greypixel.nl
       http:
         paths:
