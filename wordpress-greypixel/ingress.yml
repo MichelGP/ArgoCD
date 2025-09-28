@@ -9,6 +9,11 @@ metadata:
     ingress.cilium.io/loadbalancer-mode: "shared"
 spec:
   ingressClassName: cilium
+  tls:
+  - secretName: michelvanderzijden-tls
+    hosts:
+      - michelvanderzijden.nl
+      - www.michelvanderzijden.nl
   rules:
     - host: www.greypixel.nl
       http:
