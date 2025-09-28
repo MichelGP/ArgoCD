@@ -23,6 +23,8 @@ mimir:
 
   structuredConfig:
     multitenancy_enabled: false
+    query_scheduler: # to prevent "too many outstanding requests"
+      max_outstanding_requests_per_tenant: 10000
     common:
       storage:
         backend: s3
