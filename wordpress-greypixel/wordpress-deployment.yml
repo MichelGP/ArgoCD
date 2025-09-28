@@ -26,6 +26,20 @@ spec:
     requests:
       storage: 100Gi
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wp-php-config
+  namespace: wordpress-greypixel
+data:
+  uploads.ini: |
+    file_uploads = On
+    memory_limit = 256M
+    upload_max_filesize = 128M
+    post_max_size = 128M
+    max_execution_time = 300
+    max_input_time = 300
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -71,7 +85,16 @@ spec:
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: /var/www/html
+        - name: php-config
+          mountPath: /usr/local/etc/php/conf.d/uploads.ini
+          subPath: uploads.ini
       volumes:
       - name: wordpress-persistent-storage
         persistentVolumeClaim:
           claimName: wp-pv-claim
+      - name: php-config
+        configMap:
+          name: wp-php-config
+          items:
+            - key: uploads.ini
+              path: uploads.ini
