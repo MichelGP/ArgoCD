@@ -6,6 +6,9 @@ metadata:
   namespace: n8n
   annotations:
     ingress.cilium.io/loadbalancer-mode: "shared"
+    ingress.cilium.io/proxy-read-timeout: "3600"
+    ingress.cilium.io/proxy-send-timeout: "3600"
+    ingress.cilium.io/websocket-services: "n8n"
 spec:
   ingressClassName: cilium
   rules:
