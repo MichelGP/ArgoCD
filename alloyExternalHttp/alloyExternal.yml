@@ -11,48 +11,45 @@ metadata:
   namespace: alloy-external
 data:
   alloy.hcl: |
-    otelcol.receiver.otlp "ingest" {
+    otelcol.receiver.otlp "receiver" {
       http {}
       grpc {}
+
       output {
-        metrics = [otelcol.processor.batch.metrics.input]
-        logs    = [otelcol.processor.batch.logs.input]
-        traces  = [otelcol.processor.batch.traces.input]
+        metrics = [otelcol.processor.batch.default.input]
+        logs    = [otelcol.processor.batch.default.input]
+        traces  = [otelcol.processor.batch.default.input]
       }
     }
 
-    otelcol.processor.batch "metrics" {
-      send_batch_size = 8192
-      timeout = "5s"
-      output { metrics = [otelcol.exporter.prometheusremotewrite.mimir.input] }
-    }
+    otelcol.processor.batch "default" {
+      send_batch_size     = 1024
+      send_batch_max_size = 2048
+      timeout             = "5s"
 
-    otelcol.processor.batch "logs" {
-      send_batch_size = 2048
-      timeout = "5s"
-      output { logs = [otelcol.exporter.loki.default.input] }
-    }
-
-    otelcol.processor.batch "traces" {
-      send_batch_size = 512
-      timeout = "5s"
-      output { traces = [otelcol.exporter.otlphttp.tempo.input] }
-    }
-
-    otelcol.exporter.prometheusremotewrite "mimir" {
-      endpoint = "http://mimir-nginx.mimir.svc:80/api/v1/push"
-    }
-
-    otelcol.exporter.loki "default" {
-      client {
-        endpoint = "http://loki-gateway.loki.svc.cluster.local:80/loki/api/v1/push"
+      output {
+        metrics = [
+          otelcol.exporter.prometheus.local.input,
+        ]
+        logs = [
+          otelcol.exporter.loki.loki.input,
+        ]
+        traces = [
+          otelcol.exporter.otlp.tempo.input,
+        ]
       }
     }
 
-    otelcol.exporter.otlphttp "tempo" {
-      client {
-        endpoint = "http://tempo-distributor.tempo.svc.cluster.local:4318"
-      }
+    otelcol.exporter.otlphttp "loki_incluster" {
+      endpoint = "http://loki-distributor.loki.svc.cluster.local:3100/otlp"
+    }
+
+    otelcol.exporter.otlphttp "mimir_incluster" {
+      endpoint = "http://mimir-distributor.mimir.svc.cluster.local:8080/otlp"
+    }
+
+    otelcol.exporter.otlphttp "tempo_incluster" {
+      endpoint = "http://tempo-distributor.tempo.svc.cluster.local:4318"
     }
 ---
 apiVersion: apps/v1
