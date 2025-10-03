@@ -11,32 +11,54 @@ metadata:
   namespace: alloy-external
 data:
   alloy.hcl: |
-    otelcol.receiver.otlp "receiver" {
+    otelcol.receiver.otlp "ingest" {
       http {}
       grpc {}
-
       output {
-        logs    = [otelcol.processor.batch.default.input]
-        metrics = [otelcol.processor.batch.default.input]
+        metrics = [otelcol.processor.batch.metrics.input]
+        logs    = [otelcol.processor.batch.logs.input]
+        traces  = [otelcol.processor.batch.traces.input]
       }
     }
 
-    otelcol.processor.batch "default" {
-      output {
-        logs    = [otelcol.exporter.otlphttp.loki.input]
-        metrics = [otelcol.exporter.otlphttp.mimir.input]
-      }
+    otelcol.processor.batch "metrics" {
+      send_batch_size = 8192
+      timeout = "5s"
+      output { metrics = [otelcol.exporter.prometheusremotewrite.mimir.input] }
     }
 
-    otelcol.exporter.otlphttp "loki" {
+    otelcol.processor.batch "logs" {
+      send_batch_size = 2048
+      timeout = "5s"
+      output { logs = [otelcol.exporter.loki.default.input] }
+    }
+
+    otelcol.processor.batch "traces" {
+      send_batch_size = 512
+      timeout = "5s"
+      output { traces = [otelcol.exporter.otlphttp.tempo.input] }
+    }
+
+    # Mimir: Prometheus Remote Write
+    otelcol.exporter.prometheusremotewrite "mimir" {
+      endpoint = "http://mimir-nginx.mimir.svc:80/api/v1/push"
+      # headers = { "X-Scope-OrgID" = "tenant-a" }  # if multitenant
+      # tls { insecure = true }                      # HTTP-only, internal net
+    }
+
+    # Loki: HTTP push
+    otelcol.exporter.loki "default" {
       client {
-        endpoint = "http://loki-distributor.loki.svc.cluster.local:3100/otlp"
+        endpoint = "http://loki-gateway.loki.svc.cluster.local:80/loki/api/v1/push"
+        # headers = { "X-Scope-OrgID" = "tenant-a" }
       }
     }
 
-    otelcol.exporter.otlphttp "mimir" {
+    # Tempo: OTLP/HTTP
+    otelcol.exporter.otlphttp "tempo" {
       client {
-        endpoint = "http://mimir-distributor.mimir.svc.cluster.local:8080/otlp"
+        endpoint = "http://tempo-distributor.tempo.svc.cluster.local:4318"
+        # tls { insecure = true }  # if needed
       }
     }
 ---
@@ -46,7 +68,7 @@ metadata:
   name: alloy-deployment
   namespace: alloy-external
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: alloy
@@ -88,29 +110,10 @@ metadata:
   name: alloy-service
   namespace: alloy-external
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: alloy
   ports:
     - name: http2-otlp
       port: 4318
       targetPort: http2-otlp
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: alloy-external-ingress
-  namespace: alloy-external
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: otlp.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: alloy-service
-                port:
-                  number: 4318
