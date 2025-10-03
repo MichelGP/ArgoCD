@@ -39,26 +39,19 @@ data:
       output { traces = [otelcol.exporter.otlphttp.tempo.input] }
     }
 
-    # Mimir: Prometheus Remote Write
     otelcol.exporter.prometheusremotewrite "mimir" {
       endpoint = "http://mimir-nginx.mimir.svc:80/api/v1/push"
-      # headers = { "X-Scope-OrgID" = "tenant-a" }  # if multitenant
-      # tls { insecure = true }                      # HTTP-only, internal net
     }
 
-    # Loki: HTTP push
     otelcol.exporter.loki "default" {
       client {
         endpoint = "http://loki-gateway.loki.svc.cluster.local:80/loki/api/v1/push"
-        # headers = { "X-Scope-OrgID" = "tenant-a" }
       }
     }
 
-    # Tempo: OTLP/HTTP
     otelcol.exporter.otlphttp "tempo" {
       client {
         endpoint = "http://tempo-distributor.tempo.svc.cluster.local:4318"
-        # tls { insecure = true }  # if needed
       }
     }
 ---
