@@ -35,15 +35,21 @@ data:
     }
 
     otelcol.exporter.otlphttp "loki_incluster" {
-      endpoint = "http://loki-distributor.loki.svc.cluster.local:3100/otlp"
+      client {
+        endpoint = "http://loki-distributor.loki.svc.cluster.local:3100/otlp"
+      }
     }
 
     otelcol.exporter.otlphttp "mimir_incluster" {
-      endpoint = "http://mimir-distributor.mimir.svc.cluster.local:8080/otlp"
+      client {
+        endpoint = "http://mimir-distributor.mimir.svc.cluster.local:8080/otlp"
+      }
     }
 
     otelcol.exporter.otlphttp "tempo_incluster" {
-      endpoint = "http://tempo-distributor.tempo.svc.cluster.local:4318"
+      client {
+        endpoint = "http://tempo-distributor.tempo.svc.cluster.local:4318"
+      }
     }
 ---
 apiVersion: apps/v1
