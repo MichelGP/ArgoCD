@@ -180,7 +180,7 @@ spec:
               name: postgres-secret
               key: POSTGRES_PASSWORD
         - name: WEBHOOK_URL
-          value: "https://n8n.greypixel.nl"
+          value: "http://n8n.greypixel.nl"
         - name: N8N_LICENSE_ACTIVATION_KEY
           value: "50ffb1e3-ef15-42ee-90d8-3f4c9bc10503"
         - name: N8N_RUNNERS_ENABLED
