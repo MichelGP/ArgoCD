@@ -77,8 +77,6 @@ spec:
       labels:
         app: alloy
     spec:
-      nodeSelector:
-        logs: ingest
       containers:
         - name: alloy
           image: grafana/alloy:latest
