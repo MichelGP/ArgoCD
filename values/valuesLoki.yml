@@ -204,8 +204,8 @@ chunksCache:
       cpu: "100m"
       memory: "256Mi"
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: "1000m"
+      memory: "1024Mi"
 
 lokiCanary:
   enabled: true
