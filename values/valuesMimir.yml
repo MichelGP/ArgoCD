@@ -86,15 +86,15 @@ ingester:
     size: 10Gi
 
 querier:
-  replicas: 2
+  replicas: 3
   #nodeSelector: *queryCpuSelector
   resources:
     requests:
       cpu: "100m"
       memory: "256Mi"
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: "1000m"
+      memory: "512Mi"
 
 query_frontend:
   replicas: 2

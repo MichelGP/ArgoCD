@@ -94,7 +94,7 @@ ingester:
         storageClass: nfs-csi-retain
         
 querier:
-  replicas: 2
+  replicas: 3
   maxUnavailable: 1
   #nodeSelector: *queryCpuSelector
   resources:
@@ -102,8 +102,8 @@ querier:
       cpu: "100m"
       memory: "256Mi"
     limits:
-      cpu: "500m"
-      memory: "256Mi"
+      cpu: "1000m"
+      memory: "512Mi"
 
 queryFrontend:
   replicas: 2
