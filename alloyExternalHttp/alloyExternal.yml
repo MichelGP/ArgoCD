@@ -16,6 +16,17 @@ data:
       grpc {}
 
       output {
+        metrics = [otelcol.processor.memory_limiter.default.input]
+        logs    = [otelcol.processor.memory_limiter.default.input]
+        traces  = [otelcol.processor.memory_limiter.default.input]
+      }
+    }
+
+    otelcol.processor.memory_limiter "default" {
+      check_interval = "1s"
+      limit          = "1024MiB"
+      spike_limit    = "512MiB"
+      output {
         metrics = [otelcol.processor.batch.default.input]
         logs    = [otelcol.processor.batch.default.input]
         traces  = [otelcol.processor.batch.default.input]
