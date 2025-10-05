@@ -12,8 +12,14 @@ metadata:
 data:
   alloy.hcl: |
     otelcol.receiver.otlp "receiver" {
-      http {}
-      grpc {}
+      http {
+        // Preserve the tenant_id metadata.
+        include_metadata = true
+      }        
+      grpc {
+        // Preserve the tenant_id metadata.
+        include_metadata = true
+      }
 
       output {
         metrics = [otelcol.processor.memory_limiter.default.input]
@@ -38,6 +44,9 @@ data:
       send_batch_max_size = 2048
       timeout             = "5s"
 
+      // Preserve the tenant_id metadata.
+      metadata_keys = ["tenant_id"]
+
       output {
         metrics = [otelcol.exporter.otlphttp.mimir_incluster.input]
         logs    = [otelcol.exporter.otlphttp.loki_incluster.input] 
@@ -45,15 +54,25 @@ data:
       }
     }
 
+    // Set the tenant_id header for multi-tenancy.
+    otelcol.auth.headers "creds" {
+      header {
+        key          = "X-Scope-OrgID"
+        from_context = "tenant_id"
+      }
+    }
+
     otelcol.exporter.otlphttp "loki_incluster" {
       client {
         endpoint = "http://loki-distributor.loki.svc.cluster.local:3100/otlp"
+        auth     = otelcol.auth.headers.creds.handler
       }
     }
 
     otelcol.exporter.otlphttp "mimir_incluster" {
       client {
         endpoint = "http://mimir-distributor.mimir.svc.cluster.local:8080/otlp"
+        auth     = otelcol.auth.headers.creds.handler
       }
     }
 
