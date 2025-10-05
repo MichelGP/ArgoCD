@@ -5,11 +5,11 @@ destinations:
   - name: loki
     type: loki
     url: http://loki-gateway.loki.svc.cluster.local:80/loki/api/v1/push
-    tenantId: GP # Test for tenancy
+    tenantId: K8s # Test for tenancy
   - name: localPrometheus
     type: prometheus
     url: http://mimir-nginx.mimir.svc:80/api/v1/push
-    tenantId: GP # Test for tenancy
+    tenantId: K8s # Test for tenancy
   - name: tempo
     type: otlp
     protocol: http        # http -> 4318, grpc -> 4317
