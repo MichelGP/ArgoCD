@@ -47,6 +47,18 @@ data:
         source_labels = ["__syslog_message_severity"]
         target_label  = "severity"
       }
+    rule {
+        source_labels = ["__syslog_message_app_name"]
+        target_label  = "app_name"
+      }
+    rule {
+        source_labels = ["__syslog_message_proc_id"]
+        target_label  = "proc_id"
+      }
+    rule {
+        source_labels = ["__syslog_message_msg_id"]
+        target_label  = "msg_id"
+      }
     }
 
     otelcol.receiver.loki "syslog" {
