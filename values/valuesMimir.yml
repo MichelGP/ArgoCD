@@ -22,6 +22,7 @@ mimir:
     tag: "latest"
 
   structuredConfig:
+    # multitenancy_enabled: true # Is enabled by default.
     query_scheduler: # to prevent "too many outstanding requests" when using query_scheduler
       max_outstanding_requests_per_tenant: 10000
     #frontend: # to prevent "too many outstanding requests" when using query_frontend
@@ -56,7 +57,7 @@ minio:
   enabled: false
   
 distributor:
-  replicas: 1
+  replicas: 2
   #nodeSelector: *metricsHotSelector
   resources:
     requests:
@@ -64,7 +65,7 @@ distributor:
       memory: "256Mi"
     limits:
       cpu: "500m"
-      memory: "256Mi"
+      memory: "512Mi"
 
 ingester:
   zoneAwareReplication:
