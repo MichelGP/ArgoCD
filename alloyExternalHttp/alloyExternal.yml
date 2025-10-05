@@ -13,11 +13,11 @@ data:
   alloy.hcl: |
     otelcol.receiver.otlp "receiver" {
       http {
-        // Preserve the tenant_id metadata.
+        // Preserve metadata / headers (we need x-scope-orgid for multi-tenancy)
         include_metadata = true
       }        
       grpc {
-        // Preserve the tenant_id metadata.
+        // Preserve metadata / headers (we need x-scope-orgid for multi-tenancy)
         include_metadata = true
       }
 
@@ -44,8 +44,8 @@ data:
       send_batch_max_size = 2048
       timeout             = "5s"
 
-      // Preserve the tenant_id metadata.
-      metadata_keys = ["tenant_id"]
+      // Preserve x-scope-orgid
+      metadata_keys = ["x-scope-orgid"]
 
       output {
         metrics = [otelcol.exporter.otlphttp.mimir_incluster.input]
@@ -54,11 +54,11 @@ data:
       }
     }
 
-    // Set the tenant_id header for multi-tenancy.
+    // Set the x-scope-orgid header for multi-tenancy.
     otelcol.auth.headers "creds" {
       header {
         key          = "X-Scope-OrgID"
-        from_context = "tenant_id"
+        from_context = "x-scope-orgid"
       }
     }
 
