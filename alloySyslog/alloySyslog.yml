@@ -28,11 +28,24 @@ data:
     }
 
     // Relabel rules, extracts the IP address of the sender and puts it in the "ip_address" label.
+    // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.syslog/
     loki.relabel "syslog" {
     forward_to = []
     rule {
         source_labels = ["__syslog_connection_ip_address"]
         target_label  = "ip_address"
+      }
+    rule {
+        source_labels = ["__syslog_message_hostname"]
+        target_label  = "hostname"
+      }
+    rule {
+        source_labels = ["__syslog_message_facility"]
+        target_label  = "facility"
+      }
+    rule {
+        source_labels = ["__syslog_message_severity"]
+        target_label  = "severity"
       }
     }
 
