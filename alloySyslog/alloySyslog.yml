@@ -1,0 +1,147 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alloy-syslog
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alloy-config
+  namespace: alloy-syslog
+data:
+  alloy.hcl: |
+    loki.source.syslog "local" {
+      listener {
+        address  = "127.0.0.1:51893"
+        labels   = { component = "loki.source.syslog", protocol = "tcp" }
+      }
+
+      listener {
+        address  = "127.0.0.1:51898"
+        protocol = "udp"
+        labels   = { component = "loki.source.syslog", protocol = "udp"}
+      }
+
+      forward_to = [otelcol.receiver.loki.syslog.receiver]
+    }
+
+    otelcol.receiver.loki "syslog" {
+        output { logs = [otelcol.processor.resourcedetection.syslog.input] }
+    }
+
+    // Adds service.name, this helps with drilldown and quering in Grafana.
+    otelcol.processor.transform "syslog" {
+      log_statements {
+        context = "log"
+        statements = [
+          `set(resource.attributes["service.name"], "syslog") where attributes["service"] == nil`,
+        ]
+      }
+      output { logs = [otelcol.processor.memory_limiter.syslog.input] }
+    }
+
+    // Memory Limiter Processor, limits the memory usage of the collector. Should always be placed before any batch processor.
+    otelcol.processor.memory_limiter "syslog" {
+      check_interval = "1s"     // How often to check memory usage.
+      limit = "128MiB"          // Limit total memory usage to this value.
+      spike_limit = "256MiB"    // Allow for short spikes, e.g. during log bursts.
+
+      output {
+          logs = [otelcol.processor.batch.syslog.input]
+      }
+    }
+
+    // Batch Processor, batches the logs before sending them to the OTLP/HTTP exporter.
+    otelcol.processor.batch "syslog" {
+      output { logs = [otelcol.exporter.otlphttp.syslog.input] }
+      timeout = "10s"              // Send at least a batch every timeout (if data is available).
+      send_batch_size = 1000      // Send directly after this amount is collected, even if the timeout isn't reached yet.
+      send_batch_max_size = 2000  // Maximum number of items to send in a batch. Batches larger than this will be split up, over timeout value.
+    }
+
+    // Auth Headers, sets the "X-Scope-OrgID" to a tenant for multi tenancy in Grafana.
+    otelcol.auth.headers "syslog" {
+      header {
+        key          = "X-Scope-OrgID"
+        value        = "GP"
+      }
+    }
+
+    // EXPORTER
+    otelcol.exporter.otlphttp "syslog" {
+      client {
+        endpoint = "http://192.168.50.154:4318"
+        auth = otelcol.auth.headers.syslog.handler
+        tls {
+          insecure             = true
+          insecure_skip_verify = true
+        }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alloy-deployment
+  namespace: alloy-syslog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alloy
+  template:
+    metadata:
+      labels:
+        app: alloy
+    spec:
+      containers:
+        - name: alloy
+          image: grafana/alloy:latest
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          args:
+            - "run"
+            - "/etc/alloy/alloy.hcl"
+          ports:
+            - name: syslog-tcp
+              containerPort: 51893
+            - name: syslog-udp
+              containerPort: 51898
+          volumeMounts:
+            - name: config
+              mountPath: /etc/alloy
+              readOnly: true
+          livenessProbe:
+            tcpSocket: { port: 51893 }
+            initialDelaySeconds: 10
+            periodSeconds: 20
+      volumes:
+        - name: config
+          configMap:
+            name: alloy-config
+            items:
+              - key: alloy.hcl
+                path: alloy.hcl
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alloy-service
+  namespace: alloy-syslog
+spec:
+  type: LoadBalancer
+  selector:
+    app: alloy
+  ports:
+    - name: syslog-tcp
+      port: 51893
+      targetPort: syslog-tcp
+    - name: syslog-udp
+      port: 51898
+      targetPort: syslog-udp
