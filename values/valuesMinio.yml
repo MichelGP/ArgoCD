@@ -20,16 +20,16 @@ mode: distributed
 replicas: 4
 
 persistence:
-  size: 10Gi
-  storageClass: standard
+  size: 100Gi
+  storageClass: nfs-csi-retain
 
 resources:
   requests:
     cpu: "500m"
     memory: "512Mi"
   limits:
-    cpu: "500m"
-    memory: "512Mi"
+    cpu: "1"
+    memory: "1024Mi"
 
 nodeSelector:
   tier: minio
