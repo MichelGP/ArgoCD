@@ -22,7 +22,7 @@ mimir:
     tag: "latest"
 
   structuredConfig:
-    multitenancy_enabled: false
+    multitenancy_enabled: true
     query_scheduler: # to prevent "too many outstanding requests" when using query_scheduler
       max_outstanding_requests_per_tenant: 10000
     #frontend: # to prevent "too many outstanding requests" when using query_frontend
