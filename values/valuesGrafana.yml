@@ -41,6 +41,14 @@ datasources:
           httpHeaderName1: 'X-Scope-OrgID'
         secureJsonData:
           httpHeaderValue1: 'GP'
+      - name: Loki (K8s)
+        type: loki
+        access: proxy
+        url: http://loki-gateway.loki.svc.cluster.local:80
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'K8s'
       - name: Loki (WT)
         type: loki
         access: proxy
@@ -57,6 +65,14 @@ datasources:
           httpHeaderName1: 'X-Scope-OrgID'
         secureJsonData:
           httpHeaderValue1: 'GP'
+      - name: Mimir (K8s)
+        type: prometheus
+        access: proxy
+        url: http://mimir-nginx.mimir.svc:80/prometheus
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'K8s'
       - name: Mimir (WT)
         type: prometheus
         access: proxy
