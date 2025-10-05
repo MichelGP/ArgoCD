@@ -24,6 +24,16 @@ data:
       }
 
       forward_to = [otelcol.receiver.loki.syslog.receiver]
+      relabel_rules = loki.relabel.syslog.rules
+    }
+
+    // Relabel rules, extracts the IP address of the sender and puts it in the "ip_address" label.
+    loki.relabel "syslog" {
+    forward_to = []
+    rule {
+        source_labels = ["__syslog_connection_ip_address"]
+        target_label  = "ip_address"
+      }
     }
 
     otelcol.receiver.loki "syslog" {
