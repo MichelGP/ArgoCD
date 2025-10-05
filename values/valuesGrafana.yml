@@ -33,26 +33,38 @@ datasources:
   datasources.yaml:
     apiVersion: 1
     datasources:
-      - name: Loki (orgId 1)
+      - name: Loki (GP)
         type: loki
         access: proxy
-        orgId: 1
         url: http://loki-gateway.loki.svc.cluster.local:80
-      - name: Mimir (orgId 1)
-        type: prometheus
-        access: proxy
-        orgId: 1
-        url: http://mimir-nginx.mimir.svc:80/prometheus
-      - name: Loki (orgId 2)
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'GP'
+      - name: Loki (WT)
         type: loki
         access: proxy
-        orgId: 2
         url: http://loki-gateway.loki.svc.cluster.local:80
-      - name: Mimir (orgId 2)
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'WT'
+      - name: Mimir (GP)
         type: prometheus
         access: proxy
-        orgId: 2
         url: http://mimir-nginx.mimir.svc:80/prometheus
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'GP'
+      - name: Mimir (WT)
+        type: prometheus
+        access: proxy
+        url: http://mimir-nginx.mimir.svc:80/prometheus
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'WT'
       - name: Tempo
         type: tempo
         access: proxy
