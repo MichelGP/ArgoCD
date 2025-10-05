@@ -11,6 +11,11 @@ metadata:
   namespace: alloy-syslog
 data:
   alloy.hcl: |
+    // Alloy Configuration for Syslog ingestion and forwarding to Grafana Loki via OTLP/HTTP
+    // Only accepts IETF format, RFC 5424. For BSD format, another solution is needed.
+
+    // SOURCE
+    // Syslog Source, listens for syslog messages over TCP and UDP on port 518
     loki.source.syslog "local" {
       listener {
         address  = "0.0.0.0:51893"
@@ -27,7 +32,7 @@ data:
       relabel_rules = loki.relabel.syslog.rules
     }
 
-    // Relabel rules, extracts the IP address of the sender and puts it in the "ip_address" label.
+    // Relabel rules, extracts valuable fields of the sender and puts it in the appropriate label.
     // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.syslog/
     loki.relabel "syslog" {
     forward_to = []
