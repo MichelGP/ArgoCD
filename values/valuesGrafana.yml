@@ -33,13 +33,15 @@ datasources:
   datasources.yaml:
     apiVersion: 1
     datasources:
-      - name: Loki
+      - name: Loki (greypixel)
         type: loki
         access: proxy
+        orgId: greypixel
         url: http://loki-gateway.loki.svc.cluster.local:80
-      - name: Mimir
+      - name: Mimir (greypixel)
         type: prometheus
         access: proxy
+        orgId: greypixel
         url: http://mimir-nginx.mimir.svc:80/prometheus
       - name: Tempo
         type: tempo
