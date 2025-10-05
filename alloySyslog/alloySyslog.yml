@@ -44,7 +44,7 @@ data:
     // Memory Limiter Processor, limits the memory usage of the collector. Should always be placed before any batch processor.
     otelcol.processor.memory_limiter "syslog" {
       check_interval = "1s"     // How often to check memory usage.
-      limit = "128MiB"          // Limit total memory usage to this value.
+      limit = "512MiB"          // Limit total memory usage to this value.
       spike_limit = "256MiB"    // Allow for short spikes, e.g. during log bursts.
 
       output {
