@@ -13,6 +13,7 @@ data:
   alloy.hcl: |
     // Alloy Configuration for Syslog ingestion and forwarding to Grafana Loki via OTLP/HTTP
     // Only accepts IETF format, RFC 5424. For BSD format, another solution is needed.
+    // Maybe we must use syslog-ng or rsyslog to convert BSD to IETF format and forward to Alloy.
 
     // SOURCE
     // Syslog Source, listens for syslog messages over TCP and UDP on port 518
