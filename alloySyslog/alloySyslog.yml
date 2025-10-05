@@ -27,7 +27,7 @@ data:
     }
 
     otelcol.receiver.loki "syslog" {
-        output { logs = [otelcol.processor.resourcedetection.syslog.input] }
+        output { logs = [otelcol.processor.transform.syslog.input] }
     }
 
     // Adds service.name, this helps with drilldown and quering in Grafana.
