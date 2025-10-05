@@ -117,10 +117,6 @@ spec:
             - name: config
               mountPath: /etc/alloy
               readOnly: true
-          livenessProbe:
-            tcpSocket: { port: 51893 }
-            initialDelaySeconds: 10
-            periodSeconds: 20
       volumes:
         - name: config
           configMap:
