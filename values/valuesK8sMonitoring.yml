@@ -5,11 +5,11 @@ destinations:
   - name: loki
     type: loki
     url: http://loki-gateway.loki.svc.cluster.local:80/loki/api/v1/push
-    tenantId: K8s # Set to Id of the tenant in Loki
+    tenantId: spark # Set to Id of the tenant in Loki
   - name: localPrometheus
     type: prometheus
     url: http://mimir-nginx.mimir.svc:80/api/v1/push
-    tenantId: K8s # Set to Id of the tenant in Mimir
+    tenantId: spark # Set to Id of the tenant in Mimir
   - name: tempo
     type: otlp
     protocol: http        # http -> 4318, grpc -> 4317
