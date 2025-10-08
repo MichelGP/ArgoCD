@@ -81,6 +81,54 @@ datasources:
           httpHeaderName1: 'X-Scope-OrgID'
         secureJsonData:
           httpHeaderValue1: 'WT'
+      - name: Loki (smoke)
+        type: loki
+        access: proxy
+        url: http://loki-gateway.loki.svc.cluster.local:80
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'smoke'
+      - name: Loki (fire)
+        type: loki
+        access: proxy
+        url: http://loki-gateway.loki.svc.cluster.local:80
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'fire'
+      - name: Loki (spark)
+        type: loki
+        access: proxy
+        url: http://loki-gateway.loki.svc.cluster.local:80
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'spark'
+      - name: Mimir (smoke)
+        type: prometheus
+        access: proxy
+        url: http://mimir-nginx.mimir.svc:80/prometheus
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'smoke'
+      - name: Mimir (fire)
+        type: prometheus
+        access: proxy
+        url: http://mimir-nginx.mimir.svc:80/prometheus
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'fire'
+      - name: Mimir (spark)
+        type: prometheus
+        access: proxy
+        url: http://mimir-nginx.mimir.svc:80/prometheus
+        jsonData:
+          httpHeaderName1: 'X-Scope-OrgID'
+        secureJsonData:
+          httpHeaderValue1: 'spark'
       - name: Tempo
         type: tempo
         access: proxy
