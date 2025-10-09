@@ -36,9 +36,9 @@ integrations:
   alloy:
     instances:
       # monitor the collector gathering and sending meta-monitoring metrics/logs to the meta-monitoring cluster
-      - name: alloy-in-logs
+      - name: alloy
         namespaces:
-          - logs
+          - k8s-monitoring
         labelSelectors:
           app.kubernetes.io/name: alloy-singleton
 
@@ -53,7 +53,7 @@ integrations:
     instances:
       - name: grafana
         namespaces:
-          - o11y
+          - grafana
         labelSelectors:
           app.kubernetes.io/name: grafana
 
@@ -61,7 +61,7 @@ integrations:
     instances:
       - name: loki
         namespaces:
-          - logs
+          - loki
         labelSelectors:
           app.kubernetes.io/name: loki
         logs:
@@ -76,7 +76,7 @@ integrations:
     instances:
       - name: mimir
         namespaces:
-          - metrics
+          - mimir
         labelSelectors:
           app.kubernetes.io/name: mimir
         logs:
