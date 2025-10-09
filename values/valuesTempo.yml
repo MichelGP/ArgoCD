@@ -91,7 +91,7 @@ compactor:
       cpu: 100m
       memory: 256Mi
     limits:
-      cpu: 200m
+      cpu: 250m
       memory: 256Mi
 #memcached:
   #nodeSelector: *tracesHotSelector
