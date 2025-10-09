@@ -92,12 +92,13 @@ ingester:
       - name: data # staging area for chunks
         size: "10Gi"
         storageClass: nfs-csi-retain
-        accessModes: ReadWriteOnce
+        accessModes:
+          - ReadWriteOnce
       - name: wal # write-ahead log
         size: "10Gi"
         storageClass: nfs-csi-retain
-        accessModes: ReadWriteOnce
-        
+        accessModes:
+          - ReadWriteOnce        
 querier:
   replicas: 3
   maxUnavailable: 1
