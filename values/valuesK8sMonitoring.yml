@@ -109,3 +109,42 @@ alloy-profiles:
   enabled: false
 
 extraConfig: |
+
+integrations:
+  enabled: true
+
+  loki:
+    enabled: true
+    discovery:
+      namespaceSelector:
+        matchNames: [loki]
+      serviceSelector:
+        matchLabels:
+          app.kubernetes.io/name: loki
+
+  mimir:
+    enabled: true
+    discovery:
+      namespaceSelector:
+        matchNames: [mimir]
+      serviceSelector:
+        matchLabels:
+          app.kubernetes.io/name: mimir
+
+  tempo:
+    enabled: true
+    discovery:
+      namespaceSelector:
+        matchNames: [tempo]
+      serviceSelector:
+        matchLabels:
+          app.kubernetes.io/name: tempo
+
+  grafana:
+    enabled: true
+    discovery:
+      namespaceSelector:
+        matchNames: [grafana]
+      serviceSelector:
+        matchLabels:
+          app.kubernetes.io/name: grafana
