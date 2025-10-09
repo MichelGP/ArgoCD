@@ -76,7 +76,7 @@ data:
       log_statements {
         context = "log"
         statements = [
-          `set(resource.attributes["service.name"], "syslog") where attributes["service"] == nil`,
+          `set(resource.attributes["service.name"], "syslog-collector")`,
         ]
       }
       output { logs = [otelcol.processor.memory_limiter.syslog.input] }
