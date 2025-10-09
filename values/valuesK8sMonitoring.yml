@@ -64,14 +64,7 @@ integrations:
           - loki
         labelSelectors:
           app.kubernetes.io/name: loki
-        logs:
-          tuning:
-            # extract logfmt fields and set them as structured metadata
-            structuredMetadata:
-              caller:
-              tenant:
-              org_id:
-              user:
+
   mimir:
     instances:
       - name: mimir
@@ -79,14 +72,6 @@ integrations:
           - mimir
         labelSelectors:
           app.kubernetes.io/name: mimir
-        logs:
-          tuning:
-            # extract logfmt fields and set them as structured metadata
-            structuredMetadata:
-              caller:
-              tenant:
-              org_id:
-              user:
 
 clusterEvents:
   enabled: true
