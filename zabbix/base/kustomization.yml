@@ -12,3 +12,13 @@ resources:
   - zabbix-web-service.yml
   - zabbix-web-deployment.yml
   - zabbix-web-ingress.yml
+
+secretGenerator:
+  - name: zabbix-db-secret
+    literals:
+      - mysql-user=zabbix
+      - mysql-password=changeme
+      - mysql-root-password=changeme
+      - mysql-database=zabbix
+    options:
+      disableNameSuffixHash: true
