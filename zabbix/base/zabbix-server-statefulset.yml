@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: zabbix-server
-  namespace: zabbix
 spec:
   serviceName: zabbix-server-headless
   replicas: 2
