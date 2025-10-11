@@ -11,6 +11,7 @@ resources:
   - zabbix-web-service.yml
   - zabbix-web-deployment.yml
   - zabbix-web-ingress.yml
+  - zabbix-upgrade-node.yml
 
 secretGenerator:
   - name: zabbix-db-secret
