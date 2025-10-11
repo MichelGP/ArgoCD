@@ -10,6 +10,7 @@ patches:
   - path: patch-replicas.yml
   - path: patch-ingress.yml
   - path: patch-storage.yml
+  - path: patch-db-host.yml
 
 images:
   - name: zabbix/zabbix-server-mysql
