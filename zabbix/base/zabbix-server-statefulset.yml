@@ -9,7 +9,7 @@ spec:
   template:
     metadata: { labels: { app: zabbix-server } }
     spec:
-      terminationGracePeriodSeconds: 30
+      terminationGracePeriodSeconds: 3600
       containers:
         - name: server
           image: zabbix/zabbix-server-mysql:alpine-latest
