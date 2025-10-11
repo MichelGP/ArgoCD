@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: zabbix
+
+resources:
+  - namespace.yml
+  - mysql-service.yml
+  - mysql-statefulset.yml
+  - zabbix-server-services.yml
+  - zabbix-server-statefulset.yml
+  - zabbix-web-service.yml
+  - zabbix-web-deployment.yml
+  - zabbix-web-ingress.yml
+
+# Generate secrets
+secretGenerator:
+  - name: zabbix-db-secret
+    behavior: replace
+    literals:
+      - mysql-user=zabbix
+      - mysql-password=COxymoron-Daffodil-Tinsel1-Unspoiled-Swept-Arrive
+      - mysql-root-password=Overlay1-Anatomy-Precision-Cannabis-Lustrous-Retinal
+      - mysql-database=zabbix
+    options:
+      disableNameSuffixHash: true
