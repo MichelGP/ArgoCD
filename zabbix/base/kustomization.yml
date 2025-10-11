@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: zabbix
 
 resources:
-  - namespace.yml
   - mysql-service.yml
   - mysql-statefulset.yml
   - zabbix-server-services.yml
@@ -17,7 +16,7 @@ secretGenerator:
   - name: zabbix-db-secret
     literals:
       - mysql-user=zabbix
-      - mysql-password=changeme
+      - mysql-password=Kosher-Everyone-Only1-Overvalue-Zodiac-Carving
       - mysql-root-password=changeme
       - mysql-database=zabbix
     options:
