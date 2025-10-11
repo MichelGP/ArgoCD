@@ -2,26 +2,31 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: zabbix-dev
-
 resources:
   - ../../base
   - namespace.yml
-
-nameSuffix: -dev
 
 patches:
   - path: patch-replicas.yml
   - path: patch-ingress.yml
   - path: patch-storage.yml
+  - path: patch-db-host.yml
 
-# Dev secrets (override base if needed)
+images:
+  - name: zabbix/zabbix-server-mysql
+    newTag: alpine-7.0-latest
+  - name: zabbix/zabbix-web-nginx-mysql
+    newTag: alpine-7.0-latest
+  - name: mysql
+    newTag: "8.0.39"
+
 secretGenerator:
   - name: zabbix-db-secret
     behavior: replace
     literals:
       - mysql-user=zabbix
-      - mysql-password=Crust-Padlock-Override5-Hatchet-Stung-Immovably
-      - mysql-root-password=Voyage-Aghast-Visible3-Unclaimed-Banana-Islamic
+      - mysql-password=Symphonic-Snap5-Splendor-Tiling-Kilogram-Underfoot
+      - mysql-root-password=Crust-Padlock-Override5-Hatchet-Stung-Immovably
       - mysql-database=zabbix
     options:
       disableNameSuffixHash: true
