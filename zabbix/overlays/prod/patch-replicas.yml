@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: zabbix-server
-  namespace: zabbix-prod
 spec:
   replicas: 2   # Zabbix HA is active/standby; 2–3 is typical
 ---
@@ -10,6 +9,5 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zabbix-web
-  namespace: zabbix-prod
 spec:
   replicas: 3

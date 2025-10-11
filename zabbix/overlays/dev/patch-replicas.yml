@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: zabbix-server
-  namespace: zabbix-dev
 spec:
   replicas: 2
 ---
@@ -10,6 +9,5 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zabbix-web
-  namespace: zabbix-dev
 spec:
   replicas: 2
