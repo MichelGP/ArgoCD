@@ -24,7 +24,8 @@ spec:
             - name: MYSQL_PASSWORD
               valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-password } }
           ports: [{ containerPort: 3306, name: mysql }]
-          volumeMounts: [{ name: data, subPath: data, mountPath: /var/lib/mysql }]
+          volumeMounts: [{ name: data, subPath: data, mountPath: /var/lib/mysql }, { name: mysql-config, mountPath: /etc/mysql/conf.d/zbx.cnf, subPath: zbx.cnf }]
+          volumes: [{ name: mysql-config, configMap: { name: mysql-config } }]
           readinessProbe: { tcpSocket: { port: 3306 }, initialDelaySeconds: 10, periodSeconds: 5 }
   volumeClaimTemplates:
     - metadata: { name: data }
