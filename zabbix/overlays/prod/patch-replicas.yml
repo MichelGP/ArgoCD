@@ -3,11 +3,11 @@ kind: StatefulSet
 metadata:
   name: zabbix-server
 spec:
-  replicas: 3   # Zabbix HA is active/standby; 2–3 is typical
+  replicas: 2   # Min 2, because of HA config
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zabbix-web
 spec:
-  replicas: 3
+  replicas: 2
