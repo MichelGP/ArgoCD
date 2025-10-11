@@ -1,12 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: zabbix-web
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  name: zabbix-web-prod
 spec:
-  tls:
-    - hosts: [zabbix.yourdomain.tld]
-      secretName: zabbix-tls
   rules:
-    - host: zabbix.yourdomain.tld
+    - host: zabbix-prod.greypixel.nl
