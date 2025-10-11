@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: zabbix-web-dev
+  name: zabbix-web
 spec:
   rules:
     - host: zabbix-prod.greypixel.nl
