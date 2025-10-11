@@ -10,8 +10,8 @@ spec:
     spec:
       containers:
         - name: web
-          image: zabbix/zabbix-web-nginx-mysql:alpine-latest
-          resources: { requests: { cpu: "100m", memory: "128Mi" }, limits: { cpu: "2", memory: "2Gi" } }
+          image: zabbix/zabbix-web-nginx-mysql:alpine-7.4-latest
+          resources: { requests: { cpu: "100m", memory: "128Mi" }, limits: { cpu: "1", memory: "1Gi" } }
           env:
             - name: DB_SERVER_HOST
               value: mysql.zabbix.svc.cluster.local
