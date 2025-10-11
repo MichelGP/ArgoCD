@@ -6,7 +6,6 @@ namespace: zabbix
 resources:
   - mysql-service.yml
   - mysql-statefulset.yml
-  - mysql-config.yml
   - zabbix-server-services.yml
   - zabbix-server-statefulset.yml
   - zabbix-web-service.yml
