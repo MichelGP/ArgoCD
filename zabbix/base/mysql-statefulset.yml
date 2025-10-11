@@ -13,7 +13,10 @@ spec:
         - name: mysql
           image: mysql:8.0
           args: ["--default-authentication-plugin=mysql_native_password",
-                 "--sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"]
+                 "--sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION",
+                 --log-bin-trust-function-creators=1,
+                 "--character-set-server=utf8mb4",
+                 "--collation-server=utf8mb4_bin"]
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-root-password } }
@@ -24,8 +27,7 @@ spec:
             - name: MYSQL_PASSWORD
               valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-password } }
           ports: [{ containerPort: 3306, name: mysql }]
-          volumeMounts: [{ name: data, subPath: data, mountPath: /var/lib/mysql }, { name: mysql-config, mountPath: /etc/mysql/conf.d/zbx.cnf, subPath: zbx.cnf }]
-          volumes: [{ name: mysql-config, configMap: { name: mysql-config } }]
+          volumeMounts: [{ name: data, subPath: data, mountPath: /var/lib/mysql }]
           readinessProbe: { tcpSocket: { port: 3306 }, initialDelaySeconds: 10, periodSeconds: 5 }
   volumeClaimTemplates:
     - metadata: { name: data }
