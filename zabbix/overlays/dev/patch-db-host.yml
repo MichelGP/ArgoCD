@@ -9,7 +9,7 @@ spec:
         - name: server
           env:
             - name: DB_SERVER_HOST
-              value: mysql.zabbix-dev.svc.cluster.local
+              value: zabbix-mysql.zabbix-dev.svc.cluster.local
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -22,4 +22,4 @@ spec:
         - name: web
           env:
             - name: DB_SERVER_HOST
-              value: mysql.zabbix-dev.svc.cluster.local
+              value: zabbix-mysql.zabbix-dev.svc.cluster.local
