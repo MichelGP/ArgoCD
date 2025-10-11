@@ -6,8 +6,6 @@ resources:
   - ../../base
   - namespace.yml
 
-nameSuffix: -prod
-
 patches:
   - path: patch-replicas.yml
   - path: patch-ingress.yml
