@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: cilium
 spec:
   rules:
-    - host: zabbix.example.local
+    - host: zabbix-prod.greypixel.nl
       http:
         paths:
           - path: /

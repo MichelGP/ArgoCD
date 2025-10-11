@@ -2,6 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: zabbix-web
+  annotations:
+    kubernetes.io/ingress.class: cilium
 spec:
   rules:
     - host: zabbix-dev.greypixel.nl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: zabbix-web
+                port:
+                  number: 80
