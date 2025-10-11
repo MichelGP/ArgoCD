@@ -3,11 +3,11 @@ kind: StatefulSet
 metadata:
   name: zabbix-mysql
 spec:
-  serviceName: mysql
+  serviceName: zabbix-mysql
   replicas: 1
-  selector: { matchLabels: { app: mysql } }
+  selector: { matchLabels: { app: zabbix-mysql } }
   template:
-    metadata: { labels: { app: mysql } }
+    metadata: { labels: { app: zabbix-mysql } }
     spec:
       containers:
         - name: zabbix-mysql
@@ -26,7 +26,7 @@ spec:
               valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-user } }
             - name: MYSQL_PASSWORD
               valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-password } }
-          ports: [{ containerPort: 3306, name: mysql }]
+          ports: [{ containerPort: 3306, name: zabbix-mysql }]
           volumeMounts: [{ name: data, subPath: data, mountPath: /var/lib/mysql }]
           readinessProbe: { tcpSocket: { port: 3306 }, initialDelaySeconds: 10, periodSeconds: 5 }
   volumeClaimTemplates:
