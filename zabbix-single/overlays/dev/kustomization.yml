@@ -14,9 +14,9 @@ patches:
 
 images:
   - name: zabbix/zabbix-server-mysql
-    newTag: alpine-7.4-latest
+    newTag: alpine-trunk
   - name: zabbix/zabbix-web-nginx-mysql
-    newTag: alpine-7.4-latest
+    newTag: alpine-trunk
   - name: mysql
     newTag: "8.0.39"
 
