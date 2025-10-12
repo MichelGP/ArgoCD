@@ -33,4 +33,4 @@ spec:
               value: "$(POD_NAME).zabbix-server-headless.$(POD_NAMESPACE).svc.cluster.local:10051"
           ports: [{ containerPort: 10051, name: trapper }]
           readinessProbe: { tcpSocket: { port: 10051 }, initialDelaySeconds: 10, periodSeconds: 5 }
-          livenessProbe: { exec: { command: ["/bin/sh", "-ec", "/usr/sbin/zabbix_server -R ha_status >/dev/null 2>&1"] }, initialDelaySeconds: 60, periodSeconds: 10, failureThreshold: 3 }
+          livenessProbe: { tcpSocket: { port: 10051 }, initialDelaySeconds: 10, periodSeconds: 5 }
