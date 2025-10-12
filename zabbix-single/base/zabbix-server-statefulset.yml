@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zabbix-server
+spec:
+  serviceName: zabbix-server-headless
+  replicas: 1
+  selector: { matchLabels: { app: zabbix-server } }
+  template:
+    metadata: { labels: { app: zabbix-server } }
+    spec:
+      terminationGracePeriodSeconds: 300
+      containers:
+        - name: server
+          image: zabbix/zabbix-server-mysql:alpine-7.4-latest
+          resources: { requests: { cpu: "500m", memory: "1Gi" }, limits: { cpu: "2", memory: "2Gi" } }
+          env:
+            - name: DB_SERVER_HOST
+              value: mysql.zabbix.svc.cluster.local
+            - name: DB_SERVER_PORT
+              value: "3306"
+            - name: MYSQL_DATABASE
+              valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-database } }
+            - name: MYSQL_USER
+              valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-user } }
+            - name: MYSQL_PASSWORD
+              valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-password } }
+            - name: POD_NAME
+              valueFrom: { fieldRef: { fieldPath: metadata.name } }
+            - name: POD_NAMESPACE
+              valueFrom: { fieldRef: { fieldPath: metadata.namespace } }
+            - name: ZBX_NODEADDRESS
+              value: "$(POD_NAME).zabbix-server-headless.$(POD_NAMESPACE).svc.cluster.local:10051"
+          ports: [{ containerPort: 10051, name: trapper }]
+          readinessProbe: { tcpSocket: { port: 10051 }, initialDelaySeconds: 10, periodSeconds: 5 }
+          livenessProbe: { exec: { command: ["/bin/sh", "-ec", "/usr/sbin/zabbix_server -R ha_status >/dev/null 2>&1"] }, initialDelaySeconds: 60, periodSeconds: 10, failureThreshold: 3 }
