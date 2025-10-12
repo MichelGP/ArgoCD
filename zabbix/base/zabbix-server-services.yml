@@ -13,5 +13,6 @@ metadata:
   name: zabbix-server
   namespace: zabbix
 spec:
+  type: LoadBalancer
   selector: { app: zabbix-server }
   ports: [{ name: trapper, port: 10051, targetPort: 10051 }]
