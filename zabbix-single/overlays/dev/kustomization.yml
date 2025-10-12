@@ -18,7 +18,7 @@ images:
   - name: zabbix/zabbix-web-nginx-mysql
     newTag: alpine-trunk
   - name: mysql
-    newTag: "8.0.39"
+    newTag: "8.0.43"
 
 secretGenerator:
   - name: zabbix-db-secret
