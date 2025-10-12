@@ -17,6 +17,7 @@ spec:
                  --log-bin-trust-function-creators=1,
                  "--character-set-server=utf8mb4",
                  "--collation-server=utf8mb4_bin"]
+          resources: { requests: { cpu: "1", memory: "2Gi" }, limits: { cpu: "2", memory: "4Gi" } }
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom: { secretKeyRef: { name: zabbix-db-secret, key: mysql-root-password } }
