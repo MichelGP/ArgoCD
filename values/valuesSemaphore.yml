@@ -17,7 +17,7 @@ extraVolumes:
       name: semaphore-extra-files
 
 extraVolumeMounts:
-  - name: semaphore-extra-files
+  - name: extra-files
     mountPath: /etc/semaphore/requirements.txt
     subPath: requirements.txt
     readOnly: true
