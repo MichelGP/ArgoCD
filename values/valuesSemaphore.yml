@@ -7,8 +7,8 @@ secrets:
 
 ingress:
   enabled: true
+  className: cilium
   annotations:
-    kubernetes.io/ingress.class: cilium
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
     - host: semaphore.greypixel.nl
@@ -17,7 +17,7 @@ ingress:
           pathType: Prefix
   tls:
     - hosts:
-      - semaphore.greypixel.nl
+        - semaphore.greypixel.nl
       secretName: letsencrypt-semaphore
 
 ## Extra files to be mounted in the Semaphore container
