@@ -16,7 +16,7 @@ database:
   host: mariadb
   port: 3306
   password: Confetti-Posted-Jester-Pastel-Amusement-Greeter-Petal4-Wagon
-mariadb:
+mariadb: # hier moet een aparte mariadb install voor komen
   enabled: true
   auth:
     password: Confetti-Posted-Jester-Pastel-Amusement-Greeter-Petal4-Wagon
