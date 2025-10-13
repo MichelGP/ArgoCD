@@ -11,6 +11,11 @@ ingress:
         - path: /
           pathType: Prefix
 
+extraVolumes:
+  - name: extra-files
+    configMap:
+      name: semaphore-extra-files
+
 extraVolumeMounts:
   - name: semaphore-extra-files
     mountPath: /etc/semaphore/requirements.txt
