@@ -2,6 +2,9 @@ admin:
   create: true
   password: Broadcast-Tiara-Wildly-Plasma-Hunk9-Corrosive-Change-Lyricism
 
+secrets:
+  accesskeyEncryptionKey: JJyCs5p+MLbnzVssJ8xj3rOVmuLzoQp3V9x+iV/VVdw=
+
 ingress:
   enabled: true
   ingressClassName: cilium
