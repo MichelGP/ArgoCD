@@ -7,6 +7,7 @@ metadata:
     # Cilium supports websocket upgrades automatically,
     # so you don't need nginx-specific proxy annotations.
     ingress.cilium.io/loadbalancer-mode: "shared"
+    cert-manager.io/issuer: letsencrypt-staging
 spec:
   ingressClassName: cilium
   rules:
