@@ -12,7 +12,7 @@ ingress:
           pathType: Prefix
 
 extraVolumeMounts:
-  - name: extra-files
+  - name: semaphore-extra-files
     mountPath: /etc/semaphore/requirements.txt
     subPath: requirements.txt
     readOnly: true
