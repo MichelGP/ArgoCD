@@ -5,7 +5,7 @@ metadata:
   namespace: grafana
   annotations:
     ingress.cilium.io/loadbalancer-mode: "shared"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    #cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: cilium
   tls:
