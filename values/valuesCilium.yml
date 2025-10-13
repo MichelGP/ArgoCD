@@ -46,4 +46,6 @@ hubble:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       host: hubble.greypixel.nl
       tls:
-        secretName: letsencrypt-hubble-greypixel-nl
+        - hosts:
+          - zabbix.example.local
+          secretName: letsencrypt-zabbix-example-local
