@@ -1,0 +1,28 @@
+---
+authentik:
+  secret_key: Remission-Bulgur-Dipping-Radio-Footbath-Jaundice7-Vastly-Grout
+  error_reporting:
+    enabled: true
+  log_level: trace
+  postgresql:
+    password: Coffee-Prozac-Fifth-Preformed-Sacrament-Unafraid-Outburst2-Duckbill
+  bootstrap_token: Copartner-Pajamas-Parcel-Unflawed-Aground-Tapeless-Decent-Jumble8
+  bootstrap_password: Overtone-Elastic-Outplayed-Fantasize-Modular-Punisher-Retrieval6-Smother
+  bootstrap_email: michel@greypixel.nl
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: cilium
+    hosts:
+      - auth.greypixel.nl
+  metrics:
+    enabled: true
+
+postgresql:
+  enabled: true
+  auth:
+    password: Legwork-Idealist6-Collector-Patient-Cusp-Appraisal-Overstate-Freewill
+
+redis:
+  enabled: true
