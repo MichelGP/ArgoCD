@@ -44,12 +44,6 @@ hubble:
       annotations:
         kubernetes.io/ingress.class: cilium
         cert-manager.io/cluster-issuer: letsencrypt-prod
-      spec:
-        tls:
-          - hosts:
-              - hubble.greypixel.nl
-            secretName: letsencrypt-hubble-greypixel-nl
-      rules:
-        - host: hubble.greypixel.nl
-          http:
-            paths: /
+      host: hubble.greypixel.nl
+      tls:
+        secretName: letsencrypt-hubble-greypixel-nl
