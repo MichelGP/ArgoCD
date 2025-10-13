@@ -14,6 +14,8 @@ ingress:
         - path: /
           pathType: Prefix
 
+## Extra files to be mounted in the Semaphore container
+## Used for importing extra python packages
 extraVolumes:
   - name: extra-files
     configMap:

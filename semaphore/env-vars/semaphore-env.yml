@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: semaphore-env
+  namespace: semaphoreui
+type: Opaque
+stringData:
+  SEMAPHORE_ACCESS_KEY_ENCRYPTION: "GZXuwdNidhfvG00LBdFxR+soLUs0oldd97A2fqDEbi8="
+  SEMAPHORE_COOKIE_HASH: "MknVcaaIYfIAXO/ruRVBw7/W4FvRgHE0K4jb2sOxcKk="
+  SEMAPHORE_COOKIE_ENCRYPTION: "aitOCYzVrdXmjxej0rEiILzqIVWiCIgIsTAYETL9cV8="
+  SEMAPHORE_ADMIN_PASSWORD: "Reacquire2-Ruckus-Enticing-Babied-Unselect-Frown-Enlarging-Chimpanzee-Whispered"
