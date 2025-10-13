@@ -13,9 +13,15 @@ authentik:
 server:
   ingress:
     enabled: true
-    ingressClassName: cilium
+    annotations:
+      kubernetes.io/ingress.class: cilium
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
       - auth.greypixel.nl
+    tls:
+      - hosts:
+        - auth.greypixel.nl
+        secretName: letsencrypt-authentik
   metrics:
     enabled: true
 
