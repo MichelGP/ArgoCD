@@ -7,10 +7,10 @@ secrets:
 
 ingress:
   enabled: true
-  ingressClassName: cilium
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     ingress.cilium.io/force-https: "enabled"
+    kubernetes.io/ingress.class: cilium
   hosts:
     - host: semaphore.greypixel.nl
       paths:
