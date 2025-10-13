@@ -4,7 +4,12 @@ metadata:
   name: zabbix-web
   annotations:
     kubernetes.io/ingress.class: cilium
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
+  tls:
+    - hosts:
+      - zabbix-prod.greypixel.nl
+      secretName: letsencrypt-zabbix-prod
   rules:
     - host: zabbix-prod.greypixel.nl
       http:

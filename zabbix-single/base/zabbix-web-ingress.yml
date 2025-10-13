@@ -3,8 +3,13 @@ kind: Ingress
 metadata:
   name: zabbix-web
   annotations:
-    kubernetes.io/ingress.class: cilium
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    ingress.cilium.io/loadbalancer-mode: "shared"
 spec:
+  tls:
+    - hosts:
+      - zabbix.example.local
+      secretName: letsencrypt-zabbix-example-local
   rules:
     - host: zabbix.example.local
       http:
