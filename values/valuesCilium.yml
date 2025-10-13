@@ -49,7 +49,7 @@ hubble:
           - hosts:
               - hubble.greypixel.nl
             secretName: letsencrypt-hubble-greypixel-nl
-        rules:
-          - host: hubble.greypixel.nl
-            http:
-              paths: /
+      rules:
+        - host: hubble.greypixel.nl
+          http:
+            paths: /
