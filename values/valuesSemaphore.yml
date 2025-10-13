@@ -11,7 +11,7 @@ ingress:
     kubernetes.io/ingress.class: cilium
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - semaphore.greypixel.nl
+    - host: semaphore.greypixel.nl
   tls:
     - hosts:
       - semaphore.greypixel.nl
