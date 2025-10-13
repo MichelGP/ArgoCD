@@ -10,13 +10,3 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-
-database:
-  type: mysql
-  host: mariadb
-  port: 3306
-  password: Confetti-Posted-Jester-Pastel-Amusement-Greeter-Petal4-Wagon
-mariadb: # hier moet een aparte mariadb install voor komen
-  enabled: true
-  auth:
-    password: Confetti-Posted-Jester-Pastel-Amusement-Greeter-Petal4-Wagon
