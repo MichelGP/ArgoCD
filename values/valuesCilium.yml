@@ -49,4 +49,4 @@ hubble:
       tls:
         - hosts:
           - hubble.greypixel.nl
-          secretName: letsencrypt-zabbix-example-local
+          secretName: letsencrypt-hubble
