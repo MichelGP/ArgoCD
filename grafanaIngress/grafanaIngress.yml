@@ -9,9 +9,9 @@ metadata:
 spec:
   ingressClassName: cilium
   tls:
-   - hosts:
-     - grafana.greypixel.nl
-     secretName: letsencrypt-grafana
+    - hosts:
+      - grafana.greypixel.nl
+      secretName: letsencrypt-grafana
   rules:
     - host: grafana.greypixel.nl
       http:
