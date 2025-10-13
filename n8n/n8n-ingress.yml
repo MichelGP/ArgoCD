@@ -9,8 +9,12 @@ metadata:
     ingress.cilium.io/proxy-read-timeout: "3600"
     ingress.cilium.io/proxy-send-timeout: "3600"
     ingress.cilium.io/websocket-services: "n8n"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: cilium
+  tls:
+    - hosts:
+      - n8n.greypixel.nl
   rules:
     - host: n8n.greypixel.nl
       http:
