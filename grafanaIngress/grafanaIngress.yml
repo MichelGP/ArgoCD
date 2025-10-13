@@ -4,14 +4,16 @@ metadata:
   name: grafana-ingress
   namespace: grafana
   annotations:
-    # Cilium supports websocket upgrades automatically,
-    # so you don't need nginx-specific proxy annotations.
     ingress.cilium.io/loadbalancer-mode: "shared"
     cert-manager.io/issuer: letsencrypt-staging
 spec:
   ingressClassName: cilium
+  tls:
+   - hosts:
+     - grafana.greypixel.nl
+     secretName: letsencrypt-grafana
   rules:
-    - host: grafana.local
+    - host: grafana.greypixel.nl
       http:
         paths:
           - path: /
