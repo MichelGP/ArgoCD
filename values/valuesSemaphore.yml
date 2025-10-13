@@ -26,3 +26,8 @@ extraVolumeMounts:
     mountPath: /etc/semaphore/requirements.txt
     subPath: requirements.txt
     readOnly: true
+
+## Extra environment variables from a secret
+extraEnvFrom:
+  - secretRef:
+      name: semaphore-env
