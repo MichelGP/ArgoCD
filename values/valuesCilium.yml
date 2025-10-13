@@ -47,5 +47,5 @@ hubble:
       host: hubble.greypixel.nl
       tls:
         - hosts:
-          - zabbix.example.local
+          - hubble.greypixel.nl
           secretName: letsencrypt-zabbix-example-local
