@@ -1,0 +1,22 @@
+admin:
+  create: true
+  password: Broadcast-Tiara-Wildly-Plasma-Hunk9-Corrosive-Change-Lyricism
+
+ingress:
+  enabled: true
+  ingressClassName: cilium
+  hosts:
+    - host: semaphore.greypixel.nl
+      paths:
+        - path: /
+          pathType: Prefix
+
+database:
+  type: mysql
+  host: mariadb
+  port: 3306
+  password: Confetti-Posted-Jester-Pastel-Amusement-Greeter-Petal4-Wagon
+mariadb:
+  enabled: true
+  auth:
+    password: Confetti-Posted-Jester-Pastel-Amusement-Greeter-Petal4-Wagon
