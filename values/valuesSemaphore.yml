@@ -11,7 +11,7 @@ ingress:
   className: cilium
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    ingress.cilium.io/force-https: "true"   # or "enabled"
+    ingress.cilium.io/force-https: "true"
   hosts:
     - host: semaphore.greypixel.nl
       paths:
