@@ -3,7 +3,7 @@ authentik:
   secret_key: Remission-Bulgur-Dipping-Radio-Footbath-Jaundice7-Vastly-Grout
   error_reporting:
     enabled: true
-  log_level: info
+  log_level: trace
   postgresql:
     password: Legwork-Idealist6-Collector-Patient-Cusp-Appraisal-Overstate-Freewill
   bootstrap_token: oeyW9BceZHYUaSzp8nPQdIJbGSEjjY71r1zz2VuWFK0ZOuJlRniGiOIsHe0p4JOr
