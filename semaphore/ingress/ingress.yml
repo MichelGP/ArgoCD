@@ -4,12 +4,12 @@ metadata:
   name: semaphore
   annotations:
     kubernetes.io/ingress.class: cilium
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-dev
 spec:
   tls:
     - hosts:
       - semaphore.greypixel.nl
-      secretName: letsencrypt-semaphore
+      secretName: letsencrypt-semaphore-new
   rules:
     - host: semaphore.greypixel.nl
       http:
