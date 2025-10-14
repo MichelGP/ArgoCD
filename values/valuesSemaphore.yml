@@ -7,20 +7,7 @@ secrets:
 
 # https://github.com/semaphoreui/charts/blob/main/stable/semaphore/templates/ingress.yaml
 ingress:
-  enabled: true
-  className: cilium
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    ingress.cilium.io/force-https: "true"
-  hosts:
-    - host: semaphore.greypixel.nl
-      paths:
-        - path: /
-          pathType: Prefix
-  tls:
-    - hosts:
-        - semaphore.greypixel.nl
-      secretName: letsencrypt-semaphore
+  enabled: false
 
 ## Extra files to be mounted in the Semaphore container
 ## Used for importing extra python packages
