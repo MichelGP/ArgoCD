@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: semaphore
+  annotations:
+    kubernetes.io/ingress.class: cilium
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+      - semaphore.greypixel.nl
+      secretName: letsencrypt-semaphore
+  rules:
+    - host: semaphore.greypixel.nl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: semaphoreui
+                port:
+                  number: 80
