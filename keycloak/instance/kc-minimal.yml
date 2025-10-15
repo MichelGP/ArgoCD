@@ -125,13 +125,15 @@ spec:
   additionalOptions:
     - name: proxy-headers
       value: xforwarded
-  admin:
-    usernameSecret:
-      name: keycloak-admin-credentials
-      key: username
-    passwordSecret:
-      name: keycloak-admin-credentials
-      key: password
+  bootstrap-admin:
+    expiration: 260
+    user:
+      nameSecret: 
+        name: keycloak-admin-credentials
+        key: username
+      passwordSecret:
+        name: keycloak-admin-credentials
+        key: password
   db:
     vendor: postgres
     host: kc-postgres.keycloak.svc
