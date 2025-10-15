@@ -4,14 +4,14 @@ metadata:
   name: kc-custom-ingress
   namespace: keycloak
   annotations:
+    ingress.cilium.io/loadbalancer-mode: "shared"
     cert-manager.io/cluster-issuer: letsencrypt-staging
-    ingress.cilium.io/tls-passthrough: "enabled"
 spec:
   ingressClassName: cilium
   tls:
     - hosts:
       - auth.greypixel.nl
-      secretName: letsencrypt-keycloak # keycloak will use this for tls, see kc-minimal.yml
+      secretName: letsencrypt-keycloak
   rules:
     - host: auth.greypixel.nl
       http:
@@ -22,4 +22,4 @@ spec:
               service:
                 name: kc-service
                 port:
-                  number: 8443
+                  number: 8080

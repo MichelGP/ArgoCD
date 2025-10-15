@@ -111,7 +111,8 @@ spec:
     enabled: false
   ## uitzoeken tls cert zoals bij ArgoCD ingress
   http:
-    httpEnabled: true
+    #httpEnabled: true
+    tlsSecret: letsencrypt-keycloak
   hostname:
     hostname: https://auth.greypixel.nl
     strict: true
