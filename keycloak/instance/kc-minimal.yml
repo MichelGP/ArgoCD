@@ -7,3 +7,6 @@ spec:
   instances: 1
   http:
     httpEnabled: true
+  additionalOptions:
+    - name: db
+      value: dev-file
