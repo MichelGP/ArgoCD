@@ -130,3 +130,11 @@ spec:
     passwordSecret:
       name: kc-db
       key: password
+  tracing:
+    enabled: true
+    endpoint: http://tempo-distributor.tempo.svc.cluster.local:4317
+    samplerType: parentbased_traceidratio
+    samplerRatio: 0.01
+    additionalOptions:
+      - name: tracing-jdbc-enabled
+        value: false
