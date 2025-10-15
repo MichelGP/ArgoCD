@@ -117,7 +117,8 @@ spec:
     limits:
       cpu: 500m
       memory: 1Gi
-  disableDefaultIngress: true
+  ingress:
+    enabled: false
   http:
     httpEnabled: true
   hostname:
