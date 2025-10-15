@@ -1,10 +1,11 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: keycloak
-  annotations:
-    argocd.argoproj.io/sync-wave: "-2"
+## Namespace is deployed with Keycloak Operator
+#apiVersion: v1
+#kind: Namespace
+#metadata:
+#  name: keycloak
+#  annotations:
+#    argocd.argoproj.io/sync-wave: "-2"
 ---
 apiVersion: v1
 kind: Secret
