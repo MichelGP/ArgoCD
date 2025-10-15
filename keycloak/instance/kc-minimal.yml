@@ -97,6 +97,12 @@ spec:
   instances: 1
   http:
     httpEnabled: true
+  hostname:
+    hostname: https://auth.greypixel.nl
+    strict: true
+  additionalOptions:
+    - name: proxy-headers
+      value: xforwarded
   db:
     vendor: postgres
     host: kc-postgres.keycloak.svc
