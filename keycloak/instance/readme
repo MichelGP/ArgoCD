@@ -1,0 +1,2 @@
+kubectl --namespace keycloak get secret kc-initial-admin -o jsonpath='{.data.username}' | base64
+kubectl --namespace keycloak get secret kc-initial-admin -o jsonpath='{.data.password}' | base64
