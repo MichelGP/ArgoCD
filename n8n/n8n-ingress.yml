@@ -15,6 +15,7 @@ spec:
   tls:
     - hosts:
       - n8n.greypixel.nl
+      secretName: letsencrypt-n8n
   rules:
     - host: n8n.greypixel.nl
       http:
