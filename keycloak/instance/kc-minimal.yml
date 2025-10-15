@@ -136,3 +136,10 @@ spec:
     passwordSecret:
       name: kc-db
       key: password
+  ignoreDifferences:
+    - group: networking.k8s.io
+      kind: Ingress
+      namespace: keycloak
+      name: kc-ingress
+      managedFieldsManagers:
+        - keycloakcontroller
