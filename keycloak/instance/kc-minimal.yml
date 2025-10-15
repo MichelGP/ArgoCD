@@ -12,8 +12,6 @@ kind: Secret
 metadata:
   name: kc-db
   namespace: keycloak
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
 type: Opaque
 stringData:
   username: Dumping7041
@@ -24,8 +22,6 @@ kind: Secret
 metadata:
   name: keycloak-admin-credentials
   namespace: keycloak
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
 type: Opaque
 stringData:
   username: Armory1825
@@ -53,8 +49,6 @@ kind: StatefulSet
 metadata:
   name: kc-postgres
   namespace: keycloak
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   serviceName: kc-postgres
   replicas: 1
@@ -114,8 +108,6 @@ kind: Keycloak
 metadata:
   name: kc
   namespace: keycloak
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
   instances: 1
   http:
