@@ -22,14 +22,3 @@ spec:
       protocol: TCP
   selector:
     app.kubernetes.io/name: alloy-receiver
----
-apiVersion: "cilium.io/v2"
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: public-alloy-ip-pool
-spec:
-  blocks:
-    - cidr: "192.168.50.165/32"
-  serviceSelector:
-    matchLabels:
-      lb-pool: public-alloy
