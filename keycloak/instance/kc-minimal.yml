@@ -3,16 +3,32 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: kc-db
   namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 type: Opaque
 stringData:
   username: Dumping7041
   password: Chirpy-Overplant-Uneasily-Stout-Trace-Splatter-Gladly-Sensitize3
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-admin-credentials
+  namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+type: Opaque
+stringData:
+  username: Armory1825
+  password: Decipher-Bladder-Thus9-Unclip-Anime-Deepen-Wobbling-Overblown
 ---
 apiVersion: v1
 kind: Service
@@ -21,6 +37,8 @@ metadata:
   namespace: keycloak
   labels:
     app: kc-postgres
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   ports:
     - name: postgres
@@ -34,6 +52,8 @@ kind: StatefulSet
 metadata:
   name: kc-postgres
   namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   serviceName: kc-postgres
   replicas: 1
@@ -93,6 +113,8 @@ kind: Keycloak
 metadata:
   name: kc
   namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   instances: 1
   http:
@@ -103,6 +125,13 @@ spec:
   additionalOptions:
     - name: proxy-headers
       value: xforwarded
+  admin:
+    usernameSecret:
+      name: keycloak-admin-credentials
+      key: username
+    passwordSecret:
+      name: keycloak-admin-credentials
+      key: password
   db:
     vendor: postgres
     host: kc-postgres.keycloak.svc
