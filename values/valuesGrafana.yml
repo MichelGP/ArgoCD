@@ -39,7 +39,8 @@ grafana.ini:
     name_attribute_path: full_name
     org_attribute_path: groups
     org_mapping: fire:4:Editor # maps groups to orgId:role pairs
-    role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
+    #role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
+    role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin'
     allow_assign_grafana_admin: true
     role_attribute_strict: true # if no orgId is found, user is denied access
   tracing.opentelemetry.otlp:
