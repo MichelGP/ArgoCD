@@ -31,8 +31,8 @@ grafana.ini:
     client_secret: $__file{/etc/grafana/oidc/client_secret}
     scopes: "openid email profile offline_access roles"
     auth_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/auth
-    token_url: https:///auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/token
-    api_url: https:///auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/userinfo
+    token_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/token
+    api_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/userinfo
     email_attribute_path: email
     login_attribute_path: username
     name_attribute_path: full_name
