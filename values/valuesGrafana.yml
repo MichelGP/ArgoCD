@@ -46,7 +46,7 @@ grafana.ini:
     #role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
     #role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin'
     #allow_assign_grafana_admin: true
-    #role_attribute_strict: true # if no orgId is found, user is denied access
+    role_attribute_strict: true # if no orgId is found, user is denied access
   tracing.opentelemetry.otlp:
     address: tempo-distributor.tempo.svc.cluster.local:4317
     insecure: true
