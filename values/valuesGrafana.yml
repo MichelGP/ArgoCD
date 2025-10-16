@@ -29,7 +29,7 @@ grafana.ini:
     allow_sign_up: true
     client_id: $__file{/etc/grafana/oidc/client_id}
     client_secret: $__file{/etc/grafana/oidc/client_secret}
-    scopes: "openid email profile offline_access roles groups orgid" # add roles and groups
+    scopes: "openid email profile offline_access roles" # add roles and groups
     auth_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/auth
     token_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/token
     api_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/userinfo
@@ -39,12 +39,7 @@ grafana.ini:
     name_attribute_path: full_name
     use_refresh_token: true
     ## dit werkt:
-    #org_attribute_path: roles
-    #org_mapping: fire:fire:Editor # maps groups to orgId:role pairs
-    #role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || 'None'
-    #allow_assign_grafana_admin: true
-    ## test:
-    org_attribute_path: orgid
+    org_attribute_path: roles
     org_mapping: fire:fire:Editor # maps groups to orgId:role pairs
     role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || 'None'
     allow_assign_grafana_admin: true
