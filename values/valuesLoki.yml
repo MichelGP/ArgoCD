@@ -98,7 +98,7 @@ ingester:
         size: "10Gi"
         storageClass: nfs-csi-retain
         accessModes:
-          - ReadWriteOnce        
+          - ReadWriteOnce
 querier:
   replicas: 3
   maxUnavailable: 1
