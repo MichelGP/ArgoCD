@@ -38,14 +38,12 @@ grafana.ini:
     login_attribute_path: username
     name_attribute_path: full_name
     use_refresh_token: true
-    ## dit werkt:
+  
     org_attribute_path: roles
     org_mapping: fire:fire:Admin spark:spark:Admin smoke:smoke:Admin # maps groups to orgId:role pairs
     role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || 'None'
     allow_assign_grafana_admin: true
     #role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin' || contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
-    #role_attribute_path: contains(roles[*], 'grafanaadmin') && 'GrafanaAdmin'
-    #allow_assign_grafana_admin: true
     role_attribute_strict: true # if no orgId is found, user is denied access
   tracing.opentelemetry.otlp:
     address: tempo-distributor.tempo.svc.cluster.local:4317
