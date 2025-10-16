@@ -118,7 +118,7 @@ datasources:
 
 env:
   GF_INSTALL_PLUGINS: grafana-pyroscope-app
-  GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: true # can be false when keycloak has valid cert
+  GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: false # can be false when keycloak has valid cert
   GF_AUTH_ANONYMOUS_ENABLED: "false"
   GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
   GF_DIAGNOSTICS_PROFILING_ENABLED: "true"
