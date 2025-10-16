@@ -33,6 +33,7 @@ grafana.ini:
     auth_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/auth
     token_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/token
     api_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/userinfo
+    signout_redirect_url: https://auth.greypixel.nl/realms/gpworkz/protocol/openid-connect/logout?redirect_uri=https://grafana.greypixel.nl
     email_attribute_path: email
     login_attribute_path: username
     name_attribute_path: full_name
