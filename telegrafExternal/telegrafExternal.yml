@@ -8,7 +8,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: telegraf-config
-  namespace: alloy-external
+  namespace: telegraf-external
 data:
   telegraf.conf: |
     [[inputs.exec]]
