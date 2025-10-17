@@ -115,7 +115,7 @@ data:
 
     # 2) tarifcode is a string — read it separately and map to a number
     [[inputs.mqtt_consumer]]
-      servers       = ["tcp://mqtt-broker.telegraf-external.svc.cluster.local:1883"]
+      servers       = ["tcp://mqtt-broker-lb.telegraf-external.svc.cluster.local:1883"]
       client_id     = "telegraf-p1-tarif"
       qos           = 0
       name_override = "p1monitor"
