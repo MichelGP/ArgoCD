@@ -19,40 +19,35 @@ data:
       round_interval = true
 
     # ---------- INPUT: MQTT ----------
-    # Subscribes to topics and parses JSON payloads into metrics.
     [[inputs.mqtt_consumer]]
-      servers = ["tcp://telegrafExternal:1883"] 
+      servers = ["tcp://telegrafExternal:1883"]
       topics  = ["p1monitor/#"]
       qos = 0
       connection_timeout = "30s"
       client_id = "telegraf-mqtt"
 
-      # If your broker needs auth:
+      # Auth
       username = "Scone2194"
       password = "mMF$v9$$4jkedM"
 
-      # Parse JSON payloads (works great for IoT messages)
+      # Parse JSON payloads
       data_format = "json_v2"
 
-      ## Example JSON mapping (adapt to your payload structure):
-      ## {
-      ##   "device":"kitchen",
-      ##   "temp_c":22.7,
-      ##   "humidity":45.1
-      ## }
       [[inputs.mqtt_consumer.json_v2]]
         measurement_name = "mqtt_sensor"
 
-        # Put fields into Prometheus samples
         [[inputs.mqtt_consumer.json_v2.object]]
           path = ""
-          time_key = ""           # set if your JSON contains a timestamp
-          tags = ["device"]       # JSON keys to turn into tags
-          fields = [
-            { path = "temp_c",    type = "float" },
-            { path = "humidity",  type = "float" }
-          ]
+          tags = ["device"]   # JSON keys to promote to tags
 
+          [inputs.mqtt_consumer.json_v2.object.fields]
+            temp_c   = "float"
+            humidity = "float"
+          # If you have a timestamp in the JSON, you can add:
+          # timestamp_key = "ts"
+          # timestamp_format = "unix_ms"
+
+    # ---------- OUTPUT: Mimir (Prometheus remote_write over HTTP) ----------
     [[outputs.http]]
       url = "http://mimir-nginx.mimir.svc:80/api/v1/push"
       method = "POST"
@@ -63,6 +58,7 @@ data:
         Content-Encoding = "snappy"
         X-Prometheus-Remote-Write-Version = "0.1.0"
         X-Scope-OrgID = "fire"
+
 
 ---
 apiVersion: apps/v1
