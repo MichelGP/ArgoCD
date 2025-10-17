@@ -265,6 +265,20 @@ spec:
           ports:
             - containerPort: 1883
               name: mqtt
+          livenessProbe:
+            tcpSocket:
+              port: mqtt # 1883
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: mqtt # 1883
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
           volumeMounts:
             - name: mosquitto-config
               mountPath: /mosquitto/config
