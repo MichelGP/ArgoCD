@@ -42,9 +42,6 @@ spec:
       containers:
         - name: telegraf
           image: telegraf:1.36.2-alpine
-          args:
-            - "run"
-            - "/etc/alloy/alloy.hcl"
           resources:
             requests:
               cpu: "100m"
