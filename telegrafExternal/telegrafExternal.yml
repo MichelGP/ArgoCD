@@ -13,7 +13,7 @@ data:
   telegraf.conf: |
     [[inputs.exec]]
       interval = "60s"
-      commands=["mtr -C -n example.org"]
+      commands=["uptime"]
       timeout = "40s"
       data_format = "csv"
       csv_skip_rows = 1
