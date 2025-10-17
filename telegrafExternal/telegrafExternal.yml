@@ -11,45 +11,22 @@ metadata:
   namespace: telegraf-external
 data:
   telegraf.conf: |
-    # =============================
-    # MQTT P1 Monitor -> Mimir
-    # =============================
+    # =========================
+    # P1 Monitor -> Mimir (MQTT)
+    # =========================
+
+    # 1) NUMERIC topics (parse as float; ints are fine too)
     [[inputs.mqtt_consumer]]
-      servers     = ["tcp://mqtt-broker.telegraf-external.svc.cluster.local:1883"]
-      topics      = ["p1monitor/#"]
-      qos         = 0
-      client_id   = "telegraf-p1"
-      topic_tag   = "topic"          # keep full MQTT topic as a label
-      data_format = "value"          # every payload is a single value
-      data_type   = "string"         # parse as string first; convert below
+      servers       = ["tcp://mqtt-broker.telegraf-external.svc.cluster.local:1883"]
+      client_id     = "telegraf-p1-numeric"
+      qos           = 0
       name_override = "p1monitor"
-
-    # ---- Drop non-metric string timestamps ----
-    [[processors.filter]]
-      namepass = ["p1monitor"]
-      tagdrop  = { topic = [
-        "p1monitor/smartmeter/timestamp_local",
-        "p1monitor/powergas/day/timestamp_local",
-        "p1monitor/phase/timestamp_local"
-      ] }
-
-    # ---- Convert integers ----
-    [[processors.converter]]
-      namepass = ["p1monitor"]
-      tagpass  = { topic = [
+      topic_tag     = "topic"
+      data_format   = "value"
+      data_type     = "float"
+      topics = [
+        # smartmeter (live + totals)
         "p1monitor/smartmeter/timestamp_utc",
-        "p1monitor/smartmeter/record_is_processed",
-        "p1monitor/powergas/day/timestamp_utc",
-        "p1monitor/phase/timestamp_utc"
-      ] }
-      [processors.converter.fields]
-        integer = ["value"]
-
-    # ---- Convert floats (kWh/kW/W/m3/V/A and deltas) ----
-    [[processors.converter]]
-      namepass = ["p1monitor"]
-      tagpass  = { topic = [
-        # smartmeter totals/instantaneous
         "p1monitor/smartmeter/consumption_gas_m3",
         "p1monitor/smartmeter/consumption_kwh_high",
         "p1monitor/smartmeter/consumption_kwh_low",
@@ -57,16 +34,10 @@ data:
         "p1monitor/smartmeter/production_kwh_high",
         "p1monitor/smartmeter/production_kwh_low",
         "p1monitor/smartmeter/production_kw",
-        # day aggregates
-        "p1monitor/powergas/day/consumption_kwh_low",
-        "p1monitor/powergas/day/consumption_kwh_high",
-        "p1monitor/powergas/day/production_kwh_low",
-        "p1monitor/powergas/day/production_kwh_high",
-        "p1monitor/powergas/day/consumption_delta_kwh",
-        "p1monitor/powergas/day/production_delta_kwh",
-        "p1monitor/powergas/day/consumption_gas_m3",
-        "p1monitor/powergas/day/consumption_gas_delta_m3",
-        # per-phase metrics (W, V, A)
+        "p1monitor/smartmeter/record_is_processed",
+
+        # per-phase
+        "p1monitor/phase/timestamp_utc",
         "p1monitor/phase/consumption_l1_w",
         "p1monitor/phase/consumption_l2_w",
         "p1monitor/phase/consumption_l3_w",
@@ -78,23 +49,93 @@ data:
         "p1monitor/phase/l3_v",
         "p1monitor/phase/l1_a",
         "p1monitor/phase/l2_a",
-        "p1monitor/phase/l3_a"
-      ] }
-      [processors.converter.fields]
-        float = ["value"]
+        "p1monitor/phase/l3_a",
 
-    # ---- Map tarifcode string -> numeric (e.g., P=1). Overwrite "value" ----
+        # power/gas daily aggregates
+        "p1monitor/powergas/day/timestamp_utc",
+        "p1monitor/powergas/day/consumption_kwh_low",
+        "p1monitor/powergas/day/consumption_kwh_high",
+        "p1monitor/powergas/day/production_kwh_low",
+        "p1monitor/powergas/day/production_kwh_high",
+        "p1monitor/powergas/day/consumption_delta_kwh",
+        "p1monitor/powergas/day/production_delta_kwh",
+        "p1monitor/powergas/day/consumption_gas_m3",
+        "p1monitor/powergas/day/consumption_gas_delta_m3",
+
+        # power production (minute)
+        "p1monitor/powerproduction/minute/timestamp_utc",
+        "p1monitor/powerproduction/minute/production_kwh_high",
+        "p1monitor/powerproduction/minute/production_kwh_high_total",
+        "p1monitor/powerproduction/minute/production_kwh_low",
+        "p1monitor/powerproduction/minute/production_kwh_low_total",
+        "p1monitor/powerproduction/minute/production_kwh_total",
+        "p1monitor/powerproduction/minute/production_pseudo_w",
+        "p1monitor/powerproduction/minute/puls_per_timeunit_high",
+        "p1monitor/powerproduction/minute/puls_per_timeunit_low",
+
+        # watermeter (day + minute)
+        "p1monitor/watermeter/day/timestamp_utc",
+        "p1monitor/watermeter/day/watermeter_consumption_liter",
+        "p1monitor/watermeter/day/watermeter_consumption_total_m3",
+        "p1monitor/watermeter/day/watermeter_puls_count",
+        "p1monitor/watermeter/minute/timestamp_utc",
+        "p1monitor/watermeter/minute/watermeter_consumption_liter",
+        "p1monitor/watermeter/minute/watermeter_consumption_total_m3",
+        "p1monitor/watermeter/minute/watermeter_puls_count",
+
+        # indoor temperature (numeric only)
+        "p1monitor/indoor/temperature/timestamp_utc",
+        "p1monitor/indoor/temperature/room_temperature_in_average",
+        "p1monitor/indoor/temperature/room_temperature_in_high",
+        "p1monitor/indoor/temperature/room_temperature_in_low",
+        "p1monitor/indoor/temperature/room_temperature_out_average",
+        "p1monitor/indoor/temperature/room_temperature_out_high",
+        "p1monitor/indoor/temperature/room_temperature_out_low",
+
+        # financial (numeric only)
+        "p1monitor/financial/day/consumption_cost_electricity_high",
+        "p1monitor/financial/day/consumption_cost_electricity_low",
+        "p1monitor/financial/day/consumption_cost_gas",
+        "p1monitor/financial/day/consumption_cost_water",
+        "p1monitor/financial/day/production_revenues_electricity_high",
+        "p1monitor/financial/day/production_revenues_electricity_low",
+        "p1monitor/financial/day/timestamp_utc",
+
+        # weather (numeric only)
+        "p1monitor/weather/timestamp_utc",
+        "p1monitor/weather/clouds",
+        "p1monitor/weather/humidity",
+        "p1monitor/weather/pressure",
+        "p1monitor/weather/temperature",
+        "p1monitor/weather/wind_degrees",
+        "p1monitor/weather/wind_speed",
+        "p1monitor/weather/city_id",
+        "p1monitor/weather/weather_id"
+      ]
+
+    # 2) tarifcode is a string — read it separately and map to a number
+    [[inputs.mqtt_consumer]]
+      servers       = ["tcp://mqtt-broker.telegraf-external.svc.cluster.local:1883"]
+      client_id     = "telegraf-p1-tarif"
+      qos           = 0
+      name_override = "p1monitor"
+      topic_tag     = "topic"
+      data_format   = "value"
+      data_type     = "string"
+      topics        = ["p1monitor/smartmeter/tarifcode"]
+
     [[processors.enum]]
       namepass = ["p1monitor"]
       tagpass  = { topic = ["p1monitor/smartmeter/tarifcode"] }
       [[processors.enum.mapping]]
         field   = "value"
-        dest    = "value"
+        dest    = "value"   # overwrite with numeric
         default = 0
         [processors.enum.mapping.value_mappings]
           P = 1
           1 = 1
           2 = 2
+
 
     # ---------- OUTPUT: Mimir (Prometheus remote_write over HTTP) ----------
     [[outputs.http]]
