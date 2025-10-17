@@ -150,9 +150,6 @@ data:
 
     [[outputs.health]]
       service_address = "http://:1337"
-      # Only report healthy if we are receiving MQTT metrics
-      [[outputs.health.metric]]
-        name = "p1monitor"
 ---
 apiVersion: apps/v1
 kind: Deployment
