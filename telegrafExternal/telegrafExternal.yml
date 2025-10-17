@@ -11,41 +11,90 @@ metadata:
   namespace: telegraf-external
 data:
   telegraf.conf: |
-    # ===== Telegraf: MQTT -> Mimir (Prometheus remote_write) =====
-
-    [agent]
-      interval = "10s"
-      flush_interval = "10s"
-      round_interval = true
-
-    # ---------- INPUT: MQTT ----------
+    # =============================
+    # MQTT P1 Monitor -> Mimir
+    # =============================
     [[inputs.mqtt_consumer]]
-      servers = ["tcp://mqtt-broker.telegraf-external.svc.cluster.local:1883"]
-      topics  = ["p1monitor/#"]
-      qos = 0
-      connection_timeout = "30s"
-      client_id = "telegraf-mqtt"
+      servers     = ["tcp://mqtt-broker.telegraf-external.svc.cluster.local:1883"]
+      topics      = ["p1monitor/#"]
+      qos         = 0
+      client_id   = "telegraf-p1"
+      topic_tag   = "topic"          # keep full MQTT topic as a label
+      data_format = "value"          # every payload is a single value
+      data_type   = "string"         # parse as string first; convert below
+      name_override = "p1monitor"
 
-      # Topic tag
-      topic_tag = "p1monitor"
+    # ---- Drop non-metric string timestamps ----
+    [[processors.filter]]
+      namepass = ["p1monitor"]
+      tagdrop  = { topic = [
+        "p1monitor/smartmeter/timestamp_local",
+        "p1monitor/powergas/day/timestamp_local",
+        "p1monitor/phase/timestamp_local"
+      ] }
 
-      # Auth (only needed if you enable it in Mosquitto)
-      username = "Scone2194"
-      password = "mMF$v9$$4jkedM"
+    # ---- Convert integers ----
+    [[processors.converter]]
+      namepass = ["p1monitor"]
+      tagpass  = { topic = [
+        "p1monitor/smartmeter/timestamp_utc",
+        "p1monitor/smartmeter/record_is_processed",
+        "p1monitor/powergas/day/timestamp_utc",
+        "p1monitor/phase/timestamp_utc"
+      ] }
+      [processors.converter.fields]
+        integer = ["value"]
 
-      # Parse JSON payloads
-      data_format = "json_v2"
+    # ---- Convert floats (kWh/kW/W/m3/V/A and deltas) ----
+    [[processors.converter]]
+      namepass = ["p1monitor"]
+      tagpass  = { topic = [
+        # smartmeter totals/instantaneous
+        "p1monitor/smartmeter/consumption_gas_m3",
+        "p1monitor/smartmeter/consumption_kwh_high",
+        "p1monitor/smartmeter/consumption_kwh_low",
+        "p1monitor/smartmeter/consumption_kw",
+        "p1monitor/smartmeter/production_kwh_high",
+        "p1monitor/smartmeter/production_kwh_low",
+        "p1monitor/smartmeter/production_kw",
+        # day aggregates
+        "p1monitor/powergas/day/consumption_kwh_low",
+        "p1monitor/powergas/day/consumption_kwh_high",
+        "p1monitor/powergas/day/production_kwh_low",
+        "p1monitor/powergas/day/production_kwh_high",
+        "p1monitor/powergas/day/consumption_delta_kwh",
+        "p1monitor/powergas/day/production_delta_kwh",
+        "p1monitor/powergas/day/consumption_gas_m3",
+        "p1monitor/powergas/day/consumption_gas_delta_m3",
+        # per-phase metrics (W, V, A)
+        "p1monitor/phase/consumption_l1_w",
+        "p1monitor/phase/consumption_l2_w",
+        "p1monitor/phase/consumption_l3_w",
+        "p1monitor/phase/production_l1_w",
+        "p1monitor/phase/production_l2_w",
+        "p1monitor/phase/production_l3_w",
+        "p1monitor/phase/l1_v",
+        "p1monitor/phase/l2_v",
+        "p1monitor/phase/l3_v",
+        "p1monitor/phase/l1_a",
+        "p1monitor/phase/l2_a",
+        "p1monitor/phase/l3_a"
+      ] }
+      [processors.converter.fields]
+        float = ["value"]
 
-      [[inputs.mqtt_consumer.json_v2]]
-        measurement_name = "mqtt_sensor"
-
-        [[inputs.mqtt_consumer.json_v2.object]]
-          path = ""
-          tags = ["device"]   # JSON keys to promote to tags
-
-          [inputs.mqtt_consumer.json_v2.object.fields]
-            temp_c   = "float"
-            humidity = "float"
+    # ---- Map tarifcode string -> numeric (e.g., P=1). Overwrite "value" ----
+    [[processors.enum]]
+      namepass = ["p1monitor"]
+      tagpass  = { topic = ["p1monitor/smartmeter/tarifcode"] }
+      [[processors.enum.mapping]]
+        field   = "value"
+        dest    = "value"
+        default = 0
+        [processors.enum.mapping.value_mappings]
+          P = 1
+          1 = 1
+          2 = 2
 
     # ---------- OUTPUT: Mimir (Prometheus remote_write over HTTP) ----------
     [[outputs.http]]
