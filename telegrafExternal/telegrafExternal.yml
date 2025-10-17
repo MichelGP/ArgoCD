@@ -20,7 +20,7 @@ data:
 
     # ---------- INPUT: MQTT ----------
     [[inputs.mqtt_consumer]]
-      servers = ["tcp://telegraf-service.telegraf-external.svc.cluster.local:1883"]
+      servers = ["tcp://mqtt-broker.telegraf-external.svc.cluster.local:1883"]
       topics  = ["p1monitor/#"]
       qos = 0
       connection_timeout = "30s"
@@ -29,7 +29,7 @@ data:
       # Topic tag
       topic_tag = "p1monitor"
 
-      # Auth
+      # Auth (only needed if you enable it in Mosquitto)
       username = "Scone2194"
       password = "mMF$v9$$4jkedM"
 
@@ -46,9 +46,6 @@ data:
           [inputs.mqtt_consumer.json_v2.object.fields]
             temp_c   = "float"
             humidity = "float"
-          # If you have a timestamp in the JSON, you can add:
-          # timestamp_key = "ts"
-          # timestamp_format = "unix_ms"
 
     # ---------- OUTPUT: Mimir (Prometheus remote_write over HTTP) ----------
     [[outputs.http]]
@@ -61,8 +58,6 @@ data:
         Content-Encoding = "snappy"
         X-Prometheus-Remote-Write-Version = "0.1.0"
         X-Scope-OrgID = "fire"
-
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -99,9 +94,6 @@ spec:
             - name: 8094-tcp
               protocol: TCP
               containerPort: 8094
-            - name: 1883-tcp
-              protocol: TCP
-              containerPort: 1883
           volumeMounts:
             - name: config
               mountPath: /etc/telegraf
@@ -137,6 +129,63 @@ spec:
     - name: 8094-tcp
       port: 8094
       targetPort: 8094
-    - name: 1883-tcp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-broker
+  namespace: telegraf-external
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mqtt-broker
+  template:
+    metadata:
+      labels:
+        app: mqtt-broker
+    spec:
+      containers:
+        - name: mosquitto
+          image: eclipse-mosquitto:2.0
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+          ports:
+            - containerPort: 1883
+              name: mqtt
+          volumeMounts:
+            - name: mosquitto-config
+              mountPath: /mosquitto/config
+      volumes:
+        - name: mosquitto-config
+          configMap:
+            name: mosquitto-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mqtt-broker
+  namespace: telegraf-external
+spec:
+  selector:
+    app: mqtt-broker
+  ports:
+    - name: mqtt
+      protocol: TCP
       port: 1883
       targetPort: 1883
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+  namespace: telegraf-external
+data:
+  mosquitto.conf: |
+    listener 1883
+    allow_anonymous true
