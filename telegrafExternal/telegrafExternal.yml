@@ -136,7 +136,6 @@ data:
           1 = 1
           2 = 2
 
-
     # ---------- OUTPUT: Mimir (Prometheus remote_write over HTTP) ----------
     [[outputs.http]]
       url = "http://mimir-nginx.mimir.svc:80/api/v1/push"
@@ -148,6 +147,12 @@ data:
         Content-Encoding = "snappy"
         X-Prometheus-Remote-Write-Version = "0.1.0"
         X-Scope-OrgID = "fire"
+
+    [[outputs.health]]
+      service_address = "http://:1337"
+      # Only report healthy if we are receiving MQTT metrics
+      [[outputs.health.metric]]
+        name = "p1monitor"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -184,14 +189,25 @@ spec:
             - name: 8094-tcp
               protocol: TCP
               containerPort: 8094
+            - name: health
+              containerPort: 1337
+              protocol: TCP
           volumeMounts:
             - name: config
               mountPath: /etc/telegraf
               readOnly: true
           livenessProbe:
-            tcpSocket: { port: 8094 }
+            httpGet:
+              path: /health
+              port: 1337
             initialDelaySeconds: 10
             periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 1337
+            initialDelaySeconds: 5
+            periodSeconds: 10
       volumes:
         - name: config
           configMap:
@@ -219,6 +235,10 @@ spec:
     - name: 8094-tcp
       port: 8094
       targetPort: 8094
+    - name: health
+      port: 1337
+      targetPort: 1337
+      protocol: TCP
 ---
 apiVersion: apps/v1
 kind: Deployment
