@@ -169,16 +169,17 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mqtt-broker
+  name: mqtt-broker-lb
   namespace: telegraf-external
 spec:
+  type: LoadBalancer
   selector:
     app: mqtt-broker
   ports:
     - name: mqtt
-      protocol: TCP
       port: 1883
       targetPort: 1883
+      protocol: TCP
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -189,17 +190,3 @@ data:
   mosquitto.conf: |
     listener 1883
     allow_anonymous true
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mqtt-broker-lb
-  namespace: telegraf-external
-spec:
-  type: LoadBalancer
-  selector:
-    app: mqtt-broker
-  ports:
-    - port: 1883
-      targetPort: 1883
-      protocol: TCP
