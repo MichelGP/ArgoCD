@@ -112,16 +112,16 @@ query_frontend:
       memory: "256Mi"
 
 store_gateway:
-  replicas: 2
+  replicas: 4
   zoneAwareReplication:
     enabled: false
   resources:
     requests:
-      cpu: "1000m"
-      memory: "2Gi"
+      cpu: "500m"
+      memory: "512Mi"
     limits:
-      cpu: "2000m"
-      memory: "4Gi"
+      cpu: "1000m"
+      memory: "1Gi"
 #  persistentVolume:
 #    enabled: true
 #    accessModes:
