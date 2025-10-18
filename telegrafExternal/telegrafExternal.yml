@@ -12,6 +12,285 @@ metadata:
 data:
   telegraf.conf: |
     # =========================
+    # ITHO -> Telegraf -> Mimir
+    # =========================
+
+    # 1) Simple numeric topic
+    [[inputs.mqtt_consumer]]
+      servers       = ["tcp://mqtt-broker-lb.telegraf-external.svc.cluster.local:1883"]
+      topics        = ["itho/state"]
+      qos           = 0
+      client_id     = "telegraf-itho-num"
+      name_override = "itho"
+      topic_tag     = "topic"
+      data_format   = "value"
+      data_type     = "float"
+
+    # 2) LWT string -> numeric (online=1, offline=0)
+    [[inputs.mqtt_consumer]]
+      servers       = ["tcp://mqtt-broker-lb.telegraf-external.svc.cluster.local:1883"]
+      topics        = ["itho/lwt"]
+      qos           = 0
+      client_id     = "telegraf-itho-lwt"
+      name_override = "itho"
+      topic_tag     = "topic"
+      data_format   = "value"
+      data_type     = "string"
+
+    [[processors.enum]]
+      namepass = ["itho"]
+      tagpass  = { topic = ["itho/lwt"] }
+      [[processors.enum.mapping]]
+        field   = "value"
+        dest    = "value"
+        default = 0
+        [processors.enum.mapping.value_mappings]
+          online  = 1
+          Online  = 1
+          ONLINE  = 1
+          offline = 0
+          Offline = 0
+          OFFLINE = 0
+
+    # 3) lastcmd JSON — grab timestamp (ignore strings)
+    [[inputs.mqtt_consumer]]
+      servers       = ["tcp://mqtt-broker-lb.telegraf-external.svc.cluster.local:1883"]
+      topics        = ["itho/lastcmd"]
+      qos           = 0
+      client_id     = "telegraf-itho-lastcmd"
+      name_override = "itho"
+      topic_tag     = "topic"
+      data_format   = "json_v2"
+
+      [[inputs.mqtt_consumer.json_v2]]
+        measurement_name = "itho"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "timestamp"
+          type   = "int"
+          rename = "lastcmd_timestamp"
+
+    # 4) ithostatus JSON — map key metrics to clean names
+    [[inputs.mqtt_consumer]]
+      servers       = ["tcp://mqtt-broker-lb.telegraf-external.svc.cluster.local:1883"]
+      topics        = ["itho/ithostatus"]
+      qos           = 0
+      client_id     = "telegraf-itho-status"
+      name_override = "itho"
+      topic_tag     = "topic"
+      data_format   = "json_v2"
+
+      [[inputs.mqtt_consumer.json_v2]]
+        measurement_name = "itho"
+
+        # ---- integers / flags
+        [[inputs.mqtt_consumer.json_v2.field]]  # modes/status
+          path   = "Operating mode"
+          type   = "int"
+          rename = "operating_mode"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Operating phase IBS"
+          type   = "int"
+          rename = "operating_phase_ibs"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Operating status"
+          type   = "int"
+          rename = "operating_status"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Setting"
+          type   = "int"
+          rename = "setting"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Error"
+          type   = "int"
+          rename = "error"
+
+        # Flags (0/1)
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status normal"
+          type   = "int"
+          rename = "status_normal"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status high extractor hood"
+          type   = "int"
+          rename = "status_high_extractor_hood"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status high bathroom"
+          type   = "int"
+          rename = "status_high_bathroom"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status timer"
+          type   = "int"
+          rename = "status_timer"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status manual control"
+          type   = "int"
+          rename = "status_manual_control"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status eco comfort"
+          type   = "int"
+          rename = "status_eco_comfort"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status limited ventilation"
+          type   = "int"
+          rename = "status_limited_ventilation"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Status not at home"
+          type   = "int"
+          rename = "status_not_at_home"
+
+        # ---- RH (%)
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "RH bathroom 1 (%)"
+          type   = "float"
+          rename = "rh_bathroom1_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "RH bathroom 2 (%)"
+          type   = "float"
+          rename = "rh_bathroom2_pct"
+
+        # ---- Fan / flaps / valves (%)
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "exhaust fan (%)"
+          type   = "float"
+          rename = "exhaust_fan_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap kitchen"
+          type   = "float"
+          rename = "pos_flap_kitchen_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap toilet 1"
+          type   = "float"
+          rename = "pos_flap_toilet1_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap living room 1"
+          type   = "float"
+          rename = "pos_flap_living_room1_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap living room 2"
+          type   = "float"
+          rename = "pos_flap_living_room2_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap laundry room"
+          type   = "float"
+          rename = "pos_flap_laundry_room_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap bathroom1"
+          type   = "float"
+          rename = "pos_flap_bathroom1_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos valve bath2+toilet2"
+          type   = "float"
+          rename = "pos_valve_bath2_toilet2_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos valve bedroom1"
+          type   = "float"
+          rename = "pos_valve_bedroom1_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap bedroom 2"
+          type   = "float"
+          rename = "pos_flap_bedroom2_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos flap bedroom 3"
+          type   = "float"
+          rename = "pos_flap_bedroom3_pct"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated pos damper bedroom 4"
+          type   = "float"
+          rename = "pos_damper_bedroom4_pct"
+
+        # ---- CO2 (ppm)
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "CO2 plenum (ppm)"
+          type   = "float"
+          rename = "co2_plenum_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 extractor (ppm)"
+          type   = "float"
+          rename = "co2_extractor_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 kitchen (ppm)"
+          type   = "float"
+          rename = "co2_kitchen_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 toilet1 (ppm)"
+          type   = "float"
+          rename = "co2_toilet1_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 living room 1 (ppm)"
+          type   = "float"
+          rename = "co2_living_room1_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 washroom (ppm)"
+          type   = "float"
+          rename = "co2_washroom_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 bathroom1 (ppm)"
+          type   = "float"
+          rename = "co2_bathroom1_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 bath2 + toilet2 (ppm)"
+          type   = "float"
+          rename = "co2_bath2_toilet2_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 bedroom 1 (ppm)"
+          type   = "float"
+          rename = "co2_bedroom1_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 bedroom 2 (ppm)"
+          type   = "float"
+          rename = "co2_bedroom2_ppm"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated CO2 bedroom 3 (ppm)"
+          type   = "float"
+          rename = "co2_bedroom3_ppm"
+
+        # ---- Flows (m3/h)
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow extractor hood (m3_h)"
+          type   = "float"
+          rename = "flow_extractor_hood_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow kitchen (m3_h)"
+          type   = "float"
+          rename = "flow_kitchen_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow toilet 1 (m3_h)"
+          type   = "float"
+          rename = "flow_toilet1_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow living room 1 (m3_h)"
+          type   = "float"
+          rename = "flow_living_room1_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow living room 2 (m3_h)"
+          type   = "float"
+          rename = "flow_living_room2_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow laundry room (m3_h)"
+          type   = "float"
+          rename = "flow_laundry_room_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow bathroom 1 (m3_h)"
+          type   = "float"
+          rename = "flow_bathroom1_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow bath2+toilet2 (m3_h)"
+          type   = "float"
+          rename = "flow_bath2_toilet2_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow bedroom1 (m3_h)"
+          type   = "float"
+          rename = "flow_bedroom1_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow bedroom 2 (m3_h)"
+          type   = "float"
+          rename = "flow_bedroom2_m3h"
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path   = "Calculated Flow bedroom 3 (m3_h)"
+          type   = "float"
+          rename = "flow_bedroom3_m3h"
+
+    # =========================
     # P1 Monitor -> Mimir (MQTT)
     # =========================
 
