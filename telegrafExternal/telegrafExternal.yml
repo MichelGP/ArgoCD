@@ -154,7 +154,7 @@ data:
           type   = "float"
           rename = "exhaust_fan_pct"
         [[inputs.mqtt_consumer.json_v2.field]]
-          path   = "Calculated pos flap kitchen"
+          path   = "calculated pos flap kitchen"
           type   = "float"
           rename = "pos_flap_kitchen_pct"
         [[inputs.mqtt_consumer.json_v2.field]]
