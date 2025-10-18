@@ -499,6 +499,7 @@ metadata:
   namespace: telegraf-external
 spec:
   type: LoadBalancer
+  loadBalancerIP: 192.168.50.159 # fix the IP
   selector:
     app: telegraf-external
   ports:
