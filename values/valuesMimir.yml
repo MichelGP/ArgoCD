@@ -112,7 +112,7 @@ query_frontend:
       memory: "256Mi"
 
 store_gateway:
-  replicas: 3
+  replicas: 1
   resources:
     requests:
       cpu: "1000m"
