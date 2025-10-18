@@ -116,10 +116,10 @@ store_gateway:
   resources:
     requests:
       cpu: "1000m"
-      memory: "1Gi"
+      memory: "2Gi"
     limits:
       cpu: "2000m"
-      memory: "2Gi"
+      memory: "4Gi"
   persistence:
     enabled: false
     size: 50Gi   # on local nVME storage
