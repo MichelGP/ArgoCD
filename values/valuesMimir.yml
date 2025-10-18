@@ -120,9 +120,6 @@ store_gateway:
     limits:
       cpu: "2000m"
       memory: "4Gi"
-  persistence:
-    enabled: false
-    size: 50Gi   # on local nVME storage
 
 compactor:
   replicas: 1
