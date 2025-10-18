@@ -123,9 +123,6 @@ store_gateway:
   persistence:
     enabled: false
     size: 50Gi   # on local nVME storage
-  extraArgs:
-    - -store-gateway.sharding-enabled=true
-    - -blocks-storage.bucket-store.index-header.lazy-loading-idle-timeout=5m
 
 compactor:
   replicas: 1
